@@ -44,6 +44,7 @@ from actions import (
     OPEN_FILE_PROPERTIES,
     OPEN_FOLDER,
     CLOSE_FILE,
+    CLOSE_ALL_FILES,
     TEST_SPEAKERS,
     OPEN_SETTINGS,
     PLAY_PAUSE,
@@ -51,8 +52,14 @@ from actions import (
     RENAME_FILE,
     RESET_SPEED,
     SEEK_BACKWARD,
+    SEEK_BACKWARD_X2,
+    SEEK_BACKWARD_X4,
+    SEEK_BACKWARD_X8,
     SEEK_END,
     SEEK_FORWARD,
+    SEEK_FORWARD_X2,
+    SEEK_FORWARD_X4,
+    SEEK_FORWARD_X8,
     SEEK_START,
     SEEK_STEP_0,
     SEEK_STEP_1,
@@ -81,10 +88,12 @@ from actions import (
     PASTE_FROM_CLIPBOARD,
     GLOBAL_SHORTCUT_ACTIONS,
 )
+from config.constants import APP_NAME
 from core.action_context import ActionContext
 from app_actions.device_actions import open_sound_cards
 from app_actions.file_actions import (
     close_file,
+    close_all_files,
     copy_file,
     del_file,
     first_file,
@@ -137,7 +146,13 @@ from app_actions.playback_actions import (
     reset_speed,
     seek_end,
     seek_backward,
+    seek_backward_x2,
+    seek_backward_x4,
+    seek_backward_x8,
     seek_forward,
+    seek_forward_x2,
+    seek_forward_x4,
+    seek_forward_x8,
     seek_start,
     set_seek_step,
     set_volume_max,
@@ -167,6 +182,7 @@ from update.actions import (
     check_updates_on_startup,
     update_youtube_components_now,
 )
+from core.windows_media import WindowsMediaBridge
 
 
 class AppController:
@@ -174,6 +190,12 @@ class AppController:
         self._settings = settings
         self._player = Player()
         self._ctx = ActionContext(self._player, self._settings)
+        self._media = WindowsMediaBridge(
+            app_id="SimpleAudioPlayer",
+            app_name=APP_NAME,
+            on_action=self._on_media_action,
+        )
+        self._media_timer = None
         self._shortcuts = ShortcutManager(ACTIONS)
         self._global_shortcuts = ShortcutManager(GLOBAL_SHORTCUT_ACTIONS)
         self._global_keyboard = None
@@ -181,6 +203,12 @@ class AppController:
             PLAY_PAUSE: lambda: toggle_play_pause(self._ctx),
             SEEK_BACKWARD: lambda: seek_backward(self._ctx),
             SEEK_FORWARD: lambda: seek_forward(self._ctx),
+            SEEK_BACKWARD_X2: lambda: seek_backward_x2(self._ctx),
+            SEEK_FORWARD_X2: lambda: seek_forward_x2(self._ctx),
+            SEEK_BACKWARD_X4: lambda: seek_backward_x4(self._ctx),
+            SEEK_FORWARD_X4: lambda: seek_forward_x4(self._ctx),
+            SEEK_BACKWARD_X8: lambda: seek_backward_x8(self._ctx),
+            SEEK_FORWARD_X8: lambda: seek_forward_x8(self._ctx),
             SEEK_START: lambda: seek_start(self._ctx),
             SEEK_END: lambda: seek_end(self._ctx),
             VOLUME_UP: lambda: change_volume(self._ctx, self._settings.get_volume_step()),
@@ -213,6 +241,7 @@ class AppController:
             OPEN_FILE_PROPERTIES: lambda: open_props(self._ctx),
             OPEN_FILE_LIST: lambda: open_list(self._ctx),
             CLOSE_FILE: lambda: close_file(self._ctx),
+            CLOSE_ALL_FILES: lambda: close_all_files(self._ctx),
             TEST_SPEAKERS: lambda: spk_test(self._ctx),
             OPEN_SETTINGS: self.open_settings_dialog,
             GO_TO_FILE: lambda: goto_file(self._ctx),
@@ -282,6 +311,7 @@ class AppController:
         self._ctx.set_frame(frame)
         video_handle = frame.get_video_window_handle()
         self._player.set_render_window(video_handle)
+        self._ensure_media_timer_started(frame)
         self._ensure_global_shortcuts_started()
         self._ctx.set_file_loaded(False)
         self._sync_frame_toggles()
@@ -348,6 +378,8 @@ class AppController:
             if self._global_keyboard is not None:
                 self._global_keyboard.stop()
                 self._global_keyboard = None
+            if self._media_timer is not None and self._media_timer.IsRunning():
+                self._media_timer.Stop()
             self._settings.set_volume(self._player.get_volume())
             self._settings.set_speed(self._player.get_speed())
             if self._settings.get_remember_position():
@@ -357,6 +389,7 @@ class AppController:
                     self._settings.set_last_file_position(path, position)
             self._settings.save()
         finally:
+            self._media.close()
             self._player.shutdown()
 
     def handle_action(self, action_id):
@@ -378,6 +411,7 @@ class AppController:
     def _sync_frame_toggles(self):
         frame = self._ctx.frame
         if frame is None:
+            self._sync_media_state()
             return
         frame.set_shuffle_checked(self._player.is_shuffle_enabled())
         frame.set_repeat_file_checked(self._player.is_repeat_file_enabled())
@@ -389,6 +423,7 @@ class AppController:
         frame.set_file_properties_enabled(is_local)
         frame.set_local_file_actions_enabled(is_local)
         frame.set_video_options_enabled(has_video(self._ctx))
+        self._sync_media_state()
 
     def _load_shortcuts_from_settings(self):
         self._shortcuts = ShortcutManager(ACTIONS)
@@ -416,4 +451,47 @@ class AppController:
 
     def _on_global_action(self, action_id):
         self.handle_action(action_id)
+
+    def _on_media_action(self, action_id):
+        self.handle_action(action_id)
+
+    def _ensure_media_timer_started(self, frame):
+        if self._media_timer is None:
+            self._media_timer = wx.Timer(frame)
+            frame.Bind(wx.EVT_TIMER, self._on_media_timer, self._media_timer)
+        if not self._media_timer.IsRunning():
+            self._media_timer.Start(1000)
+
+    def _on_media_timer(self, _event):
+        self._sync_media_state()
+
+    def _sync_media_state(self):
+        if not self._media.is_enabled:
+            return
+        path = str(self._player.current_path or "").strip()
+        has_media = bool(path)
+        title = str(self._player.current_title or "").strip()
+        if not title:
+            title = path
+        is_playing = has_media and (not self._player.is_paused())
+        duration = self._player.get_duration() if has_media else None
+        position = self._player.get_elapsed() if has_media else None
+
+        count = int(self._player.get_count() or 0)
+        idx = self._player.get_current_index()
+        can_previous = bool(has_media and idx is not None and int(idx) > 0)
+        can_next = bool(
+            has_media and idx is not None and count > 0 and int(idx) < (count - 1)
+        )
+
+        self._media.update(
+            has_media=has_media,
+            is_playing=is_playing,
+            title=title,
+            artist=APP_NAME,
+            duration=duration,
+            position=position,
+            can_next=can_next,
+            can_previous=can_previous,
+        )
 

@@ -8,6 +8,9 @@ class PlayerPlaybackMixin:
     def pause(self):
         self._engine.pause()
 
+    def is_paused(self):
+        return self._engine.is_paused()
+
     def seek(self, seconds):
         self._engine.seek_relative(seconds)
 

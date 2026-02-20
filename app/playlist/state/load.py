@@ -4,6 +4,31 @@ from core.media_library import collect_audio_files
 
 
 class PlaylistStateLoadMixin:
+    def open_file_list(self, files, preferred_path=None, start_position=None):
+        entries = list(files or [])
+        if not entries:
+            return False
+
+        selected = None
+        if preferred_path and preferred_path in entries:
+            selected = preferred_path
+
+        if selected is None:
+            index = 0
+            pending = None
+        else:
+            index = entries.index(selected)
+            pending = start_position
+
+        self._file_list = entries
+        self._current_index = index
+        self._current_path = self._file_list[index]
+        self._pending_start = pending
+        self._meta = {}
+        self._clear_marked()
+        self._rebuild_shuffle_order()
+        return True
+
     def open_file(self, path, start_position=None, title=None, source=None):
         if not path:
             return False
@@ -52,26 +77,12 @@ class PlaylistStateLoadMixin:
         files = collect_audio_files(folder_path, recursive=recursive)
         if not files:
             return False
-
         selected = None
         if preferred_path and preferred_path in files:
             selected = preferred_path
         elif preserve_current and self._current_path and self._current_path in files:
             selected = self._current_path
-
-        if selected is None:
-            index = 0
-        else:
-            index = files.index(selected)
-
-        self._file_list = files
-        self._current_index = index
-        self._current_path = self._file_list[index]
-        self._pending_start = None
-        self._meta = {}
-        self._clear_marked()
-        self._rebuild_shuffle_order()
-        return True
+        return self.open_file_list(files, preferred_path=selected, start_position=None)
 
     def open_file_with_folder(self, path, recursive=False, start_position=None):
         if not path:
@@ -80,19 +91,4 @@ class PlaylistStateLoadMixin:
         files = collect_audio_files(folder_path, recursive=recursive)
         if not files:
             return False
-
-        if path in files:
-            index = files.index(path)
-            pending = start_position
-        else:
-            index = 0
-            pending = None
-
-        self._file_list = files
-        self._current_index = index
-        self._current_path = self._file_list[index]
-        self._pending_start = pending
-        self._meta = {}
-        self._clear_marked()
-        self._rebuild_shuffle_order()
-        return True
+        return self.open_file_list(files, preferred_path=path, start_position=start_position)

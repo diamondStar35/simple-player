@@ -42,6 +42,13 @@ class PlayerFilesMixin:
             self._load_current()
         return True, self._state.current_path
 
+    def close_all_files(self):
+        if not self.current_path and not self._state.get_count():
+            return False
+        self._stop_core_only()
+        self._state.clear_all()
+        return True
+
     def rename_current_file(self, new_name):
         path = self.current_path
         if not path or not new_name:

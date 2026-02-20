@@ -18,6 +18,15 @@ class PlayerLoadMixin:
             return False
         return self._load_current()
 
+    def open_file_list(self, files, preferred_path=None, start_position=None):
+        if not self._state.open_file_list(
+            files,
+            preferred_path=preferred_path,
+            start_position=start_position,
+        ):
+            return False
+        return self._load_current()
+
     def open_stream(self, url, append=True, start_position=None, title=None, source_url=None):
         if append:
             if not self._state.append(

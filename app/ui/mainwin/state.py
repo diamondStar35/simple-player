@@ -4,6 +4,7 @@ from gettext import gettext as _
 from actions import (
     CHECK_APP_UPDATES,
     CLOSE_FILE,
+    CLOSE_ALL_FILES,
     OPEN_ABOUT,
     OPEN_CHANGES,
     OPEN_CONTAINING_FOLDER,
@@ -38,6 +39,7 @@ class MainFrameStateMixin:
             OPEN_FILE_PROPERTIES: self._open_file_props_item.GetId(),
             OPEN_FILE_LIST: self._open_file_list_item.GetId(),
             CLOSE_FILE: self._close_file_item.GetId(),
+            CLOSE_ALL_FILES: self._close_all_files_item.GetId(),
             OPEN_SETTINGS: self._settings_item.GetId(),
             OPEN_USER_GUIDE: self._user_guide_item.GetId(),
             OPEN_CHANGES: self._changes_item.GetId(),
@@ -118,6 +120,7 @@ class MainFrameStateMixin:
             self._open_file_props_item,
             self._open_file_list_item,
             self._close_file_item,
+            self._close_all_files_item,
             self._copy_current_item,
             self._mark_current_item,
             self._mark_all_item,

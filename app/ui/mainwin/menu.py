@@ -6,6 +6,7 @@ from actions import (
     CLEAR_SELECTION,
     CLEAR_MARKED_FILES,
     CLOSE_FILE,
+    CLOSE_ALL_FILES,
     COPY_CURRENT_FILE,
     DELETE_FILE,
     END_SELECTION,
@@ -138,6 +139,10 @@ class MainFrameMenuMixin:
             wx.ID_ANY,
             self._menu_label(_("Close File"), CLOSE_FILE),
         )
+        self._close_all_files_item = menu.Append(
+            wx.ID_ANY,
+            self._menu_label(_("Close all files"), CLOSE_ALL_FILES),
+        )
         self._test_speakers_item = menu.Append(
             wx.ID_ANY,
             self._menu_label(_("Test speakers"), TEST_SPEAKERS),
@@ -158,6 +163,7 @@ class MainFrameMenuMixin:
         self._bind_action_item(self._open_file_props_item, OPEN_FILE_PROPERTIES)
         self._bind_action_item(self._open_file_list_item, OPEN_FILE_LIST)
         self._bind_action_item(self._close_file_item, CLOSE_FILE)
+        self._bind_action_item(self._close_all_files_item, CLOSE_ALL_FILES)
         self._bind_action_item(self._test_speakers_item, TEST_SPEAKERS)
         self._bind_action_item(self._settings_item, OPEN_SETTINGS)
         return menu

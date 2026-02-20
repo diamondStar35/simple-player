@@ -110,17 +110,35 @@ def toggle_silence_removal(ctx):
 
 
 def seek_backward(ctx):
-    seconds = _get_seek_step_seconds(ctx)
-    if _seek_within_selection(ctx, -seconds):
-        return
-    ctx.player.seek(-seconds)
+    _seek_by_multiplier(ctx, -1.0)
 
 
 def seek_forward(ctx):
-    seconds = _get_seek_step_seconds(ctx)
-    if _seek_within_selection(ctx, seconds):
-        return
-    ctx.player.seek(seconds)
+    _seek_by_multiplier(ctx, 1.0)
+
+
+def seek_backward_x2(ctx):
+    _seek_by_multiplier(ctx, -2.0)
+
+
+def seek_forward_x2(ctx):
+    _seek_by_multiplier(ctx, 2.0)
+
+
+def seek_backward_x4(ctx):
+    _seek_by_multiplier(ctx, -4.0)
+
+
+def seek_forward_x4(ctx):
+    _seek_by_multiplier(ctx, 4.0)
+
+
+def seek_backward_x8(ctx):
+    _seek_by_multiplier(ctx, -8.0)
+
+
+def seek_forward_x8(ctx):
+    _seek_by_multiplier(ctx, 8.0)
 
 
 def seek_start(ctx):
@@ -352,4 +370,12 @@ def _seek_within_selection(ctx, delta):
     target = max(loop["start"], min(loop["end"], target))
     ctx.player.seek_absolute(target)
     return True
+
+
+def _seek_by_multiplier(ctx, scale):
+    seconds = _get_seek_step_seconds(ctx) * abs(float(scale))
+    signed = seconds if scale >= 0 else -seconds
+    if _seek_within_selection(ctx, signed):
+        return
+    ctx.player.seek(signed)
 

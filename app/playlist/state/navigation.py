@@ -45,6 +45,15 @@ class PlaylistStateNavigationMixin:
         self._pending_start = None
         self._clear_shuffle_order()
 
+    def clear_all(self):
+        self._file_list = []
+        self._current_path = None
+        self._current_index = -1
+        self._pending_start = None
+        self._meta = {}
+        self._clear_marked()
+        self._clear_shuffle_order()
+
     def is_shuffle_enabled(self):
         return self._shuffle_enabled
 

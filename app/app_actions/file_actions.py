@@ -1,4 +1,6 @@
+import concurrent.futures
 import os
+import queue
 import time
 import ctypes
 from ctypes import wintypes
@@ -7,10 +9,10 @@ from gettext import gettext as _
 
 import wx
 
+from core.media_library import collect_audio_files, collect_audio_files_with_progress
 from helpers.clipboard_utils import get_clipboard_paths, set_clipboard_files
 from helpers.file_helpers import (
     is_http_url,
-    open_mode,
     res_clip,
     res_shell,
     set_empty,
@@ -23,6 +25,140 @@ from ui import dialogs
 from youtube.actions import open_yt_link, sync_sel, try_next
 from youtube.link_validator import parse_link
 from youtube.state import clear_ses
+from ui.task_dialogs import BusyDialog
+
+
+def _open_with_mode(ctx, path, start_position=None):
+    mode = ctx.settings.get_open_with_files_mode()
+    if mode == "main_folder":
+        ok = ctx.player.open_file_with_folder(
+            path,
+            recursive=False,
+            start_position=start_position,
+        )
+    elif mode == "main_and_subfolders":
+        ok = _open_with_subfolders_loading(ctx, path, start_position=start_position)
+    else:
+        ok = ctx.player.open_file(path, start_position=start_position)
+    if ok:
+        set_ready(ctx)
+    return bool(ok)
+
+
+def _open_with_subfolders_loading(ctx, path, start_position=None):
+    folder_path = os.path.dirname(path)
+    if not folder_path:
+        return False
+
+    if ctx.frame is None:
+        files = collect_audio_files(folder_path, recursive=True)
+        if not files:
+            return False
+        return bool(
+            ctx.player.open_file_list(
+                files,
+                preferred_path=path,
+                start_position=start_position,
+            )
+        )
+
+    dlg = BusyDialog(ctx.frame, _("Opening files"), _("Loading files from folder and subfolders..."))
+    updates = queue.Queue()
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    future = pool.submit(
+        collect_audio_files_with_progress,
+        folder_path,
+        on_progress=updates.put,
+        should_cancel=lambda: bool(state["cancelled"]),
+    )
+    timer = wx.Timer(dlg)
+    state = {"finished": False, "cancelled": False, "determinate": False}
+
+    def on_tick(_event):
+        if dlg.was_cancelled():
+            state["cancelled"] = True
+
+        while True:
+            try:
+                payload = updates.get_nowait()
+            except queue.Empty:
+                break
+            label, pct = _fmt_recursive_open_progress(payload)
+            if label:
+                dlg.set_label(label)
+            if pct is None:
+                if not state["determinate"]:
+                    dlg.pulse()
+            else:
+                state["determinate"] = True
+                dlg.set_progress(pct)
+
+        if state["cancelled"] and not state["finished"]:
+            state["finished"] = True
+            dlg.EndModal(wx.ID_CANCEL)
+            return
+
+        if not future.done() and not state["determinate"]:
+            dlg.pulse()
+
+        if future.done() and not state["finished"]:
+            state["finished"] = True
+            dlg.EndModal(wx.ID_OK)
+
+    dlg.Bind(wx.EVT_TIMER, on_tick, timer)
+    timer.Start(60)
+    dlg.ShowModal()
+    timer.Stop()
+    dlg.Destroy()
+
+    if state["cancelled"]:
+        pool.shutdown(wait=False, cancel_futures=True)
+        return False
+    if not future.done():
+        pool.shutdown(wait=False, cancel_futures=True)
+        return False
+    try:
+        files = list(future.result() or [])
+    except Exception:
+        pool.shutdown(wait=False, cancel_futures=True)
+        return False
+    pool.shutdown(wait=False, cancel_futures=True)
+    if not files:
+        return False
+    return bool(
+        ctx.player.open_file_list(
+            files,
+            preferred_path=path,
+            start_position=start_position,
+        )
+    )
+
+
+def _fmt_recursive_open_progress(data):
+    payload = data if isinstance(data, dict) else {}
+    phase = str(payload.get("phase") or "").strip().lower()
+    if phase == "count":
+        counted = int(payload.get("counted") or 0)
+        text = _("Counting files... {count}").format(count=counted)
+        return text, None
+
+    total = int(payload.get("total") or 0)
+    processed = int(payload.get("processed") or 0)
+    found = int(payload.get("found") or 0)
+    pct = float(payload.get("pct") or 0.0)
+    pct = max(0.0, min(100.0, pct))
+    if total > 0:
+        text = _(
+            "Opening files... {found} media files found ({done}/{total}) - {pct:.1f}%"
+        ).format(
+            found=found,
+            done=processed,
+            total=total,
+            pct=pct,
+        )
+    else:
+        text = _("Opening files... {found} media files found").format(found=found)
+    return text, pct
 
 
 def open_paths(ctx, raw_paths):
@@ -45,7 +181,7 @@ def open_paths(ctx, raw_paths):
 
     if os.path.isfile(path):
         clear_ses(ctx)
-        if open_mode(ctx, path):
+        if _open_with_mode(ctx, path):
             ctx.settings.set_last_dir(os.path.dirname(path))
             return True
     return False
@@ -59,7 +195,7 @@ def open_file(ctx):
         return
     ctx.settings.set_last_dir(folder or os.path.dirname(path))
     clear_ses(ctx)
-    open_mode(ctx, path)
+    _open_with_mode(ctx, path)
 
 
 def open_folder(ctx):
@@ -252,8 +388,8 @@ def restore_last(ctx):
     if not path or not os.path.isfile(path):
         return
     pos = ctx.settings.get_last_position()
-    if ctx.player.open_file(path, start_position=pos):
-        set_ready(ctx)
+    if _open_with_mode(ctx, path, start_position=pos):
+        return
 
 
 def goto_file(ctx):
@@ -330,6 +466,18 @@ def close_file(ctx):
     ctx.speak(_("File closed."), _("File closed."))
 
 
+def close_all_files(ctx):
+    if not ctx.player.current_path and ctx.player.get_count() <= 0:
+        ctx.speak(_("No file loaded."), _("No file."))
+        return
+    if not ctx.player.close_all_files():
+        ctx.speak(_("Could not close files."), _("Close failed."))
+        return
+    clear_ses(ctx)
+    set_empty(ctx)
+    ctx.speak(_("All files closed."), _("All files closed."))
+
+
 def copy_file(ctx):
     path = ctx.player.current_path
     if not path:
@@ -384,7 +532,7 @@ def paste_files(ctx):
 
         if os.path.isfile(path):
             clear_ses(ctx)
-            if open_mode(ctx, path):
+            if _open_with_mode(ctx, path):
                 ctx.settings.set_last_dir(os.path.dirname(path))
                 return
             ctx.speak(_("Could not open the file from clipboard."), _("Open failed."))
