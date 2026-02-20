@@ -15,6 +15,12 @@ class Action:
 PLAY_PAUSE = "play_pause"
 SEEK_BACKWARD = "seek_backward"
 SEEK_FORWARD = "seek_forward"
+SEEK_BACKWARD_X2 = "seek_backward_x2"
+SEEK_FORWARD_X2 = "seek_forward_x2"
+SEEK_BACKWARD_X4 = "seek_backward_x4"
+SEEK_FORWARD_X4 = "seek_forward_x4"
+SEEK_BACKWARD_X8 = "seek_backward_x8"
+SEEK_FORWARD_X8 = "seek_forward_x8"
 SEEK_START = "seek_start"
 SEEK_END = "seek_end"
 VOLUME_UP = "volume_up"
@@ -38,6 +44,7 @@ OPEN_CONTAINING_FOLDER = "open_containing_folder"
 OPEN_FILE_LIST = "open_file_list"
 OPEN_FILE_PROPERTIES = "open_file_properties"
 CLOSE_FILE = "close_file"
+CLOSE_ALL_FILES = "close_all_files"
 TEST_SPEAKERS = "test_speakers"
 OPEN_SETTINGS = "open_settings"
 GO_TO_FILE = "go_to_file"
@@ -93,6 +100,36 @@ ACTIONS = {
     PLAY_PAUSE: Action(PLAY_PAUSE, "Play/Pause", Shortcut("space")),
     SEEK_BACKWARD: Action(SEEK_BACKWARD, "Seek Backward", Shortcut("left")),
     SEEK_FORWARD: Action(SEEK_FORWARD, "Seek Forward", Shortcut("right")),
+    SEEK_BACKWARD_X2: Action(
+        SEEK_BACKWARD_X2,
+        "Seek Backward x2",
+        Shortcut("left", frozenset({"ctrl"})),
+    ),
+    SEEK_FORWARD_X2: Action(
+        SEEK_FORWARD_X2,
+        "Seek Forward x2",
+        Shortcut("right", frozenset({"ctrl"})),
+    ),
+    SEEK_BACKWARD_X4: Action(
+        SEEK_BACKWARD_X4,
+        "Seek Backward x4",
+        Shortcut("left", frozenset({"ctrl", "shift"})),
+    ),
+    SEEK_FORWARD_X4: Action(
+        SEEK_FORWARD_X4,
+        "Seek Forward x4",
+        Shortcut("right", frozenset({"ctrl", "shift"})),
+    ),
+    SEEK_BACKWARD_X8: Action(
+        SEEK_BACKWARD_X8,
+        "Seek Backward x8",
+        Shortcut("left", frozenset({"shift"})),
+    ),
+    SEEK_FORWARD_X8: Action(
+        SEEK_FORWARD_X8,
+        "Seek Forward x8",
+        Shortcut("right", frozenset({"shift"})),
+    ),
     SEEK_START: Action(SEEK_START, "Seek Start", Shortcut("home")),
     SEEK_END: Action(SEEK_END, "Seek End", Shortcut("end")),
     VOLUME_UP: Action(VOLUME_UP, "Volume Up", Shortcut("up")),
@@ -181,6 +218,11 @@ ACTIONS = {
     ),
     OPEN_FILE_LIST: Action(OPEN_FILE_LIST, "Opened Files", Shortcut("f2")),
     CLOSE_FILE: Action(CLOSE_FILE, "Close File", Shortcut("w", frozenset({"ctrl"}))),
+    CLOSE_ALL_FILES: Action(
+        CLOSE_ALL_FILES,
+        "Close All Files",
+        Shortcut("w", frozenset({"ctrl", "shift"})),
+    ),
     TEST_SPEAKERS: Action(
         TEST_SPEAKERS, "Test Speakers", Shortcut("t", frozenset({"ctrl", "shift"}))
     ),

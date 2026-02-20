@@ -42,7 +42,10 @@ a = Analysis(
     pathex=[str(PROJECT_ROOT)],
     binaries=binaries,
     datas=datas,
-    hiddenimports=[],
+    hiddenimports=[
+        "winsdk.windows.media",
+        "winsdk.windows.media.playback",
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
