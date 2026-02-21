@@ -9,6 +9,7 @@ from gettext import gettext as _
 
 import wx
 
+from config.localization import app_root
 from core.media_library import collect_audio_files, collect_audio_files_with_progress
 from helpers.clipboard_utils import get_clipboard_paths, set_clipboard_files
 from helpers.file_helpers import (
@@ -370,8 +371,7 @@ def open_list(ctx):
 
 
 def spk_test(ctx):
-    root = os.path.dirname(os.path.abspath(__file__))
-    sound = os.path.join(root, "sounds", "speaker_test.wav")
+    sound = os.path.join(app_root(), "sounds", "speaker_test.wav")
     if not os.path.isfile(sound):
         ctx.speak(_("Speaker test file not found."), _("Test file missing."))
         return
