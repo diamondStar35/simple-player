@@ -1,5 +1,5 @@
 ﻿
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\actions.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\actions.py =====
 
 from dataclasses import dataclass
 from typing import Optional
@@ -18,6 +18,12 @@ class Action:
 PLAY_PAUSE = "play_pause"
 SEEK_BACKWARD = "seek_backward"
 SEEK_FORWARD = "seek_forward"
+SEEK_BACKWARD_X2 = "seek_backward_x2"
+SEEK_FORWARD_X2 = "seek_forward_x2"
+SEEK_BACKWARD_X4 = "seek_backward_x4"
+SEEK_FORWARD_X4 = "seek_forward_x4"
+SEEK_BACKWARD_X8 = "seek_backward_x8"
+SEEK_FORWARD_X8 = "seek_forward_x8"
 SEEK_START = "seek_start"
 SEEK_END = "seek_end"
 VOLUME_UP = "volume_up"
@@ -41,6 +47,7 @@ OPEN_CONTAINING_FOLDER = "open_containing_folder"
 OPEN_FILE_LIST = "open_file_list"
 OPEN_FILE_PROPERTIES = "open_file_properties"
 CLOSE_FILE = "close_file"
+CLOSE_ALL_FILES = "close_all_files"
 TEST_SPEAKERS = "test_speakers"
 OPEN_SETTINGS = "open_settings"
 GO_TO_FILE = "go_to_file"
@@ -96,6 +103,36 @@ ACTIONS = {
     PLAY_PAUSE: Action(PLAY_PAUSE, "Play/Pause", Shortcut("space")),
     SEEK_BACKWARD: Action(SEEK_BACKWARD, "Seek Backward", Shortcut("left")),
     SEEK_FORWARD: Action(SEEK_FORWARD, "Seek Forward", Shortcut("right")),
+    SEEK_BACKWARD_X2: Action(
+        SEEK_BACKWARD_X2,
+        "Seek Backward x2",
+        Shortcut("left", frozenset({"ctrl"})),
+    ),
+    SEEK_FORWARD_X2: Action(
+        SEEK_FORWARD_X2,
+        "Seek Forward x2",
+        Shortcut("right", frozenset({"ctrl"})),
+    ),
+    SEEK_BACKWARD_X4: Action(
+        SEEK_BACKWARD_X4,
+        "Seek Backward x4",
+        Shortcut("left", frozenset({"ctrl", "shift"})),
+    ),
+    SEEK_FORWARD_X4: Action(
+        SEEK_FORWARD_X4,
+        "Seek Forward x4",
+        Shortcut("right", frozenset({"ctrl", "shift"})),
+    ),
+    SEEK_BACKWARD_X8: Action(
+        SEEK_BACKWARD_X8,
+        "Seek Backward x8",
+        Shortcut("left", frozenset({"shift"})),
+    ),
+    SEEK_FORWARD_X8: Action(
+        SEEK_FORWARD_X8,
+        "Seek Forward x8",
+        Shortcut("right", frozenset({"shift"})),
+    ),
     SEEK_START: Action(SEEK_START, "Seek Start", Shortcut("home")),
     SEEK_END: Action(SEEK_END, "Seek End", Shortcut("end")),
     VOLUME_UP: Action(VOLUME_UP, "Volume Up", Shortcut("up")),
@@ -184,6 +221,11 @@ ACTIONS = {
     ),
     OPEN_FILE_LIST: Action(OPEN_FILE_LIST, "Opened Files", Shortcut("f2")),
     CLOSE_FILE: Action(CLOSE_FILE, "Close File", Shortcut("w", frozenset({"ctrl"}))),
+    CLOSE_ALL_FILES: Action(
+        CLOSE_ALL_FILES,
+        "Close All Files",
+        Shortcut("w", frozenset({"ctrl", "shift"})),
+    ),
     TEST_SPEAKERS: Action(
         TEST_SPEAKERS, "Test Speakers", Shortcut("t", frozenset({"ctrl", "shift"}))
     ),
@@ -329,7 +371,7 @@ for digit in range(10):
     PERCENT_JUMPS[shift_action_id] = shift_percent
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\app.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\app.py =====
 
 import wx
 import json
@@ -542,7 +584,7 @@ def _log_exc(message):
     traceback.print_exc()
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\SimpleAudioPlayer.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\SimpleAudioPlayer.py =====
 
 import sys
 
@@ -558,7 +600,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\speech.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\speech.py =====
 
 import accessible_output3.outputs
 speaker=accessible_output3.outputs.auto.Auto()
@@ -566,10 +608,10 @@ speaker=accessible_output3.outputs.auto.Auto()
 def speak(text, interrupt=True):
     speaker.speak(text, interrupt=interrupt)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\__init__.py =====
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\app_actions\device_actions.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\app_actions\device_actions.py =====
 
 from gettext import gettext as _
 
@@ -605,9 +647,11 @@ def open_sound_cards(ctx):
                 ctx.speak(_("Could not set sound card."), _("Set failed."))
     dialog.Destroy()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\app_actions\file_actions.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\app_actions\file_actions.py =====
 
+import concurrent.futures
 import os
+import queue
 import time
 import ctypes
 from ctypes import wintypes
@@ -616,10 +660,10 @@ from gettext import gettext as _
 
 import wx
 
+from core.media_library import collect_audio_files, collect_audio_files_with_progress
 from helpers.clipboard_utils import get_clipboard_paths, set_clipboard_files
 from helpers.file_helpers import (
     is_http_url,
-    open_mode,
     res_clip,
     res_shell,
     set_empty,
@@ -632,6 +676,140 @@ from ui import dialogs
 from youtube.actions import open_yt_link, sync_sel, try_next
 from youtube.link_validator import parse_link
 from youtube.state import clear_ses
+from ui.task_dialogs import BusyDialog
+
+
+def _open_with_mode(ctx, path, start_position=None):
+    mode = ctx.settings.get_open_with_files_mode()
+    if mode == "main_folder":
+        ok = ctx.player.open_file_with_folder(
+            path,
+            recursive=False,
+            start_position=start_position,
+        )
+    elif mode == "main_and_subfolders":
+        ok = _open_with_subfolders_loading(ctx, path, start_position=start_position)
+    else:
+        ok = ctx.player.open_file(path, start_position=start_position)
+    if ok:
+        set_ready(ctx)
+    return bool(ok)
+
+
+def _open_with_subfolders_loading(ctx, path, start_position=None):
+    folder_path = os.path.dirname(path)
+    if not folder_path:
+        return False
+
+    if ctx.frame is None:
+        files = collect_audio_files(folder_path, recursive=True)
+        if not files:
+            return False
+        return bool(
+            ctx.player.open_file_list(
+                files,
+                preferred_path=path,
+                start_position=start_position,
+            )
+        )
+
+    dlg = BusyDialog(ctx.frame, _("Opening files"), _("Loading files from folder and subfolders..."))
+    updates = queue.Queue()
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    future = pool.submit(
+        collect_audio_files_with_progress,
+        folder_path,
+        on_progress=updates.put,
+        should_cancel=lambda: bool(state["cancelled"]),
+    )
+    timer = wx.Timer(dlg)
+    state = {"finished": False, "cancelled": False, "determinate": False}
+
+    def on_tick(_event):
+        if dlg.was_cancelled():
+            state["cancelled"] = True
+
+        while True:
+            try:
+                payload = updates.get_nowait()
+            except queue.Empty:
+                break
+            label, pct = _fmt_recursive_open_progress(payload)
+            if label:
+                dlg.set_label(label)
+            if pct is None:
+                if not state["determinate"]:
+                    dlg.pulse()
+            else:
+                state["determinate"] = True
+                dlg.set_progress(pct)
+
+        if state["cancelled"] and not state["finished"]:
+            state["finished"] = True
+            dlg.EndModal(wx.ID_CANCEL)
+            return
+
+        if not future.done() and not state["determinate"]:
+            dlg.pulse()
+
+        if future.done() and not state["finished"]:
+            state["finished"] = True
+            dlg.EndModal(wx.ID_OK)
+
+    dlg.Bind(wx.EVT_TIMER, on_tick, timer)
+    timer.Start(60)
+    dlg.ShowModal()
+    timer.Stop()
+    dlg.Destroy()
+
+    if state["cancelled"]:
+        pool.shutdown(wait=False, cancel_futures=True)
+        return False
+    if not future.done():
+        pool.shutdown(wait=False, cancel_futures=True)
+        return False
+    try:
+        files = list(future.result() or [])
+    except Exception:
+        pool.shutdown(wait=False, cancel_futures=True)
+        return False
+    pool.shutdown(wait=False, cancel_futures=True)
+    if not files:
+        return False
+    return bool(
+        ctx.player.open_file_list(
+            files,
+            preferred_path=path,
+            start_position=start_position,
+        )
+    )
+
+
+def _fmt_recursive_open_progress(data):
+    payload = data if isinstance(data, dict) else {}
+    phase = str(payload.get("phase") or "").strip().lower()
+    if phase == "count":
+        counted = int(payload.get("counted") or 0)
+        text = _("Counting files... {count}").format(count=counted)
+        return text, None
+
+    total = int(payload.get("total") or 0)
+    processed = int(payload.get("processed") or 0)
+    found = int(payload.get("found") or 0)
+    pct = float(payload.get("pct") or 0.0)
+    pct = max(0.0, min(100.0, pct))
+    if total > 0:
+        text = _(
+            "Opening files... {found} media files found ({done}/{total}) - {pct:.1f}%"
+        ).format(
+            found=found,
+            done=processed,
+            total=total,
+            pct=pct,
+        )
+    else:
+        text = _("Opening files... {found} media files found").format(found=found)
+    return text, pct
 
 
 def open_paths(ctx, raw_paths):
@@ -654,7 +832,7 @@ def open_paths(ctx, raw_paths):
 
     if os.path.isfile(path):
         clear_ses(ctx)
-        if open_mode(ctx, path):
+        if _open_with_mode(ctx, path):
             ctx.settings.set_last_dir(os.path.dirname(path))
             return True
     return False
@@ -668,7 +846,7 @@ def open_file(ctx):
         return
     ctx.settings.set_last_dir(folder or os.path.dirname(path))
     clear_ses(ctx)
-    open_mode(ctx, path)
+    _open_with_mode(ctx, path)
 
 
 def open_folder(ctx):
@@ -861,8 +1039,8 @@ def restore_last(ctx):
     if not path or not os.path.isfile(path):
         return
     pos = ctx.settings.get_last_position()
-    if ctx.player.open_file(path, start_position=pos):
-        set_ready(ctx)
+    if _open_with_mode(ctx, path, start_position=pos):
+        return
 
 
 def goto_file(ctx):
@@ -939,6 +1117,18 @@ def close_file(ctx):
     ctx.speak(_("File closed."), _("File closed."))
 
 
+def close_all_files(ctx):
+    if not ctx.player.current_path and ctx.player.get_count() <= 0:
+        ctx.speak(_("No file loaded."), _("No file."))
+        return
+    if not ctx.player.close_all_files():
+        ctx.speak(_("Could not close files."), _("Close failed."))
+        return
+    clear_ses(ctx)
+    set_empty(ctx)
+    ctx.speak(_("All files closed."), _("All files closed."))
+
+
 def copy_file(ctx):
     path = ctx.player.current_path
     if not path:
@@ -993,7 +1183,7 @@ def paste_files(ctx):
 
         if os.path.isfile(path):
             clear_ses(ctx)
-            if open_mode(ctx, path):
+            if _open_with_mode(ctx, path):
                 ctx.settings.set_last_dir(os.path.dirname(path))
                 return
             ctx.speak(_("Could not open the file from clipboard."), _("Open failed."))
@@ -1109,7 +1299,7 @@ def _copy_txt(text):
         clip.Close()
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\app_actions\help_actions.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\app_actions\help_actions.py =====
 
 import os
 from pathlib import Path
@@ -1260,7 +1450,7 @@ def _push_lang(out, text):
         if value and value not in out:
             out.append(value)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\app_actions\marked_file_actions.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\app_actions\marked_file_actions.py =====
 
 import concurrent.futures
 import os
@@ -1580,7 +1770,7 @@ def _refresh_file_loaded_state(ctx):
     ctx.set_playing(has_current)
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\app_actions\playback_actions.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\app_actions\playback_actions.py =====
 
 from gettext import gettext as _
 
@@ -1694,17 +1884,35 @@ def toggle_silence_removal(ctx):
 
 
 def seek_backward(ctx):
-    seconds = _get_seek_step_seconds(ctx)
-    if _seek_within_selection(ctx, -seconds):
-        return
-    ctx.player.seek(-seconds)
+    _seek_by_multiplier(ctx, -1.0)
 
 
 def seek_forward(ctx):
-    seconds = _get_seek_step_seconds(ctx)
-    if _seek_within_selection(ctx, seconds):
-        return
-    ctx.player.seek(seconds)
+    _seek_by_multiplier(ctx, 1.0)
+
+
+def seek_backward_x2(ctx):
+    _seek_by_multiplier(ctx, -2.0)
+
+
+def seek_forward_x2(ctx):
+    _seek_by_multiplier(ctx, 2.0)
+
+
+def seek_backward_x4(ctx):
+    _seek_by_multiplier(ctx, -4.0)
+
+
+def seek_forward_x4(ctx):
+    _seek_by_multiplier(ctx, 4.0)
+
+
+def seek_backward_x8(ctx):
+    _seek_by_multiplier(ctx, -8.0)
+
+
+def seek_forward_x8(ctx):
+    _seek_by_multiplier(ctx, 8.0)
 
 
 def seek_start(ctx):
@@ -1938,11 +2146,19 @@ def _seek_within_selection(ctx, delta):
     return True
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\app_actions\__init__.py =====
+def _seek_by_multiplier(ctx, scale):
+    seconds = _get_seek_step_seconds(ctx) * abs(float(scale))
+    signed = seconds if scale >= 0 else -seconds
+    if _seek_within_selection(ctx, signed):
+        return
+    ctx.player.seek(signed)
+
+
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\app_actions\__init__.py =====
 
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\config\constants.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\config\constants.py =====
 
 APP_NAME = "Simple Audio Player"
 APP_VERSION = "1.0.0"
@@ -1998,7 +2214,7 @@ AUDIO_EXTENSIONS = {
     ".wma",
 }
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\config\file_associations.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\config\file_associations.py =====
 
 import os
 import sys
@@ -2242,7 +2458,7 @@ def _notify_association_change():
         pass
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\config\localization.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\config\localization.py =====
 
 import gettext
 import os
@@ -2364,7 +2580,7 @@ class Localization:
                     continue
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\config\settings_manager.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\config\settings_manager.py =====
 
 import configparser
 import os
@@ -2511,6 +2727,12 @@ class SettingsManager:
     def save(self):
         with open(self._config_path, "w", encoding="utf-8") as handle:
             self._config.write(handle)
+
+    def reset_to_defaults(self):
+        self._config = configparser.ConfigParser(interpolation=None)
+        self._config.read_dict(self._defaults)
+        self._migrate_silence_removal_settings(has_new_silence_section=True)
+        self.save()
 
     def get_volume(self):
         try:
@@ -2958,7 +3180,7 @@ class SettingsManager:
             self._config["global_shortcuts"][action_id] = shortcut_to_config(shortcut)
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\config\shortcuts.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\config\shortcuts.py =====
 
 from dataclasses import dataclass
 from typing import FrozenSet
@@ -3022,7 +3244,7 @@ class ShortcutManager:
         else:
             self._shortcuts[action_id] = shortcut
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\config\shortcut_utils.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\config\shortcut_utils.py =====
 
 from gettext import gettext as _
 
@@ -3218,11 +3440,11 @@ def _modifiers_from_event(event):
     return modifiers
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\config\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\config\__init__.py =====
 
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\action_context.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\action_context.py =====
 
 import time
 
@@ -3278,7 +3500,7 @@ class ActionContext:
     def should_reset_file_info(self):
         return time.time() - self.file_info_last_press > 0.3
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\controller.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\controller.py =====
 
 import os
 import wx
@@ -3326,6 +3548,7 @@ from actions import (
     OPEN_FILE_PROPERTIES,
     OPEN_FOLDER,
     CLOSE_FILE,
+    CLOSE_ALL_FILES,
     TEST_SPEAKERS,
     OPEN_SETTINGS,
     PLAY_PAUSE,
@@ -3333,8 +3556,14 @@ from actions import (
     RENAME_FILE,
     RESET_SPEED,
     SEEK_BACKWARD,
+    SEEK_BACKWARD_X2,
+    SEEK_BACKWARD_X4,
+    SEEK_BACKWARD_X8,
     SEEK_END,
     SEEK_FORWARD,
+    SEEK_FORWARD_X2,
+    SEEK_FORWARD_X4,
+    SEEK_FORWARD_X8,
     SEEK_START,
     SEEK_STEP_0,
     SEEK_STEP_1,
@@ -3363,10 +3592,12 @@ from actions import (
     PASTE_FROM_CLIPBOARD,
     GLOBAL_SHORTCUT_ACTIONS,
 )
+from config.constants import APP_NAME
 from core.action_context import ActionContext
 from app_actions.device_actions import open_sound_cards
 from app_actions.file_actions import (
     close_file,
+    close_all_files,
     copy_file,
     del_file,
     first_file,
@@ -3419,7 +3650,13 @@ from app_actions.playback_actions import (
     reset_speed,
     seek_end,
     seek_backward,
+    seek_backward_x2,
+    seek_backward_x4,
+    seek_backward_x8,
     seek_forward,
+    seek_forward_x2,
+    seek_forward_x4,
+    seek_forward_x8,
     seek_start,
     set_seek_step,
     set_volume_max,
@@ -3449,6 +3686,7 @@ from update.actions import (
     check_updates_on_startup,
     update_youtube_components_now,
 )
+from core.windows_media import WindowsMediaBridge
 
 
 class AppController:
@@ -3456,6 +3694,12 @@ class AppController:
         self._settings = settings
         self._player = Player()
         self._ctx = ActionContext(self._player, self._settings)
+        self._media = WindowsMediaBridge(
+            app_id="SimpleAudioPlayer",
+            app_name=APP_NAME,
+            on_action=self._on_media_action,
+        )
+        self._media_timer = None
         self._shortcuts = ShortcutManager(ACTIONS)
         self._global_shortcuts = ShortcutManager(GLOBAL_SHORTCUT_ACTIONS)
         self._global_keyboard = None
@@ -3463,6 +3707,12 @@ class AppController:
             PLAY_PAUSE: lambda: toggle_play_pause(self._ctx),
             SEEK_BACKWARD: lambda: seek_backward(self._ctx),
             SEEK_FORWARD: lambda: seek_forward(self._ctx),
+            SEEK_BACKWARD_X2: lambda: seek_backward_x2(self._ctx),
+            SEEK_FORWARD_X2: lambda: seek_forward_x2(self._ctx),
+            SEEK_BACKWARD_X4: lambda: seek_backward_x4(self._ctx),
+            SEEK_FORWARD_X4: lambda: seek_forward_x4(self._ctx),
+            SEEK_BACKWARD_X8: lambda: seek_backward_x8(self._ctx),
+            SEEK_FORWARD_X8: lambda: seek_forward_x8(self._ctx),
             SEEK_START: lambda: seek_start(self._ctx),
             SEEK_END: lambda: seek_end(self._ctx),
             VOLUME_UP: lambda: change_volume(self._ctx, self._settings.get_volume_step()),
@@ -3495,6 +3745,7 @@ class AppController:
             OPEN_FILE_PROPERTIES: lambda: open_props(self._ctx),
             OPEN_FILE_LIST: lambda: open_list(self._ctx),
             CLOSE_FILE: lambda: close_file(self._ctx),
+            CLOSE_ALL_FILES: lambda: close_all_files(self._ctx),
             TEST_SPEAKERS: lambda: spk_test(self._ctx),
             OPEN_SETTINGS: self.open_settings_dialog,
             GO_TO_FILE: lambda: goto_file(self._ctx),
@@ -3564,6 +3815,7 @@ class AppController:
         self._ctx.set_frame(frame)
         video_handle = frame.get_video_window_handle()
         self._player.set_render_window(video_handle)
+        self._ensure_media_timer_started(frame)
         self._ensure_global_shortcuts_started()
         self._ctx.set_file_loaded(False)
         self._sync_frame_toggles()
@@ -3630,6 +3882,8 @@ class AppController:
             if self._global_keyboard is not None:
                 self._global_keyboard.stop()
                 self._global_keyboard = None
+            if self._media_timer is not None and self._media_timer.IsRunning():
+                self._media_timer.Stop()
             self._settings.set_volume(self._player.get_volume())
             self._settings.set_speed(self._player.get_speed())
             if self._settings.get_remember_position():
@@ -3639,6 +3893,7 @@ class AppController:
                     self._settings.set_last_file_position(path, position)
             self._settings.save()
         finally:
+            self._media.close()
             self._player.shutdown()
 
     def handle_action(self, action_id):
@@ -3660,6 +3915,7 @@ class AppController:
     def _sync_frame_toggles(self):
         frame = self._ctx.frame
         if frame is None:
+            self._sync_media_state()
             return
         frame.set_shuffle_checked(self._player.is_shuffle_enabled())
         frame.set_repeat_file_checked(self._player.is_repeat_file_enabled())
@@ -3671,6 +3927,7 @@ class AppController:
         frame.set_file_properties_enabled(is_local)
         frame.set_local_file_actions_enabled(is_local)
         frame.set_video_options_enabled(has_video(self._ctx))
+        self._sync_media_state()
 
     def _load_shortcuts_from_settings(self):
         self._shortcuts = ShortcutManager(ACTIONS)
@@ -3699,8 +3956,51 @@ class AppController:
     def _on_global_action(self, action_id):
         self.handle_action(action_id)
 
+    def _on_media_action(self, action_id):
+        self.handle_action(action_id)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\keyboard_handler.py =====
+    def _ensure_media_timer_started(self, frame):
+        if self._media_timer is None:
+            self._media_timer = wx.Timer(frame)
+            frame.Bind(wx.EVT_TIMER, self._on_media_timer, self._media_timer)
+        if not self._media_timer.IsRunning():
+            self._media_timer.Start(1000)
+
+    def _on_media_timer(self, _event):
+        self._sync_media_state()
+
+    def _sync_media_state(self):
+        if not self._media.is_enabled:
+            return
+        path = str(self._player.current_path or "").strip()
+        has_media = bool(path)
+        title = str(self._player.current_title or "").strip()
+        if not title:
+            title = path
+        is_playing = has_media and (not self._player.is_paused())
+        duration = self._player.get_duration() if has_media else None
+        position = self._player.get_elapsed() if has_media else None
+
+        count = int(self._player.get_count() or 0)
+        idx = self._player.get_current_index()
+        can_previous = bool(has_media and idx is not None and int(idx) > 0)
+        can_next = bool(
+            has_media and idx is not None and count > 0 and int(idx) < (count - 1)
+        )
+
+        self._media.update(
+            has_media=has_media,
+            is_playing=is_playing,
+            title=title,
+            artist=APP_NAME,
+            duration=duration,
+            position=position,
+            can_next=can_next,
+            can_previous=can_previous,
+        )
+
+
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\keyboard_handler.py =====
 
 from pynput import keyboard
 
@@ -3813,7 +4113,7 @@ def _iter_shortcuts(value):
     return []
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\media_library.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\media_library.py =====
 
 import os
 
@@ -3847,7 +4147,104 @@ def collect_audio_files(folder_path, recursive=False):
     return entries
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\mpv_engine.py =====
+def collect_audio_files_with_progress(folder_path, on_progress=None, should_cancel=None):
+    def is_cancelled():
+        if should_cancel is None:
+            return False
+        try:
+            return bool(should_cancel())
+        except Exception:
+            return False
+
+    def emit(data):
+        if on_progress is None:
+            return
+        try:
+            on_progress(dict(data))
+        except Exception:
+            pass
+
+    total_files = 0
+    counted = 0
+    try:
+        for _root, _dirs, files in os.walk(folder_path):
+            if is_cancelled():
+                return None
+            count = len(files)
+            total_files += count
+            counted += count
+            if counted % 500 == 0:
+                emit(
+                    {
+                        "phase": "count",
+                        "counted": counted,
+                        "total": 0,
+                        "processed": 0,
+                        "found": 0,
+                        "pct": 0.0,
+                    }
+                )
+    except OSError:
+        return []
+
+    emit(
+        {
+            "phase": "count",
+            "counted": counted,
+            "total": total_files,
+            "processed": 0,
+            "found": 0,
+            "pct": 0.0,
+        }
+    )
+    if total_files <= 0:
+        return []
+
+    entries = []
+    processed = 0
+    try:
+        for root, _dirs, files in os.walk(folder_path):
+            if is_cancelled():
+                return None
+            for name in files:
+                if is_cancelled():
+                    return None
+                processed += 1
+                _, ext = os.path.splitext(name)
+                if ext.lower() in AUDIO_EXTENSIONS:
+                    entries.append(os.path.join(root, name))
+                if processed == total_files or processed % 200 == 0:
+                    pct = (processed / total_files) * 100.0
+                    emit(
+                        {
+                            "phase": "collect",
+                            "counted": total_files,
+                            "total": total_files,
+                            "processed": processed,
+                            "found": len(entries),
+                            "pct": pct,
+                        }
+                    )
+    except OSError:
+        return []
+
+    entries.sort(key=lambda p: p.lower())
+    emit(
+        {
+            "phase": "collect",
+            "counted": total_files,
+            "total": total_files,
+            "processed": total_files,
+            "found": len(entries),
+            "pct": 100.0,
+        }
+    )
+    return entries
+
+
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\mpv_engine.py =====
+
+import os
 
 import mpv
 
@@ -3863,6 +4260,8 @@ AUDIO_MONO_FILTER_GRAPH = "aformat=channel_layouts=mono"
 BASE_VOLUME = 100.0
 HIGH_VOLUME_PREAMP = max(1.0, VOLUME_MAX / BASE_VOLUME)
 NETWORK_TIMEOUT_SECONDS = 10
+MEDIA_CONTROLS_OPTION = "media-controls"
+MEDIA_KEYS_OPTION = "input-media-keys"
 
 
 class MpvEngine:
@@ -3875,6 +4274,7 @@ class MpvEngine:
         self._audio_mono_enabled = False
         self._requested_volume = BASE_VOLUME
         self._apply_network_defaults()
+        self._apply_windows_media_defaults()
         self._register_event_handlers()
 
     def _create_core(self, window_id=None):
@@ -3902,6 +4302,24 @@ class MpvEngine:
             pass
         try:
             self._mpv.command("set", "network-timeout", str(NETWORK_TIMEOUT_SECONDS))
+        except Exception:
+            pass
+
+    def _apply_windows_media_defaults(self):
+        # libmpv defaults this to "no"; enable Windows media session integration.
+        if os.name != "nt":
+            return
+        self._set_option_safe(MEDIA_CONTROLS_OPTION, "yes")
+        self._set_option_safe(MEDIA_KEYS_OPTION, "yes")
+
+    def _set_option_safe(self, name, value):
+        try:
+            self._mpv[str(name)] = value
+            return
+        except Exception:
+            pass
+        try:
+            self._mpv.command("set", str(name), str(value))
         except Exception:
             pass
 
@@ -3936,6 +4354,7 @@ class MpvEngine:
             self._mpv = old_mpv
             return None
         self._apply_network_defaults()
+        self._apply_windows_media_defaults()
         self.set_audio_normalize_filter(self._audio_normalize_enabled)
         self.set_mono_filter(self._audio_mono_enabled)
         self._register_event_handlers()
@@ -3968,6 +4387,7 @@ class MpvEngine:
             self.set_audio_device(audio_device)
 
     def load_file(self, path, start_position=None, paused=False):
+        self._ensure_audio_device_available()
         try:
             if start_position is not None:
                 self._mpv.loadfile(path, "replace", start=start_position)
@@ -3986,10 +4406,13 @@ class MpvEngine:
 
     def toggle_pause(self):
         paused = bool(self._mpv.pause)
+        if paused:
+            self._ensure_audio_device_available()
         self._mpv.pause = not paused
         return not self._mpv.pause
 
     def play(self):
+        self._ensure_audio_device_available()
         self._mpv.pause = False
 
     def pause(self):
@@ -4081,10 +4504,11 @@ class MpvEngine:
         return results
 
     def set_audio_device(self, device_name):
-        if not device_name:
-            return False
+        target = str(device_name or "").strip() or "auto"
+        if target != "auto" and not self._is_audio_device_available(target):
+            return self._fallback_audio_device()
         try:
-            self._mpv.audio_device = device_name
+            self._mpv.audio_device = target
             return True
         except Exception:
             return False
@@ -4197,6 +4621,7 @@ class MpvEngine:
 
     def play_test_sound(self, path):
         self.stop_test_sound()
+        self._ensure_audio_device_available()
         options = {
             "vid": "no",
             "vo": "null",
@@ -4238,12 +4663,291 @@ class MpvEngine:
         except Exception:
             pass
 
+    def _ensure_audio_device_available(self):
+        current = str(self.get_audio_device() or "").strip()
+        if self._is_audio_device_available(current):
+            return True
+        return self._fallback_audio_device()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\__init__.py =====
+    def _is_audio_device_available(self, device_name):
+        target = str(device_name or "").strip()
+        if not target or target == "auto":
+            return True
+        for name, _desc in self.get_audio_devices():
+            if str(name or "").strip() == target:
+                return True
+        return False
+
+    def _fallback_audio_device(self):
+        try:
+            self._mpv.audio_device = "auto"
+            return True
+        except Exception:
+            return False
+
+
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\windows_media.py =====
+
+import ctypes
+import os
+from datetime import timedelta
+
+from actions import (
+    NEXT_TRACK,
+    PLAY_PAUSE,
+    PREVIOUS_TRACK,
+    SEEK_BACKWARD,
+    SEEK_FORWARD,
+)
+
+try:
+    from winsdk.windows.media import (
+        MediaPlaybackStatus,
+        MediaPlaybackType,
+        SystemMediaTransportControlsButton,
+        SystemMediaTransportControlsTimelineProperties,
+    )
+    from winsdk.windows.media.playback import MediaPlayer
+
+    _WINSDK_OK = True
+except Exception:
+    _WINSDK_OK = False
+
+
+class WindowsMediaBridge:
+    def __init__(self, app_id, app_name, on_action=None):
+        self._app_name = str(app_name or "").strip() or "Simple Audio Player"
+        self._on_action = on_action
+        self._player = None
+        self._smtc = None
+        self._button_token = None
+        self._enabled = False
+        self._last_title = ""
+        self._last_artist = ""
+
+        if os.name != "nt":
+            return
+        _set_app_id(app_id)
+        if not _WINSDK_OK:
+            return
+        self._init_session()
+
+    @property
+    def is_enabled(self):
+        return bool(self._enabled)
+
+    def close(self):
+        smtc = self._smtc
+        self._smtc = None
+        token = self._button_token
+        self._button_token = None
+        if smtc is not None and token is not None:
+            try:
+                smtc.remove_button_pressed(token)
+            except Exception:
+                pass
+
+        player = self._player
+        self._player = None
+        if player is not None:
+            try:
+                player.close()
+            except Exception:
+                pass
+        self._enabled = False
+
+    def update(
+        self,
+        *,
+        has_media,
+        is_playing,
+        title="",
+        artist="",
+        duration=None,
+        position=None,
+        can_next=False,
+        can_previous=False,
+    ):
+        if not self._enabled or self._smtc is None:
+            return
+
+        smtc = self._smtc
+        has_media = bool(has_media)
+        is_playing = bool(is_playing) if has_media else False
+
+        smtc.is_play_enabled = has_media
+        smtc.is_pause_enabled = has_media
+        smtc.is_next_enabled = has_media and bool(can_next)
+        smtc.is_previous_enabled = has_media and bool(can_previous)
+        smtc.is_fast_forward_enabled = has_media
+        smtc.is_rewind_enabled = has_media
+        smtc.is_stop_enabled = has_media
+
+        if not has_media:
+            smtc.playback_status = MediaPlaybackStatus.CLOSED
+            self._clear_display()
+            return
+
+        smtc.playback_status = (
+            MediaPlaybackStatus.PLAYING if is_playing else MediaPlaybackStatus.PAUSED
+        )
+        self._update_display(title=title, artist=artist)
+        self._update_timeline(duration=duration, position=position)
+
+    def _init_session(self):
+        try:
+            player = MediaPlayer()
+        except Exception:
+            return
+
+        self._player = player
+        try:
+            self._player.command_manager.is_enabled = False
+        except Exception:
+            pass
+
+        try:
+            smtc = self._player.system_media_transport_controls
+        except Exception:
+            self.close()
+            return
+
+        self._smtc = smtc
+        try:
+            smtc.is_enabled = True
+        except Exception:
+            self.close()
+            return
+
+        smtc.is_play_enabled = True
+        smtc.is_pause_enabled = True
+        smtc.is_next_enabled = True
+        smtc.is_previous_enabled = True
+        smtc.is_fast_forward_enabled = True
+        smtc.is_rewind_enabled = True
+        smtc.is_stop_enabled = True
+
+        if callable(self._on_action):
+            try:
+                self._button_token = smtc.add_button_pressed(self._on_button_pressed)
+            except Exception:
+                self._button_token = None
+
+        self._enabled = True
+
+    def _on_button_pressed(self, _sender, args):
+        action_id = None
+        try:
+            button = args.button
+            if button in (
+                SystemMediaTransportControlsButton.PLAY,
+                SystemMediaTransportControlsButton.PAUSE,
+            ):
+                action_id = PLAY_PAUSE
+            elif button == SystemMediaTransportControlsButton.NEXT:
+                action_id = NEXT_TRACK
+            elif button == SystemMediaTransportControlsButton.PREVIOUS:
+                action_id = PREVIOUS_TRACK
+            elif button == SystemMediaTransportControlsButton.FAST_FORWARD:
+                action_id = SEEK_FORWARD
+            elif button == SystemMediaTransportControlsButton.REWIND:
+                action_id = SEEK_BACKWARD
+        except Exception:
+            action_id = None
+
+        if action_id and callable(self._on_action):
+            try:
+                self._on_action(action_id)
+            except Exception:
+                pass
+
+    def _update_display(self, *, title, artist):
+        if self._smtc is None:
+            return
+        title_text = str(title or "").strip() or self._app_name
+        artist_text = str(artist or "").strip() or self._app_name
+        if title_text == self._last_title and artist_text == self._last_artist:
+            return
+        self._last_title = title_text
+        self._last_artist = artist_text
+        try:
+            updater = self._smtc.display_updater
+            updater.type = MediaPlaybackType.MUSIC
+            props = updater.music_properties
+            props.title = title_text
+            props.artist = artist_text
+            updater.update()
+        except Exception:
+            pass
+
+    def _clear_display(self):
+        if self._smtc is None:
+            return
+        if not self._last_title and not self._last_artist:
+            return
+        self._last_title = ""
+        self._last_artist = ""
+        try:
+            updater = self._smtc.display_updater
+            updater.type = MediaPlaybackType.UNKNOWN
+            props = updater.music_properties
+            props.title = ""
+            props.artist = ""
+            updater.update()
+        except Exception:
+            pass
+
+    def _update_timeline(self, *, duration, position):
+        if self._smtc is None:
+            return
+        duration_val = _safe_seconds(duration)
+        position_val = _safe_seconds(position)
+        if duration_val is None or duration_val <= 0:
+            return
+        if position_val is None:
+            position_val = 0.0
+        position_val = max(0.0, min(duration_val, position_val))
+        try:
+            timeline = SystemMediaTransportControlsTimelineProperties()
+            start = timedelta(seconds=0)
+            pos = timedelta(seconds=position_val)
+            end = timedelta(seconds=duration_val)
+            timeline.start_time = start
+            timeline.min_seek_time = start
+            timeline.position = pos
+            timeline.max_seek_time = end
+            timeline.end_time = end
+            self._smtc.update_timeline_properties(timeline)
+        except Exception:
+            pass
+
+
+def _safe_seconds(value):
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    if number < 0:
+        return 0.0
+    return number
+
+
+def _set_app_id(app_id):
+    if os.name != "nt":
+        return
+    value = str(app_id or "").strip()
+    if not value:
+        return
+    try:
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(value)
+    except Exception:
+        pass
+
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\__init__.py =====
 
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\player\files.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\player\files.py =====
 
 import os
 
@@ -4288,6 +4992,13 @@ class PlayerFilesMixin:
         if current_changed:
             self._load_current()
         return True, self._state.current_path
+
+    def close_all_files(self):
+        if not self.current_path and not self._state.get_count():
+            return False
+        self._stop_core_only()
+        self._state.clear_all()
+        return True
 
     def rename_current_file(self, new_name):
         path = self.current_path
@@ -4344,7 +5055,7 @@ class PlayerFilesMixin:
     def _stop_core_only(self):
         self._engine.stop()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\player\filters.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\player\filters.py =====
 
 from config.settings_manager import SILENCE_REMOVAL_DEFAULTS
 
@@ -4468,7 +5179,7 @@ class PlayerFiltersMixin:
             text = SILENCE_REMOVAL_DEFAULTS["threshold"]
         return f"{text}dB"
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\player\lifecycle.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\player\lifecycle.py =====
 
 import mpv
 
@@ -4499,7 +5210,7 @@ class PlayerLifecycleMixin:
             self._state.set_pending_start(0)
             self._load_current()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\player\load.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\player\load.py =====
 
 class PlayerLoadMixin:
     def open_file(self, path, start_position=None):
@@ -4517,6 +5228,15 @@ class PlayerLoadMixin:
     def open_file_with_folder(self, path, recursive=False, start_position=None):
         if not self._state.open_file_with_folder(
             path, recursive=recursive, start_position=start_position
+        ):
+            return False
+        return self._load_current()
+
+    def open_file_list(self, files, preferred_path=None, start_position=None):
+        if not self._state.open_file_list(
+            files,
+            preferred_path=preferred_path,
+            start_position=start_position,
         ):
             return False
         return self._load_current()
@@ -4576,7 +5296,7 @@ class PlayerLoadMixin:
             self._apply_active_audio_filters()
         return loaded
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\player\playback.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\player\playback.py =====
 
 class PlayerPlaybackMixin:
     def toggle_pause(self):
@@ -4587,6 +5307,9 @@ class PlayerPlaybackMixin:
 
     def pause(self):
         self._engine.pause()
+
+    def is_paused(self):
+        return self._engine.is_paused()
 
     def seek(self, seconds):
         self._engine.seek_relative(seconds)
@@ -4664,7 +5387,7 @@ class PlayerPlaybackMixin:
     def play_test_speakers_sound(self, path):
         return self._engine.play_test_sound(path)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\player\state.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\player\state.py =====
 
 class PlayerStateMixin:
     def is_shuffle_enabled(self):
@@ -4726,7 +5449,7 @@ class PlayerStateMixin:
             return False
         return self._load_current()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\player\window.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\player\window.py =====
 
 class PlayerWindowMixin:
     @property
@@ -4782,7 +5505,7 @@ class PlayerWindowMixin:
                 self.pause()
         return True
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\core\player\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\core\player\__init__.py =====
 
 from core.mpv_engine import MpvEngine
 from core.player.files import PlayerFilesMixin
@@ -4815,7 +5538,7 @@ class Player(
         self._silence_removal_options = {}
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\helpers\clipboard_utils.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\helpers\clipboard_utils.py =====
 
 import os
 from urllib.parse import unquote, urlparse
@@ -4900,7 +5623,7 @@ def _parse_file_uri_or_path(value):
         return os.path.normpath(candidate)
     return os.path.normpath(value)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\helpers\file_helpers.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\helpers\file_helpers.py =====
 
 import os
 from urllib.parse import urlparse
@@ -4971,7 +5694,7 @@ def show_name(path):
         return f"{host}/{tail}" if tail else host
     return os.path.basename(text) or text
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\helpers\utils.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\helpers\utils.py =====
 
 import math
 
@@ -4997,11 +5720,11 @@ def format_time(seconds):
     secs = total % 60
     return f"{hours:02d}:{minutes:02d}:{secs:02d}"
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\helpers\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\helpers\__init__.py =====
 
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\info.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\info.py =====
 
 import concurrent.futures
 import os
@@ -5402,7 +6125,7 @@ def _fmt_size(num_bytes):
     return f"{val:.2f} {units[idx]}"
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\state.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\state.py =====
 
 import random
 
@@ -5437,11 +6160,11 @@ class PlaylistState(
 
         self._marked_keys = set()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\__init__.py =====
 
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\state\core.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\state\core.py =====
 
 class PlaylistStateCoreMixin:
     @property
@@ -5477,7 +6200,7 @@ class PlaylistStateCoreMixin:
     def get_current_index(self):
         return self._current_index
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\state\load.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\state\load.py =====
 
 import os
 
@@ -5485,6 +6208,31 @@ from core.media_library import collect_audio_files
 
 
 class PlaylistStateLoadMixin:
+    def open_file_list(self, files, preferred_path=None, start_position=None):
+        entries = list(files or [])
+        if not entries:
+            return False
+
+        selected = None
+        if preferred_path and preferred_path in entries:
+            selected = preferred_path
+
+        if selected is None:
+            index = 0
+            pending = None
+        else:
+            index = entries.index(selected)
+            pending = start_position
+
+        self._file_list = entries
+        self._current_index = index
+        self._current_path = self._file_list[index]
+        self._pending_start = pending
+        self._meta = {}
+        self._clear_marked()
+        self._rebuild_shuffle_order()
+        return True
+
     def open_file(self, path, start_position=None, title=None, source=None):
         if not path:
             return False
@@ -5533,26 +6281,12 @@ class PlaylistStateLoadMixin:
         files = collect_audio_files(folder_path, recursive=recursive)
         if not files:
             return False
-
         selected = None
         if preferred_path and preferred_path in files:
             selected = preferred_path
         elif preserve_current and self._current_path and self._current_path in files:
             selected = self._current_path
-
-        if selected is None:
-            index = 0
-        else:
-            index = files.index(selected)
-
-        self._file_list = files
-        self._current_index = index
-        self._current_path = self._file_list[index]
-        self._pending_start = None
-        self._meta = {}
-        self._clear_marked()
-        self._rebuild_shuffle_order()
-        return True
+        return self.open_file_list(files, preferred_path=selected, start_position=None)
 
     def open_file_with_folder(self, path, recursive=False, start_position=None):
         if not path:
@@ -5561,24 +6295,9 @@ class PlaylistStateLoadMixin:
         files = collect_audio_files(folder_path, recursive=recursive)
         if not files:
             return False
+        return self.open_file_list(files, preferred_path=path, start_position=start_position)
 
-        if path in files:
-            index = files.index(path)
-            pending = start_position
-        else:
-            index = 0
-            pending = None
-
-        self._file_list = files
-        self._current_index = index
-        self._current_path = self._file_list[index]
-        self._pending_start = pending
-        self._meta = {}
-        self._clear_marked()
-        self._rebuild_shuffle_order()
-        return True
-
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\state\marks.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\state\marks.py =====
 
 class PlaylistStateMarksMixin:
     def toggle_mark_current(self):
@@ -5630,7 +6349,7 @@ class PlaylistStateMarksMixin:
     def _clear_marked(self):
         self._marked_keys.clear()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\state\meta.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\state\meta.py =====
 
 import os
 
@@ -5671,7 +6390,7 @@ class PlaylistStateMetaMixin:
             return text
         return os.path.normcase(os.path.abspath(text))
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\state\mutations.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\state\mutations.py =====
 
 class PlaylistStateMutationsMixin:
     def remove_paths(self, paths):
@@ -5767,7 +6486,7 @@ class PlaylistStateMutationsMixin:
         self._sync_shuffle_position_to_current()
         return True
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\state\navigation.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\state\navigation.py =====
 
 class PlaylistStateNavigationMixin:
     def next_track(self, use_shuffle=True):
@@ -5814,6 +6533,15 @@ class PlaylistStateNavigationMixin:
         self._current_path = None
         self._current_index = -1
         self._pending_start = None
+        self._clear_shuffle_order()
+
+    def clear_all(self):
+        self._file_list = []
+        self._current_path = None
+        self._current_index = -1
+        self._pending_start = None
+        self._meta = {}
+        self._clear_marked()
         self._clear_shuffle_order()
 
     def is_shuffle_enabled(self):
@@ -5931,7 +6659,7 @@ class PlaylistStateNavigationMixin:
         self._shuffle_order = []
         self._shuffle_position = -1
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\playlist\state\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\playlist\state\__init__.py =====
 
 import random
 
@@ -5966,7 +6694,7 @@ class PlaylistState(
 
         self._marked_keys = set()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\scripts\update_pot.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\scripts\update_pot.py =====
 
 import argparse
 import os
@@ -6050,7 +6778,7 @@ def main():
 if __name__ == "__main__":
     raise SystemExit(main())
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\accelerators.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\accelerators.py =====
 
 import wx
 
@@ -6144,7 +6872,7 @@ def _modifiers(modifiers):
     return flags
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\audio_settings.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\audio_settings.py =====
 
 import wx
 from gettext import gettext as _
@@ -6315,7 +7043,7 @@ class AudioSettings(wx.ScrolledWindow):
             "Disable it to keep the original channel layout."
         )
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\custom_controls.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\custom_controls.py =====
 
 import wx
 
@@ -6373,7 +7101,7 @@ class CustomSlider(wx.Slider):
         self.SetValue(new_value)
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\dialogs.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\dialogs.py =====
 
 import wx
 from gettext import gettext as _
@@ -6497,7 +7225,7 @@ class PlaylistInfoDialog(TextInfoDialog):
     def __init__(self, parent, info_text):
         super().__init__(parent, _("Playlist Info"), info_text, close_label=_("Close"))
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\help_dialogs.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\help_dialogs.py =====
 
 from gettext import gettext as _
 
@@ -6612,7 +7340,7 @@ class AboutDialog(wx.Dialog):
             return
         event.Skip()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\main_frame.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\main_frame.py =====
 
 import wx
 from gettext import gettext as _
@@ -6693,13 +7421,13 @@ class MainFrame(MainFrameMenuMixin, MainFrameStateMixin, MainFrameEventsMixin, w
     def get_video_window_handle(self):
         return int(self.GetHandle())
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\settings_dialog.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\settings_dialog.py =====
 
 from ui.prefs.dialog import SettingsDialog
 
 __all__ = ["SettingsDialog"]
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\shortcut_settings.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\shortcut_settings.py =====
 
 import wx
 from gettext import gettext as _
@@ -7092,7 +7820,7 @@ class ShortcutSettings(wx.Panel):
         self._refresh_list()
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\silence_removal.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\silence_removal.py =====
 
 import wx
 from gettext import gettext as _
@@ -7146,6 +7874,7 @@ ADVANCED_TEXT_FIELDS = [
         _("Smoothing window used by silence detection (default: 0.02)."),
     ),
 ]
+ADVANCED_TEXT_LABELS = {key: label for key, label, _hint in ADVANCED_TEXT_FIELDS}
 
 DETECTION_HINT = _(
     "How silence is detected. Peak reacts faster to speech transients (default). "
@@ -7290,6 +8019,59 @@ class SilenceRemovalSettings(wx.ScrolledWindow):
         self._settings.set_silence_removal_options(silence_options)
         self._settings.set_silence_removal_advanced(advanced)
 
+    def validate_inputs(self):
+        min_duration = self._min_duration_field.GetValue().strip()
+        if min_duration:
+            ok, parsed = self._parse_float(min_duration)
+            if not ok or parsed < 0:
+                self._min_duration_field.SetFocus()
+                return _("Minimum silence duration must be a non-negative number.")
+
+        threshold = self._threshold_field.GetValue().strip()
+        if threshold:
+            ok, _parsed = self._parse_float(threshold)
+            if not ok:
+                self._threshold_field.SetFocus()
+                return _("Silence threshold must be a valid number.")
+
+        if not self._advanced_checkbox.GetValue():
+            return ""
+
+        for key, _label, _hint in ADVANCED_TEXT_FIELDS:
+            control = self._advanced_controls.get(key)
+            if control is None:
+                continue
+            text = control.GetValue().strip()
+            if not text:
+                continue
+
+            if key in ("start_periods", "stop_periods"):
+                ok, parsed = self._parse_int(text)
+                if not ok:
+                    control.SetFocus()
+                    return _("{field} must be an integer value.").format(
+                        field=ADVANCED_TEXT_LABELS.get(key, key)
+                    )
+                if key == "start_periods" and parsed < 0:
+                    control.SetFocus()
+                    return _("{field} must be zero or greater.").format(
+                        field=ADVANCED_TEXT_LABELS.get(key, key)
+                    )
+                if key == "stop_periods" and parsed < -1:
+                    control.SetFocus()
+                    return _("{field} must be -1 or greater.").format(
+                        field=ADVANCED_TEXT_LABELS.get(key, key)
+                    )
+                continue
+
+            ok, parsed = self._parse_float(text)
+            if not ok or parsed < 0:
+                control.SetFocus()
+                return _("{field} must be a non-negative number.").format(
+                    field=ADVANCED_TEXT_LABELS.get(key, key)
+                )
+        return ""
+
     def refresh_from_settings(self):
         silence_options = self._settings.get_silence_removal_options()
         self._min_duration_field.SetValue(self._initial_minimum_duration(silence_options))
@@ -7404,8 +8186,20 @@ class SilenceRemovalSettings(wx.ScrolledWindow):
             )
         return _("Silence removal setting. Enter a value and press OK to save.")
 
+    def _parse_float(self, text):
+        try:
+            return True, float(str(text).strip())
+        except (TypeError, ValueError):
+            return False, 0.0
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\sound_cards_dialog.py =====
+    def _parse_int(self, text):
+        try:
+            return True, int(str(text).strip())
+        except (TypeError, ValueError):
+            return False, 0
+
+
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\sound_cards_dialog.py =====
 
 import wx
 from gettext import gettext as _
@@ -7440,7 +8234,7 @@ class SoundCardDialog(wx.Dialog):
     def get_selection(self):
         return self._combo.GetSelection()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\task_dialogs.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\task_dialogs.py =====
 
 import wx
 from gettext import gettext as _
@@ -7564,7 +8358,7 @@ class BusyDialog(wx.Dialog):
 TaskDlg = TaskDialog
 BusyDlg = BusyDialog
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\update_dialogs.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\update_dialogs.py =====
 
 import wx
 from gettext import gettext as _
@@ -7615,7 +8409,7 @@ class AppUpdateDialog(wx.Dialog):
         yes.Bind(wx.EVT_BUTTON, lambda _e: self.EndModal(wx.ID_YES))
         no.Bind(wx.EVT_BUTTON, lambda _e: self.EndModal(wx.ID_NO))
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\yt_dialogs.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\yt_dialogs.py =====
 
 import wx
 from gettext import gettext as _
@@ -7890,10 +8684,10 @@ class ResultsDlg(wx.Dialog):
 class PlaylistDlg(ResultsDlg):
     pass
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\__init__.py =====
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\mainwin\events.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\mainwin\events.py =====
 
 import wx
 import traceback
@@ -7944,7 +8738,7 @@ class MainFrameEventsMixin:
                 return
         event.Skip()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\mainwin\menu.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\mainwin\menu.py =====
 
 import wx
 from gettext import gettext as _
@@ -7954,6 +8748,7 @@ from actions import (
     CLEAR_SELECTION,
     CLEAR_MARKED_FILES,
     CLOSE_FILE,
+    CLOSE_ALL_FILES,
     COPY_CURRENT_FILE,
     DELETE_FILE,
     END_SELECTION,
@@ -8086,6 +8881,10 @@ class MainFrameMenuMixin:
             wx.ID_ANY,
             self._menu_label(_("Close File"), CLOSE_FILE),
         )
+        self._close_all_files_item = menu.Append(
+            wx.ID_ANY,
+            self._menu_label(_("Close all files"), CLOSE_ALL_FILES),
+        )
         self._test_speakers_item = menu.Append(
             wx.ID_ANY,
             self._menu_label(_("Test speakers"), TEST_SPEAKERS),
@@ -8106,6 +8905,7 @@ class MainFrameMenuMixin:
         self._bind_action_item(self._open_file_props_item, OPEN_FILE_PROPERTIES)
         self._bind_action_item(self._open_file_list_item, OPEN_FILE_LIST)
         self._bind_action_item(self._close_file_item, CLOSE_FILE)
+        self._bind_action_item(self._close_all_files_item, CLOSE_ALL_FILES)
         self._bind_action_item(self._test_speakers_item, TEST_SPEAKERS)
         self._bind_action_item(self._settings_item, OPEN_SETTINGS)
         return menu
@@ -8410,7 +9210,7 @@ class MainFrameMenuMixin:
         return text
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\mainwin\state.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\mainwin\state.py =====
 
 import wx
 from gettext import gettext as _
@@ -8418,6 +9218,7 @@ from gettext import gettext as _
 from actions import (
     CHECK_APP_UPDATES,
     CLOSE_FILE,
+    CLOSE_ALL_FILES,
     OPEN_ABOUT,
     OPEN_CHANGES,
     OPEN_CONTAINING_FOLDER,
@@ -8452,6 +9253,7 @@ class MainFrameStateMixin:
             OPEN_FILE_PROPERTIES: self._open_file_props_item.GetId(),
             OPEN_FILE_LIST: self._open_file_list_item.GetId(),
             CLOSE_FILE: self._close_file_item.GetId(),
+            CLOSE_ALL_FILES: self._close_all_files_item.GetId(),
             OPEN_SETTINGS: self._settings_item.GetId(),
             OPEN_USER_GUIDE: self._user_guide_item.GetId(),
             OPEN_CHANGES: self._changes_item.GetId(),
@@ -8532,6 +9334,7 @@ class MainFrameStateMixin:
             self._open_file_props_item,
             self._open_file_list_item,
             self._close_file_item,
+            self._close_all_files_item,
             self._copy_current_item,
             self._mark_current_item,
             self._mark_all_item,
@@ -8578,11 +9381,11 @@ class MainFrameStateMixin:
         )
         self.set_video_options_enabled(self._video_opts_enabled if enabled else False)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\mainwin\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\mainwin\__init__.py =====
 
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\prefs\backup.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\prefs\backup.py =====
 
 import os
 import shutil
@@ -8592,24 +9395,28 @@ from gettext import gettext as _
 
 
 class BackupRestorePanel(wx.Panel):
-    def __init__(self, parent, settings, on_import=None):
+    def __init__(self, parent, settings, on_import=None, on_reset=None):
         super().__init__(parent)
         self._settings = settings
         self._on_import = on_import
+        self._on_reset = on_reset
 
         self._export_button = wx.Button(self, label=_("Export settings"))
         self._import_button = wx.Button(self, label=_("Import settings"))
+        self._reset_button = wx.Button(self, label=_("Reset settings"))
         self._open_folder_button = wx.Button(
             self, label=_("Open user settings folder")
         )
 
         self._export_button.Bind(wx.EVT_BUTTON, self._on_export)
         self._import_button.Bind(wx.EVT_BUTTON, self._on_import_clicked)
+        self._reset_button.Bind(wx.EVT_BUTTON, self._on_reset_clicked)
         self._open_folder_button.Bind(wx.EVT_BUTTON, self._on_open_folder)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self._export_button, 0, wx.ALL | wx.EXPAND, 8)
         sizer.Add(self._import_button, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, 8)
+        sizer.Add(self._reset_button, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, 8)
         sizer.Add(self._open_folder_button, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, 8)
         self.SetSizer(sizer)
 
@@ -8631,6 +9438,10 @@ class BackupRestorePanel(wx.Panel):
             if control is self._open_folder_button:
                 return _(
                     "Open user settings folder opens the folder where this app stores its configuration."
+                )
+            if control is self._reset_button:
+                return _(
+                    "Reset settings restores all preferences to default values."
                 )
             if control is self:
                 break
@@ -8711,6 +9522,37 @@ class BackupRestorePanel(wx.Panel):
             parent=self,
         )
 
+    def _on_reset_clicked(self, _event):
+        result = wx.MessageBox(
+            _(
+                "Are you sure you want to reset all settings to defaults?\n"
+                "This action cannot be undone."
+            ),
+            _("Reset settings"),
+            wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING,
+            parent=self,
+        )
+        if result != wx.YES:
+            return
+        try:
+            self._settings.reset_to_defaults()
+            if self._on_reset is not None:
+                self._on_reset()
+        except Exception as exc:
+            wx.MessageBox(
+                _("Could not reset settings.\n{error}").format(error=str(exc)),
+                _("Reset error"),
+                wx.OK | wx.ICON_ERROR,
+                parent=self,
+            )
+            return
+        wx.MessageBox(
+            _("Settings were reset to defaults."),
+            _("Reset settings"),
+            wx.OK | wx.ICON_INFORMATION,
+            parent=self,
+        )
+
     def _on_open_folder(self, _event):
         folder = os.path.dirname(self._settings.config_path)
         try:
@@ -8726,7 +9568,7 @@ class BackupRestorePanel(wx.Panel):
                 parent=self,
             )
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\prefs\dialog.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\prefs\dialog.py =====
 
 import wx
 from gettext import gettext as _
@@ -8928,7 +9770,7 @@ class SettingsDialog(wx.Dialog):
                 except Exception:
                     continue
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\prefs\general.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\prefs\general.py =====
 
 import wx
 from gettext import gettext as _
@@ -9192,7 +10034,7 @@ class GeneralSettingsPanel(wx.Panel):
             idx = 0
         self._lang_choice.SetSelection(idx)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\prefs\youtube.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\prefs\youtube.py =====
 
 import wx
 from gettext import gettext as _
@@ -9345,11 +10187,11 @@ class YouTubeSettingsPanel(wx.Panel):
         if self._on_download_components is not None:
             self._on_download_components(self, channel)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\ui\prefs\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\ui\prefs\__init__.py =====
 
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\update\actions.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\update\actions.py =====
 
 import concurrent.futures
 import os
@@ -9718,7 +10560,7 @@ def _fmt_yt_status(data):
     pct = float(data.get("pct", 0.0))
     return f"{title}\nTotal size: {size}\nDownloaded: {got}\nPercentage: {pct:.2f}%"
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\update\service.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\update\service.py =====
 
 import json
 import os
@@ -9906,11 +10748,11 @@ def fmt_bytes(value):
         return f"{int(size)} {units[idx]}"
     return f"{size:.2f} {units[idx]}"
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\update\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\update\__init__.py =====
 
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\updater\main.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\updater\main.py =====
 
 import ctypes
 import os
@@ -10149,7 +10991,7 @@ if __name__ == "__main__":
     app = UpdaterApp(False)
     app.MainLoop()
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\actions.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\actions.py =====
 
 from .flow import on_esc, open_yt, open_yt_link, search_yt, sync_sel, try_next
 from .video import copy_link, dl_now, has_video, show_desc
@@ -10167,7 +11009,7 @@ __all__ = [
     "copy_link",
 ]
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\components.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\components.py =====
 
 import json
 import os
@@ -10535,7 +11377,7 @@ def _clean_version(text):
         line = line[len("yt-dlp") :].strip(" :-")
     return line
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\download.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\download.py =====
 
 import os
 import re
@@ -10663,7 +11505,7 @@ def _stop(proc):
     except Exception:
         pass
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\flow.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\flow.py =====
 
 import concurrent.futures
 
@@ -11275,7 +12117,7 @@ def _show_error(ctx, message, title):
     )
 
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\link_validator.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\link_validator.py =====
 
 from dataclasses import dataclass
 from urllib.parse import parse_qs, urlparse
@@ -11385,7 +12227,7 @@ def _host(value):
         host = host.split(":", 1)[0]
     return host.rstrip(".")
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\resolver.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\resolver.py =====
 
 import json
 import os
@@ -11778,7 +12620,7 @@ def _with_diag(base, diag):
         return msg
     return _("{base}\nDetails: {details}").format(base=msg, details=detail)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\results.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\results.py =====
 
 import wx
 from gettext import gettext as _
@@ -11956,7 +12798,7 @@ def _more_done(ctx, ses, dlg, busy, future, prefetch, prefetch_n):
     start = len(ses["items"]) - len(new_items)
     prefetch(ses, start, prefetch_n)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\search.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\search.py =====
 
 import asyncio
 from dataclasses import dataclass, field
@@ -12082,7 +12924,7 @@ def _desc(parts):
                 out.append(text)
     return " ".join(out)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\startup.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\startup.py =====
 
 import concurrent.futures
 import queue
@@ -12243,7 +13085,7 @@ def _show_install_error(parent, err):
         message = f"{message}\n{err}"
     wx.MessageBox(message, _("YouTube"), wx.OK | wx.ICON_ERROR, parent=parent)
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\state.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\state.py =====
 
 from urllib.parse import urlparse
 import traceback
@@ -12349,7 +13191,7 @@ def is_yt(url):
         host = ""
     return "youtube.com" in host or "youtu.be" in host
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\task_ui.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\task_ui.py =====
 
 import concurrent.futures
 import queue
@@ -12478,7 +13320,7 @@ def run_task(parent, title, job, fmt_up=None, simple=False):
         can=bool(state["can"]),
     )
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\ui_utils.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\ui_utils.py =====
 
 import os
 from gettext import gettext as _
@@ -12660,7 +13502,7 @@ def res_label(ses):
         return _("Playlist videos")
     return _("Videos")
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\video.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\video.py =====
 
 from gettext import gettext as _
 
@@ -12774,6 +13616,6 @@ def _cur_meta(ctx, need_desc):
             ctx.yt_now = {"url": url, "title": title, "desc": desc}
     return {"url": url, "title": title, "desc": desc}
 
-# ===== C:\Users\Administrator\Documents\GitHub\Simple Audio Player\youtube\__init__.py =====
+# ===== C:\Users\Administrator\Documents\GitHub\simple-player\app\youtube\__init__.py =====
 
 
