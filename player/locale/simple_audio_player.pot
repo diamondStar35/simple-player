@@ -8,23 +8,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-19 10:36+0200\n"
+"POT-Creation-Date: 2026-02-22 08:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ui/mainwin/menu.py:210
+#: ui/mainwin/menu.py:216
 msgid "&Copy to folder..."
 msgstr ""
 
-#: ui/mainwin/menu.py:222
+#: ui/mainwin/menu.py:228
 msgid "&Delete"
 msgstr ""
 
-#: ui/mainwin/menu.py:214
+#: ui/mainwin/menu.py:220
 msgid "&Move to folder..."
 msgstr ""
 
@@ -73,6 +74,7 @@ msgid "60 minutes"
 msgstr ""
 
 #: ui/help_dialogs.py:67
+#, python-brace-format
 msgid ""
 "A lightweight, highly accessible media player designed for keyboard "
 "efficiency and seamless screen reader compatibility. Whether playing local "
@@ -83,15 +85,16 @@ msgid ""
 msgstr ""
 
 #: ui/update_dialogs.py:13
+#, python-brace-format
 msgid ""
 "A new version of {app_name} has been detected. Would you like to update?"
 msgstr ""
 
-#: ui/mainwin/menu.py:305
+#: ui/mainwin/menu.py:311
 msgid "A-B loop"
 msgstr ""
 
-#: ui/help_dialogs.py:62 ui/mainwin/menu.py:440
+#: ui/help_dialogs.py:62 ui/mainwin/menu.py:446
 msgid "About"
 msgstr ""
 
@@ -99,7 +102,7 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: ui/mainwin/menu.py:86
+#: ui/mainwin/menu.py:87
 msgid "Actions for marked files"
 msgstr ""
 
@@ -113,6 +116,10 @@ msgstr ""
 
 #: app_actions/playback_actions.py:56
 msgid "Advanced mode"
+msgstr ""
+
+#: app_actions/file_actions.py:478
+msgid "All files closed."
 msgstr ""
 
 #: app_actions/marked_file_actions.py:41
@@ -141,6 +148,12 @@ msgstr ""
 msgid "Application update"
 msgstr ""
 
+#: ui/prefs/backup.py:139
+msgid ""
+"Are you sure you want to reset all settings to defaults?\n"
+"This action cannot be undone."
+msgstr ""
+
 #: ui/prefs/youtube.py:26
 msgid "Ask every time"
 msgstr ""
@@ -163,7 +176,7 @@ msgstr ""
 msgid "Backup and restore"
 msgstr ""
 
-#: ui/prefs/backup.py:53
+#: ui/prefs/backup.py:61
 msgid ""
 "Backup and restore settings page. Use Export settings, Import settings, or "
 "Open user settings folder."
@@ -177,7 +190,7 @@ msgstr ""
 msgid "Beginner mode"
 msgstr ""
 
-#: ui/mainwin/menu.py:318
+#: ui/mainwin/menu.py:324
 msgid "Beginning"
 msgstr ""
 
@@ -206,7 +219,7 @@ msgstr ""
 msgid "Canceled."
 msgstr ""
 
-#: app_actions/file_actions.py:401
+#: app_actions/file_actions.py:549
 msgid "Cannot open clipboard data."
 msgstr ""
 
@@ -218,7 +231,7 @@ msgstr ""
 msgid "Channel links are not supported here."
 msgstr ""
 
-#: ui/mainwin/menu.py:430
+#: ui/mainwin/menu.py:436
 msgid "Check for app updates"
 msgstr ""
 
@@ -236,27 +249,28 @@ msgstr ""
 msgid "Checking for app updates"
 msgstr ""
 
-#: ui/mainwin/menu.py:303
+#: ui/mainwin/menu.py:309
 msgid "Clear A-B loop"
 msgstr ""
 
-#: ui/mainwin/menu.py:194
+#: ui/mainwin/menu.py:200
 msgid "Clear Marked Files"
 msgstr ""
 
-#: app_actions/file_actions.py:347
+#: app_actions/file_actions.py:495
 msgid "Clipboard does not contain files or folders."
 msgstr ""
 
-#: app_actions/file_actions.py:401
+#: app_actions/file_actions.py:549
 msgid "Clipboard does not contain openable files or folders."
 msgstr ""
 
-#: app_actions/file_actions.py:347
+#: app_actions/file_actions.py:495
 msgid "Clipboard empty."
 msgstr ""
 
-#: app_actions/file_actions.py:397
+#: app_actions/file_actions.py:545
+#, python-brace-format
 msgid "Clipboard path could not be resolved: {path}"
 msgstr ""
 
@@ -264,15 +278,19 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: ui/mainwin/menu.py:139
+#: ui/mainwin/menu.py:140
 msgid "Close File"
 msgstr ""
 
-#: app_actions/file_actions.py:324
+#: ui/mainwin/menu.py:144
+msgid "Close all files"
+msgstr ""
+
+#: app_actions/file_actions.py:460 app_actions/file_actions.py:474
 msgid "Close failed."
 msgstr ""
 
-#: app_actions/file_actions.py:418 app_actions/marked_file_actions.py:89
+#: app_actions/file_actions.py:566 app_actions/marked_file_actions.py:89
 msgid "Confirm Delete"
 msgstr ""
 
@@ -280,26 +298,25 @@ msgstr ""
 msgid "Confirm Reset"
 msgstr ""
 
-#: ui/help_dialogs.py:15 ui/mainwin/menu.py:424
+#: ui/help_dialogs.py:15 ui/mainwin/menu.py:430
 msgid "Contact me"
 msgstr ""
 
-#: ui/mainwin/menu.py:358
+#: ui/mainwin/menu.py:364
 msgid "Control the clicks movement value"
 msgstr ""
 
-#: app_actions/file_actions.py:339 app_actions/file_actions.py:483
-#: app_actions/marked_file_actions.py:76
-#: app_actions/marked_file_actions.py:266 youtube/results.py:59
-#: youtube/video.py:45
+#: app_actions/file_actions.py:487 app_actions/file_actions.py:631
+#: app_actions/marked_file_actions.py:76 app_actions/marked_file_actions.py:266
+#: youtube/results.py:59 youtube/video.py:45
 msgid "Copied."
 msgstr ""
 
-#: ui/mainwin/menu.py:177
+#: ui/mainwin/menu.py:183
 msgid "Copy"
 msgstr ""
 
-#: app_actions/file_actions.py:341 app_actions/file_actions.py:485
+#: app_actions/file_actions.py:489 app_actions/file_actions.py:633
 #: app_actions/marked_file_actions.py:78 youtube/results.py:61
 #: youtube/video.py:47
 msgid "Copy failed."
@@ -309,11 +326,11 @@ msgstr ""
 msgid "Copy link\tCtrl+C"
 msgstr ""
 
-#: ui/mainwin/menu.py:218
+#: ui/mainwin/menu.py:224
 msgid "Copy to &clipboard"
 msgstr ""
 
-#: ui/mainwin/menu.py:399
+#: ui/mainwin/menu.py:405
 msgid "Copy video link"
 msgstr ""
 
@@ -329,7 +346,11 @@ msgstr ""
 msgid "Could not check for updates."
 msgstr ""
 
-#: app_actions/file_actions.py:324
+#: app_actions/file_actions.py:474
+msgid "Could not close files."
+msgstr ""
+
+#: app_actions/file_actions.py:460
 msgid "Could not close the file."
 msgstr ""
 
@@ -345,7 +366,7 @@ msgstr ""
 msgid "Could not delete marked files."
 msgstr ""
 
-#: app_actions/file_actions.py:426
+#: app_actions/file_actions.py:574
 msgid "Could not delete the file."
 msgstr ""
 
@@ -353,17 +374,20 @@ msgstr ""
 msgid "Could not download update."
 msgstr ""
 
-#: ui/prefs/backup.py:79
+#: ui/prefs/backup.py:87
+#, python-brace-format
 msgid ""
 "Could not export settings.\n"
 "{error}"
 msgstr ""
 
 #: app_actions/help_actions.py:60
+#, python-brace-format
 msgid "Could not find the file {name}."
 msgstr ""
 
-#: ui/prefs/backup.py:115
+#: ui/prefs/backup.py:123
+#, python-brace-format
 msgid ""
 "Could not import settings.\n"
 "{error}"
@@ -385,15 +409,16 @@ msgstr ""
 msgid "Could not open browser."
 msgstr ""
 
-#: app_actions/file_actions.py:140 app_actions/file_actions.py:144
+#: app_actions/file_actions.py:277 app_actions/file_actions.py:281
 msgid "Could not open file properties."
 msgstr ""
 
-#: app_actions/file_actions.py:141
+#: app_actions/file_actions.py:278
+#, python-brace-format
 msgid "Could not open file properties: {error}"
 msgstr ""
 
-#: app_actions/file_actions.py:390
+#: app_actions/file_actions.py:538
 msgid "Could not open the file from clipboard."
 msgstr ""
 
@@ -401,19 +426,19 @@ msgstr ""
 msgid "Could not open the file."
 msgstr ""
 
-#: app_actions/file_actions.py:118
+#: app_actions/file_actions.py:255
 msgid "Could not open the folder."
 msgstr ""
 
-#: app_actions/file_actions.py:363
+#: app_actions/file_actions.py:511
 msgid "Could not open the link from clipboard."
 msgstr ""
 
-#: app_actions/file_actions.py:98 app_actions/help_actions.py:74
+#: app_actions/file_actions.py:235 app_actions/help_actions.py:74
 msgid "Could not open the link."
 msgstr ""
 
-#: ui/prefs/backup.py:137
+#: ui/prefs/backup.py:176
 msgid "Could not open the settings folder."
 msgstr ""
 
@@ -430,13 +455,21 @@ msgid "Could not read video details."
 msgstr ""
 
 #: ui/prefs/general.py:232
+#, python-brace-format
 msgid ""
 "Could not register file extensions.\n"
 "{error}"
 msgstr ""
 
-#: app_actions/file_actions.py:459
+#: app_actions/file_actions.py:607
 msgid "Could not rename the file."
+msgstr ""
+
+#: ui/prefs/backup.py:154
+#, python-brace-format
+msgid ""
+"Could not reset settings.\n"
+"{error}"
 msgstr ""
 
 #: youtube/flow.py:388
@@ -456,6 +489,7 @@ msgid "Could not start the updater."
 msgstr ""
 
 #: ui/prefs/general.py:249
+#, python-brace-format
 msgid ""
 "Could not unregister file extensions.\n"
 "{error}"
@@ -465,7 +499,12 @@ msgstr ""
 msgid "Could not update yt-dlp."
 msgstr ""
 
-#: app_actions/file_actions.py:339
+#: app_actions/file_actions.py:143
+#, python-brace-format
+msgid "Counting files... {count}"
+msgstr ""
+
+#: app_actions/file_actions.py:487
 msgid "Current file copied to clipboard."
 msgstr ""
 
@@ -484,15 +523,16 @@ msgstr ""
 msgid "Custom value"
 msgstr ""
 
-#: ui/mainwin/menu.py:251
+#: ui/mainwin/menu.py:257
 msgid "Decrease Speed"
 msgstr ""
 
-#: config/shortcut_utils.py:41 ui/mainwin/menu.py:173
+#: config/shortcut_utils.py:41 ui/mainwin/menu.py:179
 msgid "Delete"
 msgstr ""
 
-#: app_actions/file_actions.py:417
+#: app_actions/file_actions.py:565
+#, python-brace-format
 msgid "Delete '{name}'?"
 msgstr ""
 
@@ -501,35 +541,38 @@ msgstr ""
 msgid "Delete Complete"
 msgstr ""
 
-#: app_actions/file_actions.py:426 app_actions/marked_file_actions.py:157
+#: app_actions/file_actions.py:574 app_actions/marked_file_actions.py:157
 msgid "Delete failed."
 msgstr ""
 
-#: app_actions/file_actions.py:411
+#: app_actions/file_actions.py:559
 msgid "Delete is available only for local files."
 msgstr ""
 
 #: app_actions/marked_file_actions.py:88
+#, python-brace-format
 msgid "Delete {count} marked files?"
 msgstr ""
 
 #: app_actions/marked_file_actions.py:139
+#, python-brace-format
 msgid "Deleted {count} marked files."
 msgstr ""
 
 #: app_actions/marked_file_actions.py:147
+#, python-brace-format
 msgid "Deleted {deleted} files. Failed to delete {failed} files."
 msgstr ""
 
-#: app_actions/file_actions.py:432 app_actions/marked_file_actions.py:144
+#: app_actions/file_actions.py:580 app_actions/marked_file_actions.py:144
 msgid "Deleted."
 msgstr ""
 
-#: ui/silence_removal.py:125
+#: ui/silence_removal.py:126
 msgid "Detection mode"
 msgstr ""
 
-#: ui/silence_removal.py:305
+#: ui/silence_removal.py:359
 msgid ""
 "Detection mode for silence analysis. Peak reacts quickly to speech "
 "transients. RMS is smoother."
@@ -539,7 +582,7 @@ msgstr ""
 msgid "Detection window size (seconds)"
 msgstr ""
 
-#: ui/silence_removal.py:300
+#: ui/silence_removal.py:354
 msgid "Detection window size in seconds. Default is 0.02."
 msgstr ""
 
@@ -577,7 +620,7 @@ msgstr ""
 msgid "Download failed."
 msgstr ""
 
-#: ui/mainwin/menu.py:391
+#: ui/mainwin/menu.py:397
 msgid "Download..."
 msgstr ""
 
@@ -597,7 +640,7 @@ msgstr ""
 msgid "Downloading update package..."
 msgstr ""
 
-#: ui/mainwin/menu.py:84
+#: ui/mainwin/menu.py:85
 msgid "Edit"
 msgstr ""
 
@@ -609,11 +652,12 @@ msgstr ""
 msgid "Edit Secondary Shortcut"
 msgstr ""
 
-#: app_actions/playback_actions.py:170
+#: app_actions/playback_actions.py:188
 msgid "Elapsed time: "
 msgstr ""
 
 #: playlist/info.py:224
+#, python-brace-format
 msgid "Elapsed: {value}"
 msgstr ""
 
@@ -632,23 +676,25 @@ msgid ""
 "Disable it to use raw output without this processing."
 msgstr ""
 
-#: ui/mainwin/menu.py:287
+#: ui/mainwin/menu.py:293
 msgid "Enable silence removal filter"
 msgstr ""
 
-#: config/shortcut_utils.py:40 ui/mainwin/menu.py:322
+#: config/shortcut_utils.py:40 ui/mainwin/menu.py:328
 msgid "End"
 msgstr ""
 
-#: app_actions/playback_actions.py:266
+#: app_actions/playback_actions.py:284
 msgid "End selection must be after start."
 msgstr ""
 
-#: app_actions/playback_actions.py:274
+#: app_actions/playback_actions.py:292
+#, python-brace-format
 msgid "End selection: {time}"
 msgstr ""
 
-#: app_actions/playback_actions.py:275
+#: app_actions/playback_actions.py:293
+#, python-brace-format
 msgid "End {time}"
 msgstr ""
 
@@ -660,15 +706,16 @@ msgstr ""
 msgid "Enter a YouTube video or playlist link."
 msgstr ""
 
-#: app_actions/file_actions.py:268
+#: app_actions/file_actions.py:404
+#, python-brace-format
 msgid "Enter file number (1-{count})"
 msgstr ""
 
-#: app_actions/file_actions.py:83
+#: app_actions/file_actions.py:220
 msgid "Enter link to play."
 msgstr ""
 
-#: app_actions/file_actions.py:449
+#: app_actions/file_actions.py:597
 msgid "Enter new name for the file."
 msgstr ""
 
@@ -676,26 +723,26 @@ msgstr ""
 msgid "Enter search text."
 msgstr ""
 
-#: app_actions/file_actions.py:99 app_actions/file_actions.py:364
+#: app_actions/file_actions.py:236 app_actions/file_actions.py:512
 #: app_actions/help_actions.py:61 update/actions.py:88 update/actions.py:134
 #: update/actions.py:140 youtube/flow.py:48 youtube/flow.py:61
 #: youtube/flow.py:320 youtube/flow.py:605
 msgid "Error"
 msgstr ""
 
-#: ui/mainwin/menu.py:150
+#: ui/mainwin/menu.py:155
 msgid "Exit"
 msgstr ""
 
-#: ui/prefs/backup.py:80
+#: ui/prefs/backup.py:88
 msgid "Export error"
 msgstr ""
 
-#: ui/prefs/backup.py:14 ui/prefs/backup.py:66 ui/prefs/backup.py:87
+#: ui/prefs/backup.py:15 ui/prefs/backup.py:74 ui/prefs/backup.py:95
 msgid "Export settings"
 msgstr ""
 
-#: ui/prefs/backup.py:39
+#: ui/prefs/backup.py:43
 msgid "Export settings creates a copy of the current settings file."
 msgstr ""
 
@@ -711,7 +758,7 @@ msgstr ""
 msgid "Fetching stream URL..."
 msgstr ""
 
-#: ui/mainwin/menu.py:83
+#: ui/mainwin/menu.py:84
 msgid "File"
 msgstr ""
 
@@ -719,11 +766,11 @@ msgstr ""
 msgid "File added to marked files."
 msgstr ""
 
-#: app_actions/file_actions.py:330
+#: app_actions/file_actions.py:466
 msgid "File closed."
 msgstr ""
 
-#: app_actions/file_actions.py:432
+#: app_actions/file_actions.py:580
 msgid "File deleted."
 msgstr ""
 
@@ -735,23 +782,23 @@ msgstr ""
 msgid "File extensions unregistered successfully."
 msgstr ""
 
-#: app_actions/file_actions.py:280
+#: app_actions/file_actions.py:416
 msgid "File number out of range."
 msgstr ""
 
-#: app_actions/file_actions.py:483
+#: app_actions/file_actions.py:631
 msgid "File path copied to clipboard."
 msgstr ""
 
-#: app_actions/file_actions.py:128
+#: app_actions/file_actions.py:265
 msgid "File properties are available only for local files."
 msgstr ""
 
-#: app_actions/file_actions.py:133
+#: app_actions/file_actions.py:270
 msgid "File properties are not supported on this platform."
 msgstr ""
 
-#: ui/mainwin/menu.py:131
+#: ui/mainwin/menu.py:132
 msgid "File properties..."
 msgstr ""
 
@@ -759,7 +806,7 @@ msgstr ""
 msgid "File removed from marked files."
 msgstr ""
 
-#: app_actions/file_actions.py:457
+#: app_actions/file_actions.py:605
 msgid "File renamed."
 msgstr ""
 
@@ -767,11 +814,11 @@ msgstr ""
 msgid "Filter failed."
 msgstr ""
 
-#: ui/mainwin/menu.py:270
+#: ui/mainwin/menu.py:276
 msgid "First File"
 msgstr ""
 
-#: ui/main_frame.py:41 ui/mainwin/menu.py:314
+#: ui/main_frame.py:41 ui/mainwin/menu.py:320
 msgid "Forward"
 msgstr ""
 
@@ -793,11 +840,11 @@ msgstr ""
 msgid "Global shortcuts"
 msgstr ""
 
-#: app_actions/file_actions.py:269
+#: app_actions/file_actions.py:405
 msgid "Go To File"
 msgstr ""
 
-#: ui/mainwin/menu.py:90
+#: ui/mainwin/menu.py:91
 msgid "Help"
 msgstr ""
 
@@ -813,30 +860,30 @@ msgstr ""
 msgid "How many silent chunks to remove from the beginning."
 msgstr ""
 
-#: ui/silence_removal.py:55
+#: ui/silence_removal.py:56
 msgid ""
 "How silence is detected. Peak reacts faster to speech transients (default). "
 "RMS is smoother and less sensitive to short spikes."
 msgstr ""
 
-#: ui/prefs/backup.py:69 ui/prefs/backup.py:101
+#: ui/prefs/backup.py:77 ui/prefs/backup.py:109
 msgid "INI files (*.ini)|*.ini|All files (*.*)|*.*"
 msgstr ""
 
-#: ui/prefs/backup.py:116
+#: ui/prefs/backup.py:124
 msgid "Import error"
 msgstr ""
 
-#: ui/prefs/backup.py:15 ui/prefs/backup.py:98 ui/prefs/backup.py:123
+#: ui/prefs/backup.py:16 ui/prefs/backup.py:106 ui/prefs/backup.py:131
 msgid "Import settings"
 msgstr ""
 
-#: ui/prefs/backup.py:43
+#: ui/prefs/backup.py:47
 msgid ""
 "Import settings replaces current settings with a selected settings file."
 msgstr ""
 
-#: ui/mainwin/menu.py:247
+#: ui/mainwin/menu.py:253
 msgid "Increase Speed"
 msgstr ""
 
@@ -860,15 +907,15 @@ msgstr ""
 msgid "Invalid download folder."
 msgstr ""
 
-#: app_actions/playback_actions.py:266
+#: app_actions/playback_actions.py:284
 msgid "Invalid end."
 msgstr ""
 
-#: app_actions/file_actions.py:276
+#: app_actions/file_actions.py:412
 msgid "Invalid file number."
 msgstr ""
 
-#: app_actions/file_actions.py:89 youtube/flow.py:66
+#: app_actions/file_actions.py:226 youtube/flow.py:66
 msgid "Invalid link"
 msgstr ""
 
@@ -876,15 +923,15 @@ msgstr ""
 msgid "Invalid link."
 msgstr ""
 
-#: app_actions/file_actions.py:276
+#: app_actions/file_actions.py:412
 msgid "Invalid number."
 msgstr ""
 
-#: app_actions/file_actions.py:398
+#: app_actions/file_actions.py:546
 msgid "Invalid path in clipboard."
 msgstr ""
 
-#: ui/mainwin/menu.py:334
+#: ui/mainwin/menu.py:340
 msgid "Jump to Percentage"
 msgstr ""
 
@@ -900,7 +947,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: ui/mainwin/menu.py:274
+#: ui/mainwin/menu.py:280
 msgid "Last File"
 msgstr ""
 
@@ -912,7 +959,7 @@ msgstr ""
 msgid "Leading silent parts to trim"
 msgstr ""
 
-#: ui/silence_removal.py:273
+#: ui/silence_removal.py:327
 msgid ""
 "Leading silent parts to trim. This controls how many silent chunks are "
 "removed from the beginning. Typical value is 1."
@@ -940,6 +987,10 @@ msgstr ""
 
 #: youtube/resolver.py:135
 msgid "Loading YouTube stream..."
+msgstr ""
+
+#: app_actions/file_actions.py:66
+msgid "Loading files from folder and subfolders..."
 msgstr ""
 
 #: youtube/results.py:140
@@ -978,11 +1029,11 @@ msgstr ""
 msgid "Low"
 msgstr ""
 
-#: ui/mainwin/menu.py:190
+#: ui/mainwin/menu.py:196
 msgid "Mark All Files"
 msgstr ""
 
-#: ui/mainwin/menu.py:186
+#: ui/mainwin/menu.py:192
 msgid "Mark Current File"
 msgstr ""
 
@@ -1022,7 +1073,7 @@ msgstr ""
 msgid "Minimum inner silence length (seconds)"
 msgstr ""
 
-#: ui/silence_removal.py:290
+#: ui/silence_removal.py:344
 msgid ""
 "Minimum inner silence length in seconds. Only silence in the middle or end "
 "at least this long is removed."
@@ -1032,13 +1083,13 @@ msgstr ""
 msgid "Minimum leading silence length (seconds)"
 msgstr ""
 
-#: ui/silence_removal.py:279
+#: ui/silence_removal.py:333
 msgid ""
 "Minimum leading silence length in seconds. Only leading silence at least "
 "this long is removed. Default is 0.2."
 msgstr ""
 
-#: ui/silence_removal.py:81
+#: ui/silence_removal.py:82
 msgid "Minimum silence duration (seconds)"
 msgstr ""
 
@@ -1048,11 +1099,15 @@ msgid ""
 "Default is 0.5."
 msgstr ""
 
-#: ui/silence_removal.py:254
+#: ui/silence_removal.py:308
 msgid ""
 "Minimum silence duration in seconds. Silence shorter than this value is "
 "kept. Increase it to preserve short pauses. Decrease it to trim more "
 "aggressively."
+msgstr ""
+
+#: ui/silence_removal.py:204
+msgid "Minimum silence duration must be a non-negative number."
 msgstr ""
 
 #: youtube/flow.py:130
@@ -1071,7 +1126,7 @@ msgstr ""
 msgid "Navigate to channel\tCtrl+N"
 msgstr ""
 
-#: ui/main_frame.py:42 ui/mainwin/menu.py:266
+#: ui/main_frame.py:42 ui/mainwin/menu.py:272
 msgid "Next"
 msgstr ""
 
@@ -1087,11 +1142,11 @@ msgstr ""
 msgid "No YouTube video."
 msgstr ""
 
-#: app_actions/file_actions.py:75 app_actions/file_actions.py:379
+#: app_actions/file_actions.py:212 app_actions/file_actions.py:527
 msgid "No audio files found in that folder."
 msgstr ""
 
-#: app_actions/file_actions.py:75 app_actions/file_actions.py:379
+#: app_actions/file_actions.py:212 app_actions/file_actions.py:527
 msgid "No audio files."
 msgstr ""
 
@@ -1111,45 +1166,45 @@ msgstr ""
 msgid "No devices."
 msgstr ""
 
-#: app_actions/file_actions.py:109 app_actions/file_actions.py:113
-#: app_actions/file_actions.py:124 app_actions/file_actions.py:213
-#: app_actions/file_actions.py:320 app_actions/file_actions.py:336
-#: app_actions/file_actions.py:407 app_actions/file_actions.py:438
-#: app_actions/file_actions.py:466 app_actions/marked_file_actions.py:27
-#: app_actions/marked_file_actions.py:37 app_actions/playback_actions.py:41
-#: app_actions/playback_actions.py:64 app_actions/playback_actions.py:86
-#: app_actions/playback_actions.py:235 app_actions/playback_actions.py:254
+#: app_actions/file_actions.py:246 app_actions/file_actions.py:250
+#: app_actions/file_actions.py:261 app_actions/file_actions.py:350
+#: app_actions/file_actions.py:456 app_actions/file_actions.py:471
+#: app_actions/file_actions.py:484 app_actions/file_actions.py:555
+#: app_actions/file_actions.py:586 app_actions/file_actions.py:614
+#: app_actions/marked_file_actions.py:27 app_actions/marked_file_actions.py:37
+#: app_actions/playback_actions.py:41 app_actions/playback_actions.py:64
+#: app_actions/playback_actions.py:86 app_actions/playback_actions.py:253
+#: app_actions/playback_actions.py:272
 msgid "No file loaded."
 msgstr ""
 
-#: app_actions/file_actions.py:109 app_actions/file_actions.py:113
-#: app_actions/file_actions.py:124 app_actions/file_actions.py:213
-#: app_actions/file_actions.py:320 app_actions/file_actions.py:336
-#: app_actions/file_actions.py:407 app_actions/file_actions.py:438
-#: app_actions/file_actions.py:466 app_actions/marked_file_actions.py:27
-#: app_actions/marked_file_actions.py:37 app_actions/playback_actions.py:41
-#: app_actions/playback_actions.py:64 app_actions/playback_actions.py:86
-#: app_actions/playback_actions.py:235 app_actions/playback_actions.py:254
+#: app_actions/file_actions.py:246 app_actions/file_actions.py:250
+#: app_actions/file_actions.py:261 app_actions/file_actions.py:350
+#: app_actions/file_actions.py:456 app_actions/file_actions.py:471
+#: app_actions/file_actions.py:484 app_actions/file_actions.py:555
+#: app_actions/file_actions.py:586 app_actions/file_actions.py:614
+#: app_actions/marked_file_actions.py:27 app_actions/marked_file_actions.py:37
+#: app_actions/playback_actions.py:41 app_actions/playback_actions.py:64
+#: app_actions/playback_actions.py:86 app_actions/playback_actions.py:253
+#: app_actions/playback_actions.py:272
 msgid "No file."
 msgstr ""
 
 #: app_actions/marked_file_actions.py:50 app_actions/marked_file_actions.py:73
-#: app_actions/marked_file_actions.py:84
-#: app_actions/marked_file_actions.py:163
+#: app_actions/marked_file_actions.py:84 app_actions/marked_file_actions.py:163
 msgid "No marked files."
 msgstr ""
 
 #: app_actions/marked_file_actions.py:50 app_actions/marked_file_actions.py:73
-#: app_actions/marked_file_actions.py:84
-#: app_actions/marked_file_actions.py:163
+#: app_actions/marked_file_actions.py:84 app_actions/marked_file_actions.py:163
 msgid "No marks."
 msgstr ""
 
-#: app_actions/file_actions.py:264
+#: app_actions/file_actions.py:400
 msgid "No other files are loaded."
 msgstr ""
 
-#: app_actions/file_actions.py:264
+#: app_actions/file_actions.py:400
 msgid "No other files."
 msgstr ""
 
@@ -1157,11 +1212,11 @@ msgstr ""
 msgid "No playable YouTube items were found."
 msgstr ""
 
-#: app_actions/playback_actions.py:283
+#: app_actions/playback_actions.py:301
 msgid "No selection to clear."
 msgstr ""
 
-#: app_actions/playback_actions.py:283
+#: app_actions/playback_actions.py:301
 msgid "No selection."
 msgstr ""
 
@@ -1169,7 +1224,7 @@ msgstr ""
 msgid "No sound cards found."
 msgstr ""
 
-#: app_actions/playback_actions.py:258
+#: app_actions/playback_actions.py:276
 msgid "No start."
 msgstr ""
 
@@ -1189,16 +1244,17 @@ msgstr ""
 msgid "No videos were found."
 msgstr ""
 
-#: app_actions/file_actions.py:129 app_actions/file_actions.py:412
-#: app_actions/file_actions.py:443
+#: app_actions/file_actions.py:266 app_actions/file_actions.py:560
+#: app_actions/file_actions.py:591
 msgid "Not available for streams."
 msgstr ""
 
-#: app_actions/file_actions.py:133
+#: app_actions/file_actions.py:270
 msgid "Not supported."
 msgstr ""
 
 #: playlist/info.py:221
+#, python-brace-format
 msgid "Number of files: {count}"
 msgstr ""
 
@@ -1215,23 +1271,23 @@ msgstr ""
 msgid "Only trim middle/end silence chunks that are at least this long."
 msgstr ""
 
-#: ui/mainwin/menu.py:127
+#: ui/mainwin/menu.py:128
 msgid "Open Containing Folder"
 msgstr ""
 
-#: ui/mainwin/menu.py:107
+#: ui/mainwin/menu.py:108
 msgid "Open File..."
 msgstr ""
 
-#: ui/mainwin/menu.py:123
+#: ui/mainwin/menu.py:124
 msgid "Open Folder..."
 msgstr ""
 
-#: app_actions/file_actions.py:83
+#: app_actions/file_actions.py:220
 msgid "Open Link"
 msgstr ""
 
-#: ui/mainwin/menu.py:111
+#: ui/mainwin/menu.py:112
 msgid "Open Link..."
 msgstr ""
 
@@ -1239,17 +1295,17 @@ msgstr ""
 msgid "Open YouTube Link"
 msgstr ""
 
-#: ui/mainwin/menu.py:115
+#: ui/mainwin/menu.py:116
 msgid "Open YouTube Link..."
 msgstr ""
 
-#: app_actions/file_actions.py:118 app_actions/file_actions.py:144
-#: app_actions/file_actions.py:390 app_actions/help_actions.py:68
+#: app_actions/file_actions.py:255 app_actions/file_actions.py:281
+#: app_actions/file_actions.py:538 app_actions/help_actions.py:68
 #: app_actions/help_actions.py:74
 msgid "Open failed."
 msgstr ""
 
-#: ui/prefs/backup.py:138
+#: ui/prefs/backup.py:177
 msgid "Open folder error"
 msgstr ""
 
@@ -1273,11 +1329,11 @@ msgstr ""
 msgid "Open the playlist"
 msgstr ""
 
-#: ui/prefs/backup.py:17
+#: ui/prefs/backup.py:19
 msgid "Open user settings folder"
 msgstr ""
 
-#: ui/prefs/backup.py:47
+#: ui/prefs/backup.py:51
 msgid ""
 "Open user settings folder opens the folder where this app stores its "
 "configuration."
@@ -1296,8 +1352,23 @@ msgstr ""
 msgid "Opened Files"
 msgstr ""
 
-#: ui/mainwin/menu.py:135
+#: ui/mainwin/menu.py:136
 msgid "Opened Files..."
+msgstr ""
+
+#: app_actions/file_actions.py:66
+msgid "Opening files"
+msgstr ""
+
+#: app_actions/file_actions.py:161
+#, python-brace-format
+msgid "Opening files... {found} media files found"
+msgstr ""
+
+#: app_actions/file_actions.py:153
+#, python-brace-format
+msgid ""
+"Opening files... {found} media files found ({done}/{total}) - {pct:.1f}%"
 msgstr ""
 
 #: app_actions/marked_file_actions.py:259
@@ -1318,7 +1389,7 @@ msgstr ""
 msgid "Operation failed."
 msgstr ""
 
-#: app_actions/file_actions.py:280
+#: app_actions/file_actions.py:416
 msgid "Out of range."
 msgstr ""
 
@@ -1338,11 +1409,11 @@ msgstr ""
 msgid "Partial success."
 msgstr ""
 
-#: ui/mainwin/menu.py:181
+#: ui/mainwin/menu.py:187
 msgid "Paste"
 msgstr ""
 
-#: app_actions/playback_actions.py:46 ui/mainwin/state.py:63
+#: app_actions/playback_actions.py:46 ui/mainwin/state.py:65
 msgid "Pause"
 msgstr ""
 
@@ -1350,20 +1421,20 @@ msgstr ""
 msgid "Pause to keep after trimmed silence (seconds)"
 msgstr ""
 
-#: ui/silence_removal.py:295
+#: ui/silence_removal.py:349
 msgid "Pause to keep after trimmed silence, in seconds. Default is 0.2."
 msgstr ""
 
-#: ui/silence_removal.py:60
+#: ui/silence_removal.py:61
 msgid "Peak (fast reaction)"
 msgstr ""
 
-#: app_actions/playback_actions.py:185
+#: app_actions/playback_actions.py:203
 msgid "Percentage not available"
 msgstr ""
 
 #: app_actions/playback_actions.py:46 ui/main_frame.py:40
-#: ui/mainwin/state.py:63 ui/yt_dialogs.py:161
+#: ui/mainwin/state.py:65 ui/yt_dialogs.py:161
 msgid "Play"
 msgstr ""
 
@@ -1392,11 +1463,11 @@ msgid ""
 "streams."
 msgstr ""
 
-#: ui/mainwin/menu.py:241
+#: ui/mainwin/menu.py:247
 msgid "Play/Pause"
 msgstr ""
 
-#: ui/mainwin/menu.py:87
+#: ui/mainwin/menu.py:88
 msgid "Player"
 msgstr ""
 
@@ -1412,15 +1483,15 @@ msgstr ""
 msgid "Playlist videos"
 msgstr ""
 
-#: core/controller.py:326
+#: core/controller.py:356
 msgid "Please restart the app for language changes to take effect."
 msgstr ""
 
-#: core/controller.py:327 ui/prefs/dialog.py:18 ui/prefs/dialog.py:146
+#: core/controller.py:357 ui/prefs/dialog.py:18 ui/prefs/dialog.py:146
 msgid "Preferences"
 msgstr ""
 
-#: ui/mainwin/menu.py:147
+#: ui/mainwin/menu.py:152
 msgid "Preferences..."
 msgstr ""
 
@@ -1436,7 +1507,7 @@ msgstr ""
 msgid "Press the desired shortcut. Escape cancels."
 msgstr ""
 
-#: ui/main_frame.py:38 ui/mainwin/menu.py:262
+#: ui/main_frame.py:38 ui/mainwin/menu.py:268
 msgid "Previous"
 msgstr ""
 
@@ -1445,18 +1516,21 @@ msgid "Primary Shortcut"
 msgstr ""
 
 #: app_actions/marked_file_actions.py:271
+#, python-brace-format
 msgid "Processed {ok} files. Failed for {failed} files."
 msgstr ""
 
 #: app_actions/marked_file_actions.py:217
+#, python-brace-format
 msgid "Processing: {name}"
 msgstr ""
 
-#: ui/silence_removal.py:61
+#: ui/silence_removal.py:62
 msgid "RMS (smoother)"
 msgstr ""
 
 #: playlist/info.py:122
+#, python-brace-format
 msgid "Reading: {name}"
 msgstr ""
 
@@ -1480,11 +1554,12 @@ msgstr ""
 msgid "Registration Error"
 msgstr ""
 
-#: app_actions/playback_actions.py:174
+#: app_actions/playback_actions.py:192
 msgid "Remaining time: "
 msgstr ""
 
 #: playlist/info.py:225
+#, python-brace-format
 msgid "Remaining: {value}"
 msgstr ""
 
@@ -1499,27 +1574,27 @@ msgid ""
 "disabled, the player starts fresh each launch."
 msgstr ""
 
-#: app_actions/file_actions.py:450
+#: app_actions/file_actions.py:598
 msgid "Rename File"
 msgstr ""
 
-#: app_actions/file_actions.py:459
+#: app_actions/file_actions.py:607
 msgid "Rename failed."
 msgstr ""
 
-#: app_actions/file_actions.py:442
+#: app_actions/file_actions.py:590
 msgid "Rename is available only for local files."
 msgstr ""
 
-#: ui/mainwin/menu.py:169
+#: ui/mainwin/menu.py:175
 msgid "Rename..."
 msgstr ""
 
-#: app_actions/file_actions.py:457
+#: app_actions/file_actions.py:605
 msgid "Renamed."
 msgstr ""
 
-#: ui/mainwin/menu.py:282
+#: ui/mainwin/menu.py:288
 msgid "Repeat File"
 msgstr ""
 
@@ -1531,7 +1606,7 @@ msgstr ""
 msgid "Repeat on"
 msgstr ""
 
-#: ui/mainwin/menu.py:255
+#: ui/mainwin/menu.py:261
 msgid "Reset Speed"
 msgstr ""
 
@@ -1539,11 +1614,23 @@ msgstr ""
 msgid "Reset all shortcuts to defaults?"
 msgstr ""
 
+#: ui/prefs/backup.py:155
+msgid "Reset error"
+msgstr ""
+
+#: ui/prefs/backup.py:17 ui/prefs/backup.py:142 ui/prefs/backup.py:162
+msgid "Reset settings"
+msgstr ""
+
+#: ui/prefs/backup.py:55
+msgid "Reset settings restores all preferences to default values."
+msgstr ""
+
 #: ui/shortcut_settings.py:210
 msgid "Reset to Defaults"
 msgstr ""
 
-#: ui/main_frame.py:39 ui/mainwin/menu.py:310
+#: ui/main_frame.py:39 ui/mainwin/menu.py:316
 msgid "Rewind"
 msgstr ""
 
@@ -1555,7 +1642,7 @@ msgstr ""
 msgid "Search YouTube"
 msgstr ""
 
-#: ui/mainwin/menu.py:119
+#: ui/mainwin/menu.py:120
 msgid "Search YouTube..."
 msgstr ""
 
@@ -1564,6 +1651,7 @@ msgid "Search results"
 msgstr ""
 
 #: youtube/flow.py:144
+#, python-brace-format
 msgid "Search results: {query}"
 msgstr ""
 
@@ -1591,15 +1679,15 @@ msgstr ""
 msgid "Select sound card"
 msgstr ""
 
-#: app_actions/playback_actions.py:290
+#: app_actions/playback_actions.py:308
 msgid "Selection cleared"
 msgstr ""
 
-#: ui/mainwin/menu.py:295
+#: ui/mainwin/menu.py:301
 msgid "Set A (loop start)"
 msgstr ""
 
-#: ui/mainwin/menu.py:299
+#: ui/mainwin/menu.py:305
 msgid "Set B (loop end)"
 msgstr ""
 
@@ -1625,29 +1713,33 @@ msgid ""
 "General or Audio."
 msgstr ""
 
-#: ui/prefs/backup.py:86
+#: ui/prefs/backup.py:94
 msgid "Settings exported successfully."
 msgstr ""
 
-#: ui/prefs/backup.py:122
+#: ui/prefs/backup.py:130
 msgid "Settings imported successfully."
+msgstr ""
+
+#: ui/prefs/backup.py:161
+msgid "Settings were reset to defaults."
 msgstr ""
 
 #: ui/shortcut_settings.py:315 ui/shortcut_settings.py:339
 msgid "Shortcut Conflict"
 msgstr ""
 
-#: ui/silence_removal.py:105
+#: ui/silence_removal.py:106
 msgid "Show advanced settings"
 msgstr ""
 
-#: ui/silence_removal.py:267
+#: ui/silence_removal.py:321
 msgid ""
 "Show advanced settings. When enabled, extra silenceremove parameters are "
 "displayed. When disabled, only minimum duration and threshold are used."
 msgstr ""
 
-#: ui/mainwin/menu.py:278
+#: ui/mainwin/menu.py:284
 msgid "Shuffle"
 msgstr ""
 
@@ -1673,7 +1765,7 @@ msgid ""
 "only a number, for example -30."
 msgstr ""
 
-#: ui/silence_removal.py:261
+#: ui/silence_removal.py:315
 msgid ""
 "Silence level threshold. Audio quieter than this level is treated as "
 "silence. Enter only the number, for example -20, -30, or -40."
@@ -1683,7 +1775,7 @@ msgstr ""
 msgid "Silence removal"
 msgstr ""
 
-#: ui/silence_removal.py:74
+#: ui/silence_removal.py:75
 msgid "Silence removal (FFmpeg silenceremove)"
 msgstr ""
 
@@ -1695,25 +1787,29 @@ msgstr ""
 msgid "Silence removal on"
 msgstr ""
 
-#: ui/silence_removal.py:309
+#: ui/silence_removal.py:363
 msgid "Silence removal setting. Enter a value and press OK to save."
 msgstr ""
 
-#: ui/silence_removal.py:230
+#: ui/silence_removal.py:284
 msgid ""
 "Silence removal settings. Minimum silence duration and threshold are always "
 "shown. Enable advanced settings to configure all remaining filter options."
 msgstr ""
 
-#: ui/silence_removal.py:94
+#: ui/silence_removal.py:95
 msgid "Silence threshold"
+msgstr ""
+
+#: ui/silence_removal.py:211
+msgid "Silence threshold must be a valid number."
 msgstr ""
 
 #: ui/silence_removal.py:34
 msgid "Silent parts to trim after audio starts"
 msgstr ""
 
-#: ui/silence_removal.py:285
+#: ui/silence_removal.py:339
 msgid ""
 "Silent parts to trim after audio starts. Use -1 to trim all matching silent "
 "parts."
@@ -1731,7 +1827,7 @@ msgstr ""
 msgid "Sound Cards"
 msgstr ""
 
-#: ui/mainwin/menu.py:363
+#: ui/mainwin/menu.py:369
 msgid "Sound Cards..."
 msgstr ""
 
@@ -1743,11 +1839,11 @@ msgstr ""
 msgid "Space"
 msgstr ""
 
-#: app_actions/file_actions.py:240
+#: app_actions/file_actions.py:376
 msgid "Speaker test file not found."
 msgstr ""
 
-#: ui/mainwin/menu.py:257
+#: ui/mainwin/menu.py:263
 msgid "Speed"
 msgstr ""
 
@@ -1765,15 +1861,17 @@ msgid ""
 "positive decimal value like 0.025 or 0.1."
 msgstr ""
 
-#: app_actions/playback_actions.py:258
+#: app_actions/playback_actions.py:276
 msgid "Start selection not set."
 msgstr ""
 
-#: app_actions/playback_actions.py:247
+#: app_actions/playback_actions.py:265
+#, python-brace-format
 msgid "Start selection: {time}"
 msgstr ""
 
-#: app_actions/playback_actions.py:248
+#: app_actions/playback_actions.py:266
+#, python-brace-format
 msgid "Start {time}"
 msgstr ""
 
@@ -1793,19 +1891,19 @@ msgstr ""
 msgid "Telegram"
 msgstr ""
 
-#: app_actions/file_actions.py:245
+#: app_actions/file_actions.py:381
 msgid "Test failed."
 msgstr ""
 
-#: app_actions/file_actions.py:240
+#: app_actions/file_actions.py:376
 msgid "Test file missing."
 msgstr ""
 
-#: ui/mainwin/menu.py:143
+#: ui/mainwin/menu.py:148
 msgid "Test speakers"
 msgstr ""
 
-#: app_actions/file_actions.py:243
+#: app_actions/file_actions.py:379
 msgid "Testing speakers."
 msgstr ""
 
@@ -1826,7 +1924,7 @@ msgid ""
 "Choose how you want to proceed."
 msgstr ""
 
-#: app_actions/file_actions.py:88 youtube/flow.py:66
+#: app_actions/file_actions.py:225 youtube/flow.py:66
 msgid "The link must start with http or https."
 msgstr ""
 
@@ -1834,17 +1932,19 @@ msgstr ""
 msgid "This is not a valid YouTube link."
 msgstr ""
 
-#: app_actions/playback_actions.py:140 app_actions/playback_actions.py:215
-#: app_actions/playback_actions.py:239 app_actions/playback_actions.py:262
-#: app_actions/playback_actions.py:269 app_actions/playback_actions.py:296
+#: app_actions/playback_actions.py:158 app_actions/playback_actions.py:233
+#: app_actions/playback_actions.py:257 app_actions/playback_actions.py:280
+#: app_actions/playback_actions.py:287 app_actions/playback_actions.py:314
 msgid "Time not available"
 msgstr ""
 
 #: playlist/info.py:223
+#, python-brace-format
 msgid "Total duration: {value}"
 msgstr ""
 
 #: update/actions.py:345
+#, python-brace-format
 msgid ""
 "Total size: {size}\n"
 "Downloaded: {got}\n"
@@ -1852,6 +1952,7 @@ msgid ""
 msgstr ""
 
 #: youtube/ui_utils.py:147
+#, python-brace-format
 msgid ""
 "Total size: {total}\n"
 "Downloaded: {got}\n"
@@ -1859,14 +1960,15 @@ msgid ""
 msgstr ""
 
 #: playlist/info.py:222
+#, python-brace-format
 msgid "Total size: {value}"
 msgstr ""
 
-#: app_actions/playback_actions.py:178
+#: app_actions/playback_actions.py:196
 msgid "Total time: "
 msgstr ""
 
-#: app_actions/file_actions.py:341
+#: app_actions/file_actions.py:489
 msgid "Unable to copy current file to clipboard."
 msgstr ""
 
@@ -1874,18 +1976,18 @@ msgstr ""
 msgid "Unable to copy marked files to clipboard."
 msgstr ""
 
-#: app_actions/file_actions.py:485
+#: app_actions/file_actions.py:633
 msgid "Unable to copy to clipboard."
 msgstr ""
 
-#: app_actions/file_actions.py:245
+#: app_actions/file_actions.py:381
 msgid "Unable to play speaker test."
 msgstr ""
 
-#: app_actions/playback_actions.py:140 app_actions/playback_actions.py:185
-#: app_actions/playback_actions.py:215 app_actions/playback_actions.py:239
-#: app_actions/playback_actions.py:262 app_actions/playback_actions.py:269
-#: app_actions/playback_actions.py:296 playlist/info.py:382
+#: app_actions/playback_actions.py:158 app_actions/playback_actions.py:203
+#: app_actions/playback_actions.py:233 app_actions/playback_actions.py:257
+#: app_actions/playback_actions.py:280 app_actions/playback_actions.py:287
+#: app_actions/playback_actions.py:314 playlist/info.py:382
 msgid "Unavailable"
 msgstr ""
 
@@ -1924,7 +2026,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: ui/mainwin/menu.py:434
+#: ui/mainwin/menu.py:440
 msgid "Update YouTube components"
 msgstr ""
 
@@ -1932,7 +2034,7 @@ msgstr ""
 msgid "Update cancelled."
 msgstr ""
 
-#: ui/mainwin/menu.py:436
+#: ui/mainwin/menu.py:442
 msgid "Updates"
 msgstr ""
 
@@ -1944,7 +2046,7 @@ msgstr ""
 msgid "Updating yt-dlp..."
 msgstr ""
 
-#: ui/mainwin/menu.py:416
+#: ui/mainwin/menu.py:422
 msgid "User Guide"
 msgstr ""
 
@@ -1960,6 +2062,7 @@ msgid ""
 msgstr ""
 
 #: ui/update_dialogs.py:26
+#, python-brace-format
 msgid "Version: {version}"
 msgstr ""
 
@@ -1967,11 +2070,11 @@ msgstr ""
 msgid "Video description"
 msgstr ""
 
-#: ui/mainwin/menu.py:395
+#: ui/mainwin/menu.py:401
 msgid "Video description..."
 msgstr ""
 
-#: ui/mainwin/menu.py:89
+#: ui/mainwin/menu.py:90
 msgid "Video options"
 msgstr ""
 
@@ -1997,7 +2100,8 @@ msgstr ""
 msgid "Visit website"
 msgstr ""
 
-#: app_actions/playback_actions.py:166
+#: app_actions/playback_actions.py:184
+#, python-brace-format
 msgid "Volume is {percent}%"
 msgstr ""
 
@@ -2011,8 +2115,9 @@ msgid ""
 "20."
 msgstr ""
 
-#: app_actions/playback_actions.py:146 app_actions/playback_actions.py:152
-#: app_actions/playback_actions.py:158
+#: app_actions/playback_actions.py:164 app_actions/playback_actions.py:170
+#: app_actions/playback_actions.py:176
+#, python-brace-format
 msgid "Volume {volume} percent"
 msgstr ""
 
@@ -2036,7 +2141,7 @@ msgstr ""
 msgid "What would you like to open with files?"
 msgstr ""
 
-#: ui/mainwin/menu.py:420 ui/update_dialogs.py:18
+#: ui/mainwin/menu.py:426 ui/update_dialogs.py:18
 msgid "What's new"
 msgstr ""
 
@@ -2098,6 +2203,7 @@ msgid "unknown"
 msgstr ""
 
 #: update/actions.py:74
+#, python-brace-format
 msgid "yt-dlp is already up to date ({ver}) on '{ch}' channel."
 msgstr ""
 
@@ -2129,28 +2235,54 @@ msgid ""
 msgstr ""
 
 #: update/actions.py:68
+#, python-brace-format
 msgid "yt-dlp updated from {old} to {new} on '{ch}' channel."
 msgstr ""
 
 #: youtube/resolver.py:390
+#, python-brace-format
 msgid ""
 "{base}\n"
 "Details: {details}"
 msgstr ""
 
 #: app_actions/marked_file_actions.py:58
+#, python-brace-format
 msgid "{count} files marked"
 msgstr ""
 
 #: app_actions/marked_file_actions.py:258
+#, python-brace-format
 msgid "{count} files processed successfully."
 msgstr ""
 
-#: app_actions/playback_actions.py:189 app_actions/playback_actions.py:222
+#: ui/silence_removal.py:238
+#, python-brace-format
+msgid "{field} must be -1 or greater."
+msgstr ""
+
+#: ui/silence_removal.py:246
+#, python-brace-format
+msgid "{field} must be a non-negative number."
+msgstr ""
+
+#: ui/silence_removal.py:228
+#, python-brace-format
+msgid "{field} must be an integer value."
+msgstr ""
+
+#: ui/silence_removal.py:233
+#, python-brace-format
+msgid "{field} must be zero or greater."
+msgstr ""
+
+#: app_actions/playback_actions.py:207 app_actions/playback_actions.py:240
+#, python-brace-format
 msgid "{percent} percent"
 msgstr ""
 
-#: app_actions/playback_actions.py:195 app_actions/playback_actions.py:202
-#: app_actions/playback_actions.py:209
+#: app_actions/playback_actions.py:213 app_actions/playback_actions.py:220
+#: app_actions/playback_actions.py:227
+#, python-brace-format
 msgid "{speed}x"
 msgstr ""
