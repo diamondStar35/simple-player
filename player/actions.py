@@ -97,7 +97,7 @@ UPDATE_YT_COMPONENTS = "update_yt_components"
 
 
 ACTIONS = {
-    PLAY_PAUSE: Action(PLAY_PAUSE, "Play/Pause", Shortcut("space")),
+    PLAY_PAUSE: Action(PLAY_PAUSE, "Play/Pause", Shortcut("space"), Shortcut("enter")),
     SEEK_BACKWARD: Action(SEEK_BACKWARD, "Seek Backward", Shortcut("left")),
     SEEK_FORWARD: Action(SEEK_FORWARD, "Seek Forward", Shortcut("right")),
     SEEK_BACKWARD_X2: Action(
@@ -366,4 +366,3 @@ for digit in range(10):
         Shortcut(str(digit), frozenset({"ctrl", "shift"})),
     )
     PERCENT_JUMPS[shift_action_id] = shift_percent
-
