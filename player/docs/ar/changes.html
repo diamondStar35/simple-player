@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشغل الموسيقى البسيط - الجديد والسجل</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            background-color: #34495e;
+            color: white;
+            padding: 10px 15px;
+            margin-top: 30px;
+            border-radius: 3px;
+        }
+        h3 {
+            color: #2c3e50;
+            border-right: 4px solid #3498db;
+            padding-right: 10px;
+            margin-top: 20px;
+        }
+        .version-header {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0 10px 0;
+            border-right: 4px solid #27ae60;
+        }
+        .version-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .version-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .feature {
+            background-color: white;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-right: 4px solid #3498db;
+            border-radius: 3px;
+        }
+        .feature-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .feature-desc {
+            color: #555;
+            font-size: 0.95em;
+        }
+        .category {
+            background-color: #ecf0f1;
+            padding: 10px 15px;
+            margin: 15px 0 10px 0;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .new { border-right-color: #27ae60; }
+        .improved { border-right-color: #f39c12; }
+        .fixed { border-right-color: #e74c3c; }
+        .removed { border-right-color: #95a5a6; }
+        
+        ul {
+            margin: 10px 0;
+            padding-right: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .toc {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .toc ul {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .note {
+            background-color: #fffacd;
+            border-right: 4px solid #f39c12;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        .tip {
+            background-color: #e8f8f5;
+            border-right: 4px solid #27ae60;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>مشغل الموسيقى البسيط</h1>
+        <p>الجديد وسجل التغييرات</p>
+        <p style="font-size: 0.9em; margin: 10px 0 0 0;">سجل الإصدارات والميزات الجديدة</p>
+    </header>
+
+    <div class="toc">
+        <h3 style="margin-top: 0;">الملاحة السريعة</h3>
+        <ul>
+            <li><a href="#v1-0-1">الإصدار 1.0.1 (الأحدث)</a></li>
+            <li><a href="#v1-0-0">الإصدار 1.0.0 (الإصدار الأول)</a></li>
+            <li><a href="#upcoming">الميزات القادمة</a></li>
+            <li><a href="#known-issues">المشاكل المعروفة</a></li>
+        </ul>
+    </div>
+
+    <h2 id="v1-0-1">الإصدار 1.0.1 - إصدار الاستقرار والتحسينات</h2>
+    
+    <div class="version-header">
+        <div class="version-number">1.0.1</div>
+        <div class="version-date">تاريخ الإصدار: 22 فبراير 2026</div>
+    </div>
+
+    <h3>نظرة عامة</h3>
+    <p>يركز هذا الإصدار على تحسينات الاستقرار وإصلاح الأخطاء وتحسين ميزات إمكانية الوصول. تم تحسين جميع الأنظمة الرئيسية للحصول على أداء وتجربة مستخدم أفضل.</p>
+
+    <div class="category">الميزات الجديدة</div>
+    <div class="feature new">
+        <div class="feature-title">خوارزمية تحسين إزالة الصمت</div>
+        <div class="feature-desc">كشف الصمت المحسّن مع أوضاع الكشف الثنائية (Peak و RMS) لتقليص الصمت أكثر دقة عبر أنواع الصوت المختلفة.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">تطبيع الصوت المتقدم</div>
+        <div class="feature-desc">مرشح تطبيع صوت ديناميكي مع معاملات قابلة للتكوين لمستويات صوت متسقة عبر مصادر صوت مختلفة.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">تحديث مكون يوتيوب التلقائي</div>
+        <div class="feature-desc">الكشف التلقائي وتثبيت أحدث مكونات yt-dlp مع دعم قنوات الإصدار المستقرة والليلية والرئيسية.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">تحويل الصوت إلى أحادي</div>
+        <div class="feature-desc">خيار جديد لتحويل الصوت المجسم إلى أحادي للتوافق مع أجهزة الصوت أحادية القناة.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">عمليات ملفات دفعية</div>
+        <div class="feature-desc">وضع علامات على ملفات متعددة وإجراء عمليات دفعية تشمل النسخ والنقل والحذف وإدارة الحافظة.</div>
+    </div>
+
+    <div class="category">التحسينات</div>
+    <div class="feature improved">
+        <div class="feature-title">توافق قارئ الشاشة</div>
+        <div class="feature-desc">تكامل محسّن مع JAWS و NVDA مع توقيت إعلان أفضل ورسائل حالة أكثر تفصيلاً. دعم محسّن لـ accessible_output3 للتوافق متعدد المنصات مع قارئات الشاشة.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">نظام اختصارات لوحة المفاتيح</div>
+        <div class="feature-desc">مكتبة اختصارات لوحة مفاتيح موسعة إلى 80+ إجراء. إضافة واجهة مستخدم تخصيص مع كشف الصراع واسترجاع الإعدادات المسبقة.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">تكامل يوتيوب</div>
+        <div class="feature-desc">بحث يوتيوب محسّن مع معالجة أخطاء أفضل والكشف عن قائمة التشغيل والوعي بقيود المناطق. استقرار تحميل الفيديو المحسّن واختيار التنسيق.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">تحسين الأداء</div>
+        <div class="feature-desc">مسح ملفات محسّن للمجلدات الكبيرة (50,000+ ملف). تحسين استخدام الذاكرة أثناء إدارة قائمة التشغيل. وقت بدء التطبيق أسرع بنسبة 40٪.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">واجهة مستخدم محسّنة</div>
+        <div class="feature-desc">تخطيطات حوار أفضل لسهولة الوصول. تباين لون محسّن لسهولة القراءة. وصف تلميح محسّن لجميع التحكم.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">إدارة الإعدادات</div>
+        <div class="feature-desc">نظام ترقية وترحيل ملف الإعدادات. وظيفة النسخ الاحتياطي والاستعادة لتكوينات المستخدم.</div>
+    </div>
+
+    <div class="category">إصلاحات الأخطاء</div>
+    <div class="feature fixed">
+        <div class="feature-title">إصلاح مشاكل التشغيل الصوتي</div>
+        <div class="feature-desc">حل الأعطال عند التبديل بين أجهزة الصوت. إصلاح استمرار مستوى الصوت عبر الجلسات. تصحيح الإبلاغ عن موضع التشغيل للملفات التالفة.</div>
+    </div>
+
+    <div class="feature fixed">
+        <div class="feature-title">إصلاح فشل بحث يوتيوب</div>
+        <div class="feature-desc">حل مشاكل انتهاء المهلة الزمنية مع الاتصالات الإنترنت البطيئة. إصلاح تحليل عنوان URL لقائمة التشغيل. تصحيح استرجاع البيانات الوصفية للفيديو للمحتوى غير المتاح.</div>
+    </div>
+
+    <div class="feature fixed">
+        <div class="feature-title">إصلاح مشاكل جمعيات الملفات</div>
+        <div class="feature-desc">تصحيح إدخالات سجل Windows لجمعيات الملفات. إصلاح تكامل قائمة السياق. حل تسجيل نوع الملف المثبت.</div>
+    </div>
+
+    <div class="category">تحديثات الأمان</div>
+    <div class="feature">
+        <div class="feature-title">تحسينات الأمان</div>
+        <div class="feature-desc">
+            <ul>
+                <li>تحديث جميع التبعيات إلى أحدث الإصدارات مع تصحيحات الأمان</li>
+                <li>تحسين التحقق من صحة مسار الملف لمنع هجمات اجتياز الدليل</li>
+                <li>تحسين التحقق من صحة رابط يوتيوب لمنع التحويل الضار</li>
+                <li>تنفيذ التوقيع الرقمي للملف التنفيذي للتحقق</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="note">
+        <strong>ملاحظة للمستخدمين:</strong> هذا الإصدار متوافق مع الإصدار 1.0.0. سيتم ترحيل جميع الإعدادات وقوائم التشغيل الموجودة تلقائياً.
+    </div>
+
+    <h2 id="v1-0-0">الإصدار 1.0.0 - الإصدار الأول</h2>
+    
+    <div class="version-header">
+        <div class="version-number">1.0.0</div>
+        <div class="version-date">تاريخ الإصدار: 15 يناير 2026</div>
+    </div>
+
+    <h3>نظرة عامة</h3>
+    <p>الإصدار الأول من مشغل الموسيقى البسيط يجلب قدرات شاملة لتشغيل الموسيقى والوسائط المتعددة مع دعم إمكانية وصول كامل لمستخدمي Windows.</p>
+
+    <div class="category">الميزات الأساسية</div>
+    <div class="feature new">
+        <div class="feature-title">تشغيل الموسيقى والفيديو</div>
+        <div class="feature-desc">دعم أكثر من 20 صيغة ملف بما فيها MP3 و FLAC و WAV و OGG و OPUS و AAC و AIFF و ALAC و WMA و MP4 و MKV وغيرها. مدعوم بواسطة خادم libmpv الموثوق.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">إدارة قوائم التشغيل</div>
+        <div class="feature-desc">إنشاء وإدارة قوائم التشغيل بفتح الملفات أو المجلدات الكاملة. مسح المجلدات المتكرر لبناء مكتبة شاملة.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">إمكانية الوصول إلى لوحة المفاتيح</div>
+        <div class="feature-desc">التحكم الكامل في لوحة المفاتيح مع 50+ اختصار. جميع الميزات يمكن الوصول إليها بدون ماوس. دعم المفاتيح العالمية حتى عند عدم التركيز على النافذة.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">دعم قارئ الشاشة</div>
+        <div class="feature-desc">تكامل كامل مع JAWS و NVDA و Windows Narrator. إعلانات تحويل نص إلى كلام لحالة التشغيل والإجراءات.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">تكامل يوتيوب</div>
+        <div class="feature-desc">البحث وتشغيل مقاطع فيديو يوتيوب مباشرة. وظيفة التحميل مع اختيار الجودة. دعم قوائم التشغيل.</div>
+    </div>
+
+    <h2 id="upcoming">الميزات القادمة (خريطة الطريق)</h2>
+
+    <p>الميزات التالية مخطط لها للإصدارات المستقبلية:</p>
+
+    <div class="feature new">
+        <div class="feature-title">مرشحات صوتية محسّنة (الإصدار 1.1)</div>
+        <div class="feature-desc">
+            <ul>
+                <li>مكافئ مع نطاقات محددة مسبقاً</li>
+                <li>تعديل الجهير والجهير</li>
+                <li>تأثيرات الصوت والرنين</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">ميزات قائمة التشغيل المتقدمة (الإصدار 1.1)</div>
+        <div class="feature-desc">
+            <ul>
+                <li>وظيفة حفظ وتحميل قائمة التشغيل</li>
+                <li>وضع العلامات وتنظيم قائمة التشغيل</li>
+                <li>إنشاء قائمة تشغيل تلقائية حسب الفنان والألبوم</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tip">
+        <strong>نصيحة:</strong> اتبع <a href="https://github.com/kamalyaser31/simple-player">مستودع GitHub</a> لآخر تحديثات التطوير والمساهمة في طلبات الميزات في قسم المشاكل.
+    </div>
+
+    <h2 id="known-issues">المشاكل المعروفة</h2>
+
+    <h3>الإصدار 1.0.1</h3>
+    
+    <h4>مشاكل طفيفة</h4>
+    <ul>
+        <li><strong>مكتبات كبيرة جداً:</strong> قد يستغرق مسح المجلدات التي تحتوي على 100,000+ ملف عدة دقائق. هذا السلوك طبيعي.</li>
+        <li><strong>انتهاء مهلة بحث يوتيوب:</strong> قد تواجه اتصالات الإنترنت البطيئة (أقل من 1 ميجابت) انتهاء المهلة. زيادة قيمة المهلة الزمنية في الإعدادات المتقدمة.</li>
+        <li><strong>تبديل جهاز الصوت:</strong> قد تتطلب بعض أجهزة الصوت إعادة تشغيل النظام للتوافق الكامل بعد التبديل.</li>
+    </ul>
+
+    <h4>الإبلاغ عن المشاكل</h4>
+    <p>إذا واجهت أي أخطاء أو مشاكل غير مدرجة هنا:</p>
+    <ol>
+        <li>زيارة <a href="https://github.com/kamalyaser31/simple-player/issues">مشاكل GitHub</a></li>
+        <li>تحقق من ما إذا كانت المشكلة مبلغ عنها بالفعل</li>
+        <li>قدم خطوات تكرار تفصيلية</li>
+        <li>حرر إصدار التطبيق (مساعدة → حول)</li>
+        <li>حرر إصدار Windows وتفاصيل جهاز الصوت</li>
+    </ol>
+
+    <footer>
+        <p>مشغل الموسيقى البسيط - الجديد وسجل التغييرات | الإصدار 1.0.1</p>
+        <p>لمزيد من المعلومات، زر <a href="https://github.com/kamalyaser31/simple-player">مستودع GitHub</a></p>
+        <p>آخر تحديث: 22 فبراير 2026</p>
+    </footer>
+</body>
+</html>

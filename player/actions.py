@@ -180,7 +180,7 @@ ACTIONS = {
     OPEN_USER_GUIDE: Action(
         OPEN_USER_GUIDE,
         "User Guide",
-        None,
+        Shortcut("f1"),
     ),
     OPEN_CHANGES: Action(
         OPEN_CHANGES,

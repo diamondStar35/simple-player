@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشغل الموسيقى البسيط - دليل المستخدم</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            background-color: #34495e;
+            color: white;
+            padding: 10px 15px;
+            margin-top: 30px;
+            border-radius: 3px;
+        }
+        h3 {
+            color: #2c3e50;
+            border-right: 4px solid #3498db;
+            padding-right: 10px;
+            margin-top: 20px;
+        }
+        .toc {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .toc ul {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 12px;
+            text-align: right;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #ecf0f1;
+        }
+        .note {
+            background-color: #fffacd;
+            border-right: 4px solid #f39c12;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        .warning {
+            background-color: #ffe4e1;
+            border-right: 4px solid #e74c3c;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        .tip {
+            background-color: #e8f8f5;
+            border-right: 4px solid #27ae60;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            direction: ltr;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>مشغل الموسيقى البسيط</h1>
+        <p>دليل المستخدم الشامل</p>
+        <p style="font-size: 0.9em; margin: 10px 0 0 0;">الإصدار 1.0.1</p>
+    </header>
+
+    <div class="toc">
+        <h3 style="margin-top: 0;">جدول المحتويات</h3>
+        <ul>
+            <li><a href="#getting-started">البدء السريع</a></li>
+            <li><a href="#installation">التثبيت والإعداد</a></li>
+            <li><a href="#main-interface">الواجهة الرئيسية</a></li>
+            <li><a href="#basic-playback">التشغيل الأساسي</a></li>
+            <li><a href="#file-management">إدارة الملفات</a></li>
+            <li><a href="#keyboard-shortcuts">اختصارات لوحة المفاتيح</a></li>
+            <li><a href="#youtube-features">ميزات يوتيوب</a></li>
+            <li><a href="#audio-settings">إعدادات الصوت</a></li>
+            <li><a href="#advanced-features">الميزات المتقدمة</a></li>
+            <li><a href="#accessibility">إمكانية الوصول</a></li>
+            <li><a href="#troubleshooting">استكشاف الأخطاء</a></li>
+            <li><a href="#faq">الأسئلة الشائعة</a></li>
+        </ul>
+    </div>
+
+    <h2 id="getting-started">البدء السريع</h2>
+    <p>مشغل الموسيقى البسيط هو تطبيق لتشغيل الموسيقى والوسائط متعددة الميزات مصمم لنظام Windows مع دعم كامل لسهولة الوصول لوحة المفاتيح وقارئات الشاشة.</p>
+
+    <h3>ما هو مشغل الموسيقى البسيط؟</h3>
+    <p>يمكنك من خلال مشغل الموسيقى البسيط:</p>
+    <ul>
+        <li>تشغيل ملفات الموسيقى والفيديو بصيغ متعددة</li>
+        <li>إدارة مكتبات الموسيقى الكبيرة وقوائم التشغيل</li>
+        <li>البحث وتشغيل مقاطع فيديو يوتيوب مباشرة</li>
+        <li>معالجة الصوت بميزات متقدمة مثل إزالة الصمت</li>
+        <li>التحكم في التشغيل بالكامل من خلال لوحة المفاتيح</li>
+        <li>الوصول إلى جميع الميزات من خلال قارئات الشاشة</li>
+    </ul>
+
+    <h3>متطلبات النظام</h3>
+    <ul>
+        <li><strong>نظام التشغيل:</strong> Windows 7 SP1 أو أحدث (Windows 10+ موصى به)</li>
+        <li><strong>الذاكرة:</strong> 256 ميجابايت بحد أدنى</li>
+        <li><strong>مساحة القرص:</strong> 200 ميجابايت للتثبيت</li>
+        <li><strong>جهاز الصوت:</strong> جهاز إخراج صوت يعمل</li>
+    </ul>
+
+    <h2 id="installation">التثبيت والإعداد</h2>
+
+    <h3>معالج التثبيت (الموصى به)</h3>
+    <ol>
+        <li>قم بتحميل <code>SimpleAudioPlayerSetup.exe</code> من صفحة الإصدارات</li>
+        <li>شغل الملف المثبت</li>
+        <li>اتبع خطوات معالج التثبيت</li>
+        <li>اختر دليل التثبيت (الافتراضي: <code>%LocalAppData%\Programs\Simple Audio Player</code>)</li>
+        <li>اختر ما إذا كنت تريد إنشاء اختصار على سطح المكتب</li>
+        <li>انقر فوق "تثبيت" وانتظر حتى اكتمال العملية</li>
+        <li>شغل التطبيق من قائمة ابدأ أو اختصار سطح المكتب</li>
+    </ol>
+
+    <h3>النسخة المحمولة</h3>
+    <ol>
+        <li>قم بتحميل ملف ZIP المحمول</li>
+        <li>استخرج الملفات إلى الموقع المفضل لديك</li>
+        <li>شغل <code>SimpleAudioPlayer.exe</code> مباشرة</li>
+        <li>لا يلزم التثبيت أو صلاحيات المسؤول</li>
+    </ol>
+
+    <div class="tip">
+        <strong>نصيحة:</strong> النسخة المحمولة مثالية إذا كنت تريد استخدام المشغل من مفتاح USB أو إذا لم تكن لديك صلاحيات المسؤول على جهازك.
+    </div>
+
+    <h2 id="main-interface">الواجهة الرئيسية</h2>
+
+    <h3>تخطيط النافذة الرئيسية</h3>
+    <p>تحتوي النافذة الرئيسية على:</p>
+    <ul>
+        <li><strong>شريط القوائم:</strong> قوائم الملف والتحرير والعرض والمساعدة مع خيارات منسدلة</li>
+        <li><strong>أزرار التحكم:</strong> السابق، إعادة التمرير، تشغيل/إيقاف مؤقت، التمرير للأمام، التالي</li>
+        <li><strong>منطقة الحالة:</strong> عرض معلومات الملف الحالي وحالة التشغيل</li>
+    </ul>
+
+    <h2 id="basic-playback">التشغيل الأساسي</h2>
+
+    <h3>فتح وتشغيل الملفات</h3>
+    <ol>
+        <li><strong>استخدام القائمة:</strong> انتقل إلى <code>ملف → فتح ملف</code></li>
+        <li><strong>استخدام لوحة المفاتيح:</strong> اضغط <code>Ctrl+O</code></li>
+        <li>اختر ملف صوتي أو فيديو من جهازك</li>
+        <li>يتم تحميل الملف ويبدأ التشغيل الآلي (إذا كان مفعلاً)</li>
+        <li>تظهر معلومات الملف الحالي في منطقة الحالة</li>
+    </ol>
+
+    <h3>التشغيل والإيقاف المؤقت</h3>
+    <ul>
+        <li><strong>الزر:</strong> انقر على زر "تشغيل/إيقاف مؤقت"</li>
+        <li><strong>لوحة المفاتيح:</strong> اضغط <code>Space</code></li>
+        <li>يتم الإعلان عن حالة التشغيل الحالية</li>
+        <li>اضغط مرة أخرى لمتابعة من نفس النقطة</li>
+    </ul>
+
+    <h3>التنقل في الملفات</h3>
+    <table>
+        <tr>
+            <th>الإجراء</th>
+            <th>اختصار لوحة المفاتيح</th>
+            <th>الوصف</th>
+        </tr>
+        <tr>
+            <td>الملف التالي</td>
+            <td><code>Ctrl+Right</code> أو <code>N</code></td>
+            <td>الانتقال إلى الملف التالي</td>
+        </tr>
+        <tr>
+            <td>الملف السابق</td>
+            <td><code>Ctrl+Left</code> أو <code>P</code></td>
+            <td>الانتقال إلى الملف السابق</td>
+        </tr>
+        <tr>
+            <td>الملف الأول</td>
+            <td><code>Ctrl+Home</code></td>
+            <td>الذهاب إلى الملف الأول</td>
+        </tr>
+        <tr>
+            <td>الملف الأخير</td>
+            <td><code>Ctrl+End</code></td>
+            <td>الذهاب إلى الملف الأخير</td>
+        </tr>
+    </table>
+
+    <h2 id="file-management">إدارة الملفات</h2>
+
+    <h3>فتح المجلدات</h3>
+    <ol>
+        <li>انتقل إلى <code>ملف → فتح مجلد</code> أو اضغط <code>Ctrl+Shift+O</code></li>
+        <li>اختر مجلداً يحتوي على ملفات موسيقية</li>
+        <li>يقوم التطبيق بمسح المجلد بشكل متكرر عن جميع ملفات الموسيقى</li>
+        <li>يتم عرض تقدم المسح في نافذة الحوار</li>
+        <li>يتم إضافة جميع الملفات المكتشفة إلى قائمة التشغيل تلقائياً</li>
+    </ol>
+
+    <h3>عمليات الملفات</h3>
+
+    <h4>إعادة تسمية الملف</h4>
+    <ol>
+        <li>اضغط <code>F2</code> أو انتقل إلى <code>تحرير → إعادة تسمية</code></li>
+        <li>أدخل اسم الملف الجديد في نافذة الحوار</li>
+        <li>اضغط Enter للتأكيد</li>
+    </ol>
+
+    <h4>حذف الملف</h4>
+    <ol>
+        <li>اضغط <code>Delete</code> أو انتقل إلى <code>تحرير → حذف</code></li>
+        <li>أكد الحذف في نافذة الحوار</li>
+        <li>يتم نقل الملف إلى سلة المحذوفات</li>
+    </ol>
+
+    <h4>نسخ مسار الملف</h4>
+    <ol>
+        <li>اضغط <code>Ctrl+C</code> أو انتقل إلى <code>تحرير → نسخ</code></li>
+        <li>يتم نسخ مسار الملف إلى الحافظة</li>
+        <li>يمكن لصقه في أي محرر نصوص</li>
+    </ol>
+
+    <h2 id="keyboard-shortcuts">اختصارات لوحة المفاتيح</h2>
+
+    <h3>التحكم في التشغيل</h3>
+    <table>
+        <tr>
+            <th>الاختصار</th>
+            <th>الإجراء</th>
+        </tr>
+        <tr>
+            <td><code>Space</code></td>
+            <td>تشغيل / إيقاف مؤقت</td>
+        </tr>
+        <tr>
+            <td><code>Ctrl+Right</code> أو <code>N</code></td>
+            <td>الملف التالي</td>
+        </tr>
+        <tr>
+            <td><code>Ctrl+Left</code> أو <code>P</code></td>
+            <td>الملف السابق</td>
+        </tr>
+    </table>
+
+    <h3>التنقل في الملفات</h3>
+    <table>
+        <tr>
+            <th>الاختصار</th>
+            <th>الإجراء</th>
+        </tr>
+        <tr>
+            <td><code>Right Arrow</code></td>
+            <td>تقدم 5 ثوان</td>
+        </tr>
+        <tr>
+            <td><code>Left Arrow</code></td>
+            <td>إعادة 5 ثوان</td>
+        </tr>
+        <tr>
+            <td><code>Home</code></td>
+            <td>الذهاب إلى البداية</td>
+        </tr>
+        <tr>
+            <td><code>End</code></td>
+            <td>الذهاب إلى النهاية</td>
+        </tr>
+    </table>
+
+    <h3>التحكم بالصوت</h3>
+    <table>
+        <tr>
+            <th>الاختصار</th>
+            <th>الإجراء</th>
+        </tr>
+        <tr>
+            <td><code>Ctrl+Up</code> أو <code>+</code></td>
+            <td>زيادة الصوت</td>
+        </tr>
+        <tr>
+            <td><code>Ctrl+Down</code> أو <code>-</code></td>
+            <td>خفض الصوت</td>
+        </tr>
+        <tr>
+            <td><code>M</code></td>
+            <td>تعظيم الصوت</td>
+        </tr>
+        <tr>
+            <td><code>V</code></td>
+            <td>الإعلان عن مستوى الصوت</td>
+        </tr>
+    </table>
+
+    <h2 id="youtube-features">ميزات يوتيوب</h2>
+
+    <h3>البحث على يوتيوب</h3>
+    <ol>
+        <li>انتقل إلى <code>ملف → بحث يوتيوب</code> أو اضغط <code>Ctrl+Y</code></li>
+        <li>أدخل كلمات البحث (على سبيل المثال اسم الفنان)</li>
+        <li>انتظر تحميل نتائج البحث</li>
+        <li>اختر الفيديو من قائمة النتائج</li>
+        <li>يبدأ تشغيل الفيديو فوراً</li>
+    </ol>
+
+    <h3>تحميل مقاطع يوتيوب</h3>
+    <ol>
+        <li>انتقل إلى <code>تحرير → تحميل فيديو</code></li>
+        <li>اختر خيارات التحميل:
+            <ul>
+                <li>جودة الفيديو</li>
+                <li>الصيغة (ملف فيديو أو صوت فقط)</li>
+            </ul>
+        </li>
+        <li>اختر موقع الحفظ</li>
+        <li>يتم عرض تقدم التحميل في نافذة الحوار</li>
+        <li>يمكن تشغيل الملف المحمل دون الاتصال بالإنترنت</li>
+    </ol>
+
+    <h2 id="audio-settings">إعدادات الصوت</h2>
+
+    <h3>الوصول إلى الإعدادات</h3>
+    <ol>
+        <li>اضغط <code>Ctrl+Comma</code>، أو</li>
+        <li>انتقل إلى <code>أدوات → إعدادات</code></li>
+    </ol>
+
+    <h3>إعدادات عامة</h3>
+    <ul>
+        <li><strong>اللغة:</strong> اختر الإنجليزية أو العربية</li>
+        <li><strong>مستوى التفصيل:</strong> وضع مبتدئ أو متقدم</li>
+        <li><strong>التحقق من التحديثات:</strong> تفعيل أو تعطيل التحقق التلقائي</li>
+    </ul>
+
+    <h3>إعدادات جهاز الصوت</h3>
+    <ol>
+        <li>انتقل إلى الإعدادات → تبويب جهاز الصوت</li>
+        <li>اعرض قائمة الأجهزة الصوتية المتاحة</li>
+        <li>اختر جهاز الإخراج المطلوب</li>
+        <li>يتم حفظ الإعدادات تلقائياً</li>
+    </ol>
+
+    <h3>إزالة الصمت</h3>
+    <p>إزالة الأجزاء الصامتة تلقائياً من الموسيقى:</p>
+    <table>
+        <tr>
+            <th>الإعداد</th>
+            <th>الوصف</th>
+            <th>الافتراضي</th>
+        </tr>
+        <tr>
+            <td>تفعيل إزالة الصمت</td>
+            <td>تشغيل / إيقاف الميزة</td>
+            <td>مغلق</td>
+        </tr>
+        <tr>
+            <td>مدة الصمت الدنيا</td>
+            <td>الصمت الأقصر من هذا يبقى (بالثواني)</td>
+            <td>0.5</td>
+        </tr>
+        <tr>
+            <td>عتبة الصمت</td>
+            <td>مستوى الصوت الذي يعتبر صمتاً (ديسيبل)</td>
+            <td>-30</td>
+        </tr>
+    </table>
+
+    <h2 id="advanced-features">الميزات المتقدمة</h2>
+
+    <h3>وضع المزج العشوائي والتكرار</h3>
+    <table>
+        <tr>
+            <th>الوضع</th>
+            <th>السلوك</th>
+            <th>لوحة المفاتيح</th>
+        </tr>
+        <tr>
+            <td>مزج عشوائي</td>
+            <td>تشغيل الملفات بترتيب عشوائي</td>
+            <td><code>Shift+R</code></td>
+        </tr>
+        <tr>
+            <td>تكرار الملف</td>
+            <td>تكرار الملف الحالي بشكل مستمر</td>
+            <td><code>Ctrl+R</code></td>
+        </tr>
+        <tr>
+            <td>تكرار قائمة التشغيل</td>
+            <td>تكرار قائمة التشغيل بالكامل عند الانتهاء</td>
+            <td><code>Shift+Ctrl+R</code></td>
+        </tr>
+    </table>
+
+    <h2 id="accessibility">إمكانية الوصول</h2>
+
+    <h3>دعم قارئ الشاشة</h3>
+    <p>يعمل مشغل الموسيقى البسيط مع:</p>
+    <ul>
+        <li><strong>JAWS:</strong> دعم كامل لجميع الميزات</li>
+        <li><strong>NVDA:</strong> دعم كامل لجميع الميزات</li>
+        <li><strong>Windows Narrator:</strong> دعم أساسي</li>
+    </ul>
+
+    <h3>التحكم بواسطة لوحة المفاتيح فقط</h3>
+    <p>التحكم الكامل في التطبيق من خلال لوحة المفاتيح:</p>
+    <ul>
+        <li>لا يلزم الماوس لأي وظيفة</li>
+        <li>جميع القوائم يمكن الوصول إليها عبر مفتاح Alt</li>
+        <li>اختصارات متاحة لجميع العمليات الشائعة</li>
+    </ul>
+
+    <h2 id="troubleshooting">استكشاف الأخطاء</h2>
+
+    <h3>لا صوت من الإخراج</h3>
+    <p><strong>الأعراض:</strong> التطبيق يعمل ولكن لا يوجد صوت</p>
+    <p><strong>الحلول:</strong></p>
+    <ol>
+        <li>تحقق من أن جهاز الصوت في Windows يعمل</li>
+        <li>تأكد من توصيل السماعات أو سماعات الرأس</li>
+        <li>تحقق من أن مستوى الصوت بالنظام ليس مكتوماً</li>
+        <li>جرب جهاز صوت مختلف في الإعدادات</li>
+        <li>شغل "اختبار المتحدثين" (Ctrl+Alt+T)</li>
+    </ol>
+
+    <h3>قارئ الشاشة لا يعمل</h3>
+    <p><strong>الأعراض:</strong> لا توجد رسائل صوتية من التطبيق</p>
+    <p><strong>الحلول:</strong></p>
+    <ol>
+        <li>تأكد من أن قارئ الشاشة (JAWS/NVDA) قيد التشغيل</li>
+        <li>تحقق من أن مستوى الصوت ليس مكتوماً</li>
+        <li>جرب "اختبار المتحدثين" للتحقق من إخراج الصوت</li>
+        <li>أعد تشغيل قارئ الشاشة</li>
+        <li>أعد تشغيل التطبيق</li>
+    </ol>
+
+    <h2 id="faq">الأسئلة الشائعة</h2>
+
+    <p><strong>س: هل مشغل الموسيقى البسيط مجاني؟</strong></p>
+    <p>ج: نعم، التطبيق مجاني ومفتوح المصدر.</p>
+
+    <p><strong>س: هل يعمل على Mac أو Linux؟</strong></p>
+    <p>ج: حالياً يعمل على Windows فقط. الدعم متعدد المنصات ممكن في المستقبل.</p>
+
+    <p><strong>س: ما الصيغ الصوتية المدعومة؟</strong></p>
+    <p>ج: MP3، FLAC، WAV، OGG، OPUS، AAC، AIFF، ALAC، WMA وغيرها.</p>
+
+    <p><strong>س: هل يمكنني تخصيص اختصارات لوحة المفاتيح؟</strong></p>
+    <p>ج: نعم، جميع الاختصارات قابلة للتخصيص في الإعدادات > اختصارات لوحة المفاتيح.</p>
+
+    <footer>
+        <p>دليل مستخدم مشغل الموسيقى البسيط | الإصدار 1.0.1</p>
+        <p>لمزيد من المعلومات، زر <a href="https://github.com/kamalyaser31/simple-player">مستودع GitHub</a></p>
+        <p>آخر تحديث: 22 فبراير 2026</p>
+    </footer>
+</body>
+</html>

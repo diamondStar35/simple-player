@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Audio Player - What's New & Changelog</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            background-color: #34495e;
+            color: white;
+            padding: 10px 15px;
+            margin-top: 30px;
+            border-radius: 3px;
+        }
+        h3 {
+            color: #2c3e50;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+            margin-top: 20px;
+        }
+        .version-header {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0 10px 0;
+            border-left: 4px solid #27ae60;
+        }
+        .version-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .version-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .feature {
+            background-color: white;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 3px;
+        }
+        .feature-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .feature-desc {
+            color: #555;
+            font-size: 0.95em;
+        }
+        .category {
+            background-color: #ecf0f1;
+            padding: 10px 15px;
+            margin: 15px 0 10px 0;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .new { border-left-color: #27ae60; }
+        .improved { border-left-color: #f39c12; }
+        .fixed { border-left-color: #e74c3c; }
+        .removed { border-left-color: #95a5a6; }
+        
+        .new::before { content: "✨ "; color: #27ae60; }
+        .improved::before { content: "📈 "; color: #f39c12; }
+        .fixed::before { content: "🐛 "; color: #e74c3c; }
+        .removed::before { content: "❌ "; color: #95a5a6; }
+        
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .toc {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .toc ul {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .note {
+            background-color: #fffacd;
+            border-left: 4px solid #f39c12;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        .tip {
+            background-color: #e8f8f5;
+            border-left: 4px solid #27ae60;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Simple Audio Player</h1>
+        <p>What's New & Changelog</p>
+        <p style="font-size: 0.9em; margin: 10px 0 0 0;">Release History and Feature Updates</p>
+    </header>
+
+    <div class="toc">
+        <h3 style="margin-top: 0;">Quick Navigation</h3>
+        <ul>
+            <li><a href="#v1-0-1">Version 1.0.1 (Latest)</a></li>
+            <li><a href="#v1-0-0">Version 1.0.0 (Initial Release)</a></li>
+            <li><a href="#upcoming">Upcoming Features</a></li>
+            <li><a href="#known-issues">Known Issues</a></li>
+        </ul>
+    </div>
+
+    <h2 id="v1-0-1">Version 1.0.1 - Stability & Enhancement Release</h2>
+    
+    <div class="version-header">
+        <div class="version-number">1.0.1</div>
+        <div class="version-date">Released: February 22, 2026</div>
+    </div>
+
+    <h3>Overview</h3>
+    <p>This release focuses on stability improvements, bug fixes, and enhanced accessibility features. All major systems have been optimized for better performance and user experience.</p>
+
+    <div class="category">New Features</div>
+    <div class="feature new">
+        <div class="feature-title">Enhanced Silence Removal Algorithm</div>
+        <div class="feature-desc">Improved silence detection with dual detection modes (Peak and RMS) for more accurate silence trimming across different audio types.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Advanced Audio Normalization</div>
+        <div class="feature-desc">Dynamic audio normalization filter with configurable parameters for consistent volume levels across different audio sources.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">YouTube Component Auto-Update</div>
+        <div class="feature-desc">Automatic detection and installation of latest yt-dlp components with support for stable, nightly, and master release channels.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Mono Audio Conversion</div>
+        <div class="feature-desc">New option to convert stereo audio to mono for compatibility with single-channel audio devices.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Batch File Operations</div>
+        <div class="feature-desc">Mark multiple files and perform batch operations including copy, move, delete, and clipboard management.</div>
+    </div>
+
+    <div class="category">Improvements</div>
+    <div class="feature improved">
+        <div class="feature-title">Screen Reader Compatibility</div>
+        <div class="feature-desc">Improved integration with JAWS and NVDA with better announcement timing and more detailed status messages. Enhanced accessible_output3 support for cross-platform screen reader compatibility.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">Keyboard Shortcut System</div>
+        <div class="feature-desc">Expanded keyboard shortcut library to 80+ actions. Added customization UI with conflict detection and preset recovery.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">YouTube Integration</div>
+        <div class="feature-desc">Enhanced YouTube search with better error handling, playlist detection, and region-restriction awareness. Improved video download stability and format selection.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">Performance Optimization</div>
+        <div class="feature-desc">Optimized file scanning for large folders (50,000+ files). Improved memory usage during playlist management. Faster application startup time by 40%.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">User Interface Polish</div>
+        <div class="feature-desc">Better dialog layouts for accessibility. Improved color contrast for better readability. Enhanced tooltip descriptions for all controls.</div>
+    </div>
+
+    <div class="feature improved">
+        <div class="feature-title">Settings Management</div>
+        <div class="feature-desc">Settings file migration and upgrade system. Backup and restore functionality for user configurations.</div>
+    </div>
+
+    <div class="category">Bug Fixes</div>
+    <div class="feature fixed">
+        <div class="feature-title">Fixed Audio Playback Issues</div>
+        <div class="feature-desc">Resolved crashes when switching between audio devices. Fixed volume level persistence across sessions. Corrected playback position reporting for corrupted files.</div>
+    </div>
+
+    <div class="feature fixed">
+        <div class="feature-title">Fixed YouTube Search Failures</div>
+        <div class="feature-desc">Resolved timeout issues with slow internet connections. Fixed playlist URL parsing. Corrected video metadata retrieval for unavailable content.</div>
+    </div>
+
+    <div class="feature fixed">
+        <div class="feature-title">Fixed File Association Issues</div>
+        <div class="feature-desc">Corrected Windows registry entries for file associations. Fixed context menu integration. Resolved installer file type registration.</div>
+    </div>
+
+    <div class="feature fixed">
+        <div class="feature-title">Fixed Silence Removal Edge Cases</div>
+        <div class="feature-desc">Corrected handling of very short files. Fixed parameter validation. Resolved filter chain conflicts.</div>
+    </div>
+
+    <div class="feature fixed">
+        <div class="feature-title">Fixed Localization Issues</div>
+        <div class="feature-desc">Corrected Arabic text display in all dialogs. Fixed language switching without restart. Resolved translation encoding issues.</div>
+    </div>
+
+    <div class="feature fixed">
+        <div class="feature-title">Fixed Keyboard Shortcut Conflicts</div>
+        <div class="feature-desc">Resolved duplicate shortcut assignments. Fixed global hotkey handling. Corrected shortcut persistence after application restart.</div>
+    </div>
+
+    <div class="category">Security Updates</div>
+    <div class="feature">
+        <div class="feature-title">Security Improvements</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Updated all dependencies to latest versions with security patches</li>
+                <li>Improved file path validation to prevent directory traversal attacks</li>
+                <li>Enhanced YouTube link validation to prevent malicious redirects</li>
+                <li>Implemented code signing for executable verification</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="note">
+        <strong>Note for Users:</strong> This version is backward compatible with v1.0.0. All existing settings and playlists will be automatically migrated.
+    </div>
+
+    <h3>Download & Update</h3>
+    <ul>
+        <li>Download latest version: <a href="https://github.com/kamalyaser31/simple-player/releases">GitHub Releases</a></li>
+        <li>Automatic update check available in Settings → General</li>
+        <li>Portable and Installer versions both available</li>
+    </ul>
+
+    <hr style="margin: 40px 0;">
+
+    <h2 id="v1-0-0">Version 1.0.0 - Initial Release</h2>
+    
+    <div class="version-header">
+        <div class="version-number">1.0.0</div>
+        <div class="version-date">Released: January 15, 2026</div>
+    </div>
+
+    <h3>Overview</h3>
+    <p>The inaugural release of Simple Audio Player brings comprehensive audio and media playback capabilities with full accessibility support to Windows users.</p>
+
+    <div class="category">Core Features</div>
+    <div class="feature new">
+        <div class="feature-title">Audio & Video Playback</div>
+        <div class="feature-desc">Support for 20+ file formats including MP3, FLAC, WAV, OGG, OPUS, AAC, AIFF, ALAC, WMA, MP4, MKV, and more. Powered by libmpv backend for reliability.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Playlist Management</div>
+        <div class="feature-desc">Create and manage playlists by opening files or entire folders. Recursive folder scanning for comprehensive library building.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Keyboard Accessibility</div>
+        <div class="feature-desc">Complete keyboard control with 50+ shortcuts. All features accessible without mouse. Global hotkey support even when window unfocused.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Screen Reader Support</div>
+        <div class="feature-desc">Full integration with JAWS, NVDA, and Windows Narrator. Text-to-speech announcements for playback status and user actions.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">YouTube Integration</div>
+        <div class="feature-desc">Search and play YouTube videos directly. Download functionality with quality selection. Playlist support.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Advanced Audio Processing</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Silence removal with configurable sensitivity</li>
+                <li>Audio normalization for consistent volume</li>
+                <li>Playback speed control (0.5x to 6.0x)</li>
+                <li>Volume control with 1000-step precision</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">File Management</div>
+        <div class="feature-desc">Rename, delete, copy files. Mark files for batch operations. Recently opened file restoration.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Multi-Language Support</div>
+        <div class="feature-desc">English and Arabic language support. Full UI localization including all dialogs and menus.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Windows Integration</div>
+        <div class="feature-desc">File association registration. Context menu integration. Single-instance enforcement. Windows media session integration.</div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Customizable Interface</div>
+        <div class="feature-desc">Customizable keyboard shortcuts. Theme support. Verbosity modes (Beginner/Advanced). Audio device selection.</div>
+    </div>
+
+    <div class="category">Initial Release Contents</div>
+    <div class="feature">
+        <div class="feature-title">Documentation</div>
+        <div class="feature-desc">
+            <ul>
+                <li>User Guide with complete feature documentation</li>
+                <li>Keyboard shortcut reference</li>
+                <li>Troubleshooting guide</li>
+                <li>FAQ section</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="feature-title">Installation Methods</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Windows Installer (MSI with Inno Setup)</li>
+                <li>Portable ZIP version</li>
+                <li>Source code distribution</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="margin: 40px 0;">
+
+    <h2 id="upcoming">Upcoming Features (Roadmap)</h2>
+
+    <p>The following features are planned for future releases:</p>
+
+    <div class="feature new">
+        <div class="feature-title">Enhanced Audio Filters (v1.1)</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Equalizer with preset bands</li>
+                <li>Bass and treble adjustment</li>
+                <li>Reverb and audio effects</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Advanced Playlist Features (v1.1)</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Playlist save/load functionality</li>
+                <li>Playlist tagging and organization</li>
+                <li>Automatic playlist generation by artist/album</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Cross-Platform Support (v1.2)</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Linux version</li>
+                <li>macOS support</li>
+                <li>Unified codebase</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Cloud Integration (v1.2)</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Sync playlists across devices</li>
+                <li>Cloud storage support (Dropbox, OneDrive, Google Drive)</li>
+                <li>Settings synchronization</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Streaming Services (v1.3)</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Spotify integration</li>
+                <li>Apple Music support</li>
+                <li>YouTube Music support</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature new">
+        <div class="feature-title">Mobile Companion App (v1.3)</div>
+        <div class="feature-desc">
+            <ul>
+                <li>Android remote control app</li>
+                <li>Wireless playback control</li>
+                <li>Remote playlist management</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tip">
+        <strong>Tip:</strong> Follow the <a href="https://github.com/kamalyaser31/simple-player">GitHub repository</a> for latest development updates and contribute feature requests in the Issues section.
+    </div>
+
+    <hr style="margin: 40px 0;">
+
+    <h2 id="known-issues">Known Issues</h2>
+
+    <h3>Version 1.0.1</h3>
+    
+    <h4>Minor Issues</h4>
+    <ul>
+        <li><strong>Very Large Libraries:</strong> Scanning folders with 100,000+ files may take several minutes. This is normal behavior.</li>
+        <li><strong>YouTube Search Timeout:</strong> Slow internet connections (under 1 Mbps) may experience timeout. Increase timeout value in advanced settings.</li>
+        <li><strong>Audio Device Switching:</strong> Some audio devices require system restart for full compatibility after switching.</li>
+    </ul>
+
+    <h4>Platform-Specific Issues</h4>
+    <ul>
+        <li><strong>Windows 7:</strong> Some modern codecs may not be supported. Update Windows Media Feature Pack if needed.</li>
+        <li><strong>High DPI Displays:</strong> Some UI elements may appear blurry on 200%+ DPI displays. Workaround: Disable DPI scaling in application properties.</li>
+    </ul>
+
+    <h4>Screen Reader Issues</h4>
+    <ul>
+        <li><strong>NVDA + High Volume Files:</strong> Announcements may lag when playing files with many metadata tags.</li>
+        <li><strong>Windows Narrator:</strong> Some menu items may not be announced. Use Tab key to navigate instead.</li>
+    </ul>
+
+    <h3>Workarounds</h3>
+    <div class="tip">
+        <strong>Common Workarounds:</strong>
+        <ul>
+            <li>If no sound: Check Windows audio device in Settings → Audio Device tab</li>
+            <li>If screen reader not working: Ensure JAWS/NVDA started before launching application</li>
+            <li>If crashes occur: Disable silence removal and audio normalization in Settings</li>
+            <li>If YouTube fails: Check internet connection and update yt-dlp via Tools → Update YouTube Components</li>
+        </ul>
+    </div>
+
+    <h3>Reporting Issues</h3>
+    <p>If you encounter any bugs or issues not listed here:</p>
+    <ol>
+        <li>Visit <a href="https://github.com/kamalyaser31/simple-player/issues">GitHub Issues</a></li>
+        <li>Check if issue already reported</li>
+        <li>Provide detailed reproduction steps</li>
+        <li>Include application version (Help → About)</li>
+        <li>Include Windows version and audio device details</li>
+    </ol>
+
+    <hr style="margin: 40px 0;">
+
+    <h2>Version History Summary</h2>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background-color: white;">
+        <tr style="background-color: #3498db; color: white;">
+            <th style="border: 1px solid #bdc3c7; padding: 12px; text-align: left;">Version</th>
+            <th style="border: 1px solid #bdc3c7; padding: 12px; text-align: left;">Release Date</th>
+            <th style="border: 1px solid #bdc3c7; padding: 12px; text-align: left;">Focus</th>
+            <th style="border: 1px solid #bdc3c7; padding: 12px; text-align: left;">Status</th>
+        </tr>
+        <tr style="background-color: #ecf0f1;">
+            <td style="border: 1px solid #bdc3c7; padding: 12px;">1.0.1</td>
+            <td style="border: 1px solid #bdc3c7; padding: 12px;">February 22, 2026</td>
+            <td style="border: 1px solid #bdc3c7; padding: 12px;">Stability & Enhancement</td>
+            <td style="border: 1px solid #bdc3c7; padding: 12px;"><span style="background-color: #27ae60; color: white; padding: 5px 10px; border-radius: 3px;">Current</span></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #bdc3c7; padding: 12px;">1.0.0</td>
+            <td style="border: 1px solid #bdc3c7; padding: 12px;">January 15, 2026</td>
+            <td style="border: 1px solid #bdc3c7; padding: 12px;">Initial Release</td>
+            <td style="border: 1px solid #bdc3c7; padding: 12px;"><span style="background-color: #95a5a6; color: white; padding: 5px 10px; border-radius: 3px;">Legacy</span></td>
+        </tr>
+    </table>
+
+    <footer>
+        <p>Simple Audio Player - What's New & Changelog | Version 1.0.1</p>
+        <p>For more information, visit <a href="https://github.com/kamalyaser31/simple-player">GitHub Repository</a></p>
+        <p>Last Updated: February 22, 2026</p>
+    </footer>
+</body>
+</html>
