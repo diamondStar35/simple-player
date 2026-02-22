@@ -117,18 +117,23 @@ The main window contains:
 | Seek Backward (5 sec) | `Left Arrow` | Rewind 5 seconds |
 | Jump to Start | `Home` | Go to beginning of file |
 | Jump to End | `End` | Go to end of file |
-| Custom Seek | `Ctrl+1` through `Ctrl+0` | Jump by custom interval (configurable) |
+| Seek Steps | `Shift+1` through `Shift+0` | Jump by fixed intervals (1s to 60m) |
+| Custom Seek Step | `Shift+-` | Jump by your custom seek interval |
+| Percent Jumps | `Ctrl+1` through `Ctrl+0` | Jump to 10% through 100% of the file |
 
-> **Note:** Seek intervals can be customized in Settings. Default intervals range from 1 second to 1 hour.
+> **Tip:** You can also use `Ctrl+Shift+1` through `Ctrl+Shift+0` to jump to 5% offsets (e.g., 15%, 25%, etc.).
+
+> **Note:** Seek steps (Shift+1-0) are fixed presets. Percent jumps (Ctrl+1-0) allow quick navigation through long files.
+> You can also use `Ctrl+Shift+1-0` to jump to 5% offsets (e.g., 15%, 25%).
 
 ### Volume Control
 
 | Action | Keyboard Shortcut | Effect |
 |--------|-------------------|--------|
-| Volume Up | `Ctrl+Up` or `+` | Increase volume by 5 steps |
-| Volume Down | `Ctrl+Down` or `-` | Decrease volume by 5 steps |
-| Maximize Volume | `M` | Set to maximum (1000) |
-| Mute | `Shift+M` | Set to minimum (0) |
+| Volume Up | `Up Arrow` | Increase volume |
+| Volume Down | `Down Arrow` | Decrease volume |
+| Maximize Volume | `Shift+Up Arrow` | Set to maximum |
+| Mute | `Shift+Down Arrow` | Set to minimum (Mute) |
 | Announce Volume | `V` | Current volume spoken aloud |
 
 > **Tip:** Volume control has 1000 steps for fine-grained control. Minimum keyboard increment is 5 steps, but can be set to 1 step in settings.
@@ -137,9 +142,9 @@ The main window contains:
 
 | Action | Keyboard Shortcut | Range |
 |--------|-------------------|-------|
-| Increase Speed | `Shift+Up` | 0.5x to 6.0x |
-| Decrease Speed | `Shift+Down` | 0.5x to 6.0x |
-| Reset Speed | `1` | Return to 1.0x (normal) |
+| Increase Speed | `Ctrl+Up Arrow` | 0.5x to 6.0x |
+| Decrease Speed | `Ctrl+Down Arrow` | 0.5x to 6.0x |
+| Reset Speed | `Alt+Y` | Return to 1.0x (normal) |
 | Announce Speed | `S` | Current speed spoken aloud |
 
 ---
@@ -160,29 +165,35 @@ The main window contains:
 
 | Action | Keyboard Shortcut | Menu Option |
 |--------|-------------------|-------------|
-| Next File | `Ctrl+Right` or `N` | Playback → Next |
-| Previous File | `Ctrl+Left` or `P` | Playback → Previous |
+| Next File | `Tab` or `Page Down` | Playback → Next |
+| Previous File | `Shift+Tab` or `Page Up` | Playback → Previous |
 | First File | `Ctrl+Home` | Playback → First |
 | Last File | `Ctrl+End` | Playback → Last |
 | Go to File | `Ctrl+G` | File → Go to File |
+| Open Containing Folder | `Ctrl+F` | File → Open Containing Folder |
 
 ### File Operations
 
 #### Rename File
 1. Load file or select from playlist
-2. Press `F2` or go to `Edit → Rename`
+2. Press `Shift+F2` or go to `Edit → Rename`
 3. Enter new filename in dialog
 4. Press Enter to confirm
 
 #### Delete File
 1. Select file to delete
-2. Press `Delete` or go to `Edit → Delete`
+2. Press `Shift+Delete` or go to `Edit → Delete`
 3. Confirm deletion in dialog
 4. File moved to Recycle Bin
 
+#### File Properties
+1. Load file or select from playlist
+2. Press `Alt+Enter` or go to `File → File Properties`
+3. Standard Windows file properties dialog appears
+
 #### Copy File Path
 1. Load file
-2. Press `Ctrl+C` or go to `Edit → Copy`
+2. Press `Ctrl+Shift+C` or go to `Edit → Copy`
 3. File path copied to clipboard
 4. Can be pasted into any text editor
 
@@ -199,10 +210,10 @@ Mark files to perform batch operations on multiple files:
 
 | Action | Keyboard Shortcut | Effect |
 |--------|-------------------|--------|
-| Mark Current File | `M` | Add current file to marked list |
+| Mark Current File | `Ctrl+K` | Add current file to marked list |
 | Mark All Files | `Ctrl+A` | Mark all files in playlist |
-| Clear Marks | `Ctrl+Alt+C` | Remove all marks |
-| Announce Marked Count | `Ctrl+M` | Speak number of marked files |
+| Clear Marks | `Ctrl+Shift+K` | Remove all marks |
+| Announce Marked Count | `K` | Speak number of marked files |
 
 #### Batch Operations on Marked Files
 - **Copy to Folder:** Copy all marked files to selected directory
@@ -218,10 +229,9 @@ Mark files to perform batch operations on multiple files:
 
 | Shortcut | Action |
 |----------|--------|
-| `Space` | Play / Pause |
-| `Ctrl+Right` or `N` | Next Track |
-| `Ctrl+Left` or `P` | Previous Track |
-| `Ctrl+.` (period) | Stop Playback |
+| `Space` or `Enter` | Play / Pause |
+| `Tab` or `Page Down` | Next Track |
+| `Shift+Tab` or `Page Up` | Previous Track |
 
 ### Seeking
 
@@ -229,30 +239,34 @@ Mark files to perform batch operations on multiple files:
 |----------|--------|
 | `Right Arrow` | Seek Forward 5 seconds |
 | `Left Arrow` | Seek Backward 5 seconds |
-| `Ctrl+Right Arrow` (x2) | Seek Forward 2x speed |
-| `Ctrl+Left Arrow` (x2) | Seek Backward 2x speed |
+| `Ctrl+Right Arrow` | Seek Forward x2 |
+| `Ctrl+Left Arrow` | Seek Backward x2 |
+| `Shift+Right Arrow` | Seek Forward x8 |
+| `Shift+Left Arrow` | Seek Backward x8 |
+| `Ctrl+Shift+Right Arrow` | Seek Forward x4 |
+| `Ctrl+Shift+Left Arrow` | Seek Backward x4 |
 | `Home` | Jump to Start |
 | `End` | Jump to End |
-| `Ctrl+1` through `Ctrl+9` | Jump by Seek Step 1-9 |
-| `Ctrl+0` | Jump by Seek Step 10 |
+| `Shift+1` through `Shift+9` | Jump by Seek Step 1-9 |
+| `Shift+0` | Jump by Seek Step 10 |
 
 ### Volume Control
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Up` or `+` | Increase Volume |
-| `Ctrl+Down` or `-` | Decrease Volume |
-| `M` | Maximize Volume |
-| `Shift+M` | Minimize Volume (Mute) |
+| `Up Arrow` | Increase Volume |
+| `Down Arrow` | Decrease Volume |
+| `Shift+Up Arrow` | Maximize Volume |
+| `Shift+Down Arrow` | Minimize Volume (Mute) |
 | `V` | Announce Volume |
 
 ### Speed Control
 
 | Shortcut | Action |
 |----------|--------|
-| `Shift+Up` | Increase Speed |
-| `Shift+Down` | Decrease Speed |
-| `1` | Reset Speed to 1.0x |
+| `Ctrl+Up Arrow` | Increase Speed |
+| `Ctrl+Down Arrow` | Decrease Speed |
+| `Alt+Y` | Reset Speed to 1.0x |
 | `S` | Announce Speed |
 
 ### File Management
@@ -263,10 +277,13 @@ Mark files to perform batch operations on multiple files:
 | `Ctrl+Shift+O` | Open Folder |
 | `Ctrl+W` | Close Current File |
 | `Ctrl+Shift+W` | Close All Files |
-| `F2` | Rename File |
-| `Delete` | Delete File |
-| `Ctrl+C` | Copy File Path |
+| `Ctrl+L` | Open Link |
+| `F2` | Opened Files List |
+| `Shift+F2` | Rename File |
+| `Shift+Delete` | Delete File |
+| `Ctrl+Shift+C` | Copy File Path |
 | `Ctrl+V` | Paste Files |
+| `Alt+Enter` | File Properties |
 
 ### Navigation
 
@@ -281,29 +298,31 @@ Mark files to perform batch operations on multiple files:
 
 | Shortcut | Action |
 |----------|--------|
-| `T` | Announce Elapsed Time |
-| `Shift+T` | Announce Remaining Time |
-| `D` | Announce Duration |
-| `Ctrl+P` | Announce Current Position % |
+| `E` | Announce Elapsed Time |
+| `R` | Announce Remaining Time |
+| `T` | Announce Duration |
+| `P` | Announce Current Position % |
 | `F` | Announce File Information |
 
 ### Marking Files
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+I` | Mark Current File |
-| `Ctrl+Shift+A` | Mark All Files |
-| `Ctrl+Alt+C` | Clear All Marks |
-| `Ctrl+M` | Announce Marked Count |
+| `Ctrl+K` | Mark Current File |
+| `Ctrl+A` | Mark All Files |
+| `Ctrl+Shift+K` | Clear All Marks |
+| `K` | Announce Marked Count |
 
 ### Utilities
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Comma` | Open Settings |
+| `Ctrl+P` | Open Settings |
 | `F1` | Show User Guide |
-| `Ctrl+Alt+A` | Show About Dialog |
-| `Ctrl+Alt+T` | Test Speakers |
+| `Ctrl+Shift+T` | Test Speakers |
+| `Ctrl+Shift+A` | Audio Devices (Sound Cards) |
+| `Ctrl+M` | Toggle Silence Removal |
+| `Ctrl+Shift+V` | Toggle Verbosity Mode |
 
 > **Tip:** All keyboard shortcuts are customizable. Go to Settings > Keyboard Shortcuts to modify them to your preference.
 
@@ -322,9 +341,17 @@ Mark files to perform batch operations on multiple files:
 ### Opening YouTube Links
 
 1. Copy YouTube video URL to clipboard
-2. Go to `File → Open YouTube Link` or press `Ctrl+Alt+Y`
+2. Go to `File → Open YouTube Link` or press `Ctrl+Shift+Y`
 3. Paste URL when prompted
 4. Video begins playing automatically
+
+#### Video Actions
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+D` | Download Video |
+| `Alt+D` | Show Video Description |
+| `Ctrl+Y` | YouTube Search |
 
 > **Note:** YouTube URLs must start with `https://` and contain valid video ID. URLs like `https://www.youtube.com/watch?v=dQw4w9WgXcQ` are supported.
 
@@ -355,7 +382,7 @@ YouTube features require additional components (yt-dlp):
 
 ### Accessing Settings
 
-1. Press `Ctrl+Comma`, or
+1. Press `Ctrl+P`, or
 2. Go to `Tools → Settings`
 
 ### General Settings Tab
@@ -414,9 +441,8 @@ Automatically remove silent sections from audio:
 
 | Mode | Behavior | Keyboard |
 |------|----------|----------|
-| Shuffle | Play files in random order | `Shift+R` |
+| Shuffle | Play files in random order | `Ctrl+Z` |
 | Repeat File | Repeat current file continuously | `Ctrl+R` |
-| Repeat Playlist | Repeat entire playlist when finished | `Shift+Ctrl+R` |
 
 ### File Selection (Range Selection)
 
@@ -424,9 +450,9 @@ Select ranges of files for batch operations:
 
 | Action | Keyboard Shortcut |
 |--------|-------------------|
-| Start Selection | `Ctrl+Shift+S` |
-| End Selection | `Ctrl+Shift+E` |
-| Clear Selection | `Ctrl+Shift+C` |
+| Start Selection | `[` |
+| End Selection | `]` |
+| Clear Selection | `Backspace` |
 
 ### Playback Information
 
@@ -479,6 +505,7 @@ Complete application control via keyboard:
 | Advanced | Detailed Messages | Comprehensive status and action information |
 
 > **Tip:** Toggle between modes by pressing `V` when no file is playing.
+> **Tip:** Toggle verbosity mode anytime by pressing `Ctrl+Shift+V`.
 
 ---
 
@@ -495,7 +522,7 @@ Complete application control via keyboard:
 2. Verify speakers/headphones are connected
 3. Check system volume is not muted
 4. Try different audio device in Settings
-5. Run "Test Speakers" (Ctrl+Alt+T)
+5. Run "Test Speakers" (Ctrl+Shift+T)
 6. Restart application
 
 #### Screen Reader Not Announcing
