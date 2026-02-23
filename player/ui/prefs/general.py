@@ -26,6 +26,10 @@ class GeneralSettingsPanel(wx.Panel):
             self, label=_("Remember last file position")
         )
         self._remember_checkbox.SetValue(self._settings.get_remember_position())
+        self._speak_nav_checkbox = wx.CheckBox(
+            self, label=_("Speak file name when navigating (Previous/Next)")
+        )
+        self._speak_nav_checkbox.SetValue(self._settings.get_speak_file_on_nav())
         self._check_updates_checkbox = wx.CheckBox(
             self,
             label=_("Check for app updates on startup"),
@@ -90,6 +94,7 @@ class GeneralSettingsPanel(wx.Panel):
         language_sizer.Add(self._lang_choice, 0, wx.EXPAND)
         sizer.Add(language_sizer, 0, wx.ALL | wx.EXPAND, 8)
         sizer.Add(self._remember_checkbox, 0, wx.ALL, 8)
+        sizer.Add(self._speak_nav_checkbox, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
         sizer.Add(self._check_updates_checkbox, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
         verbosity_sizer = wx.BoxSizer(wx.VERTICAL)
         verbosity_sizer.Add(self._verbosity_label, 0, wx.BOTTOM, 4)
@@ -112,6 +117,7 @@ class GeneralSettingsPanel(wx.Panel):
         self._help_map = {
             self._lang_choice: self._help_language,
             self._remember_checkbox: self._help_remember_position,
+            self._speak_nav_checkbox: self._help_speak_nav,
             self._check_updates_checkbox: self._help_check_updates,
             self._verbosity_choice: self._help_verbosity,
             self._open_with_files_choice: self._help_open_with_files,
@@ -125,6 +131,7 @@ class GeneralSettingsPanel(wx.Panel):
             lang_selection = 0
         self._settings.set_ui_language(self._lang_values[lang_selection])
         self._settings.set_remember_position(self._remember_checkbox.GetValue())
+        self._settings.set_speak_file_on_nav(self._speak_nav_checkbox.GetValue())
         self._settings.set_check_app_updates(self._check_updates_checkbox.GetValue())
         selection = self._verbosity_choice.GetSelection()
         if selection == wx.NOT_FOUND:
@@ -140,6 +147,7 @@ class GeneralSettingsPanel(wx.Panel):
     def refresh_from_settings(self):
         self._set_language_selection(self._settings.get_ui_language())
         self._remember_checkbox.SetValue(self._settings.get_remember_position())
+        self._speak_nav_checkbox.SetValue(self._settings.get_speak_file_on_nav())
         self._check_updates_checkbox.SetValue(self._settings.get_check_app_updates())
         current = self._settings.get_verbosity()
         try:
@@ -173,6 +181,13 @@ class GeneralSettingsPanel(wx.Panel):
             "When enabled, the player saves the current file and playback time on exit, "
             "then restores that position next time. "
             "When disabled, the player starts fresh each launch."
+        )
+
+    def _help_speak_nav(self):
+        return _(
+            "Speak file name when navigating. "
+            "When enabled, the player will announce the name of the new file when you move to the previous or next track. "
+            "This is helpful for identifying files without manually requesting file information."
         )
 
     def _help_language(self):

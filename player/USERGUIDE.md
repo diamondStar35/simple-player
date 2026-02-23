@@ -392,6 +392,7 @@ YouTube features require additional components (yt-dlp):
   - Beginner: Less detailed announcements
   - Advanced: Detailed status messages
 - **Check for Updates:** Enable/disable automatic update checks
+- **Speak file name when navigating:** Automatically announce the file name when moving to the next or previous track.
 
 ### Audio Device Settings
 

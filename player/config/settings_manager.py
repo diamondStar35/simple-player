@@ -90,6 +90,7 @@ class SettingsManager:
                 "verbosity": "beginner",
                 "open_with_files_mode": "file_only",
                 "check_app_updates": "true",
+                "speak_file_on_nav": "false",
                 "language": "system",
             },
             "youtube": {
@@ -203,6 +204,17 @@ class SettingsManager:
         if "ui" not in self._config:
             self._config["ui"] = {}
         self._config["ui"]["check_app_updates"] = "true" if enabled else "false"
+
+    def get_speak_file_on_nav(self):
+        try:
+            return self._config.getboolean("ui", "speak_file_on_nav")
+        except (ValueError, configparser.Error):
+            return False
+
+    def set_speak_file_on_nav(self, enabled):
+        if "ui" not in self._config:
+            self._config["ui"] = {}
+        self._config["ui"]["speak_file_on_nav"] = "true" if enabled else "false"
 
     def get_ui_language(self):
         text = self._config.get("ui", "language", fallback="system")
@@ -594,4 +606,3 @@ class SettingsManager:
                 self._config["global_shortcuts"].pop(key, None)
         for action_id, shortcut in overrides.items():
             self._config["global_shortcuts"][action_id] = shortcut_to_config(shortcut)
-

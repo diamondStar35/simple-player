@@ -25,6 +25,9 @@ Improved silence detection with dual detection modes (Peak and RMS) for more acc
 #### Advanced Audio Normalization
 Dynamic audio normalization filter with configurable parameters for consistent volume levels across different audio sources.
 
+#### Navigation Announcements
+New option to automatically speak the file name when navigating to the previous or next track.
+
 #### YouTube Component Auto-Update
 Automatic detection and installation of latest yt-dlp components with support for stable, nightly, and master release channels.
 

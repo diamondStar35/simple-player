@@ -433,12 +433,18 @@ def next_file(ctx):
             sync_sel(ctx)
     if moved:
         set_switched(ctx)
+        if ctx.settings.get_speak_file_on_nav():
+            filename = show_name(ctx.player.current_path)
+            ctx.speak(filename, filename)
 
 
 def prev_file(ctx):
     if ctx.player.previous_track():
         sync_sel(ctx)
         set_switched(ctx)
+        if ctx.settings.get_speak_file_on_nav():
+            filename = show_name(ctx.player.current_path)
+            ctx.speak(filename, filename)
 
 
 def first_file(ctx):
@@ -646,4 +652,3 @@ def _copy_txt(text):
         return True
     finally:
         clip.Close()
-
