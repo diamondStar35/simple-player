@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 08:27+0200\n"
+"POT-Creation-Date: 2026-02-23 16:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,7 +110,7 @@ msgstr ""
 msgid "Advance to the next file"
 msgstr ""
 
-#: ui/prefs/general.py:36
+#: ui/prefs/general.py:40
 msgid "Advanced"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Advanced mode"
 msgstr ""
 
-#: app_actions/file_actions.py:478
+#: app_actions/file_actions.py:484
 msgid "All files closed."
 msgstr ""
 
@@ -138,7 +138,7 @@ msgstr ""
 msgid "All unmarked."
 msgstr ""
 
-#: ui/prefs/general.py:180
+#: ui/prefs/general.py:195
 msgid ""
 "Application language. System default follows your OS language. Choosing a "
 "specific language applies it on next app start."
@@ -182,7 +182,7 @@ msgid ""
 "Open user settings folder."
 msgstr ""
 
-#: ui/prefs/general.py:35
+#: ui/prefs/general.py:39
 msgid "Beginner"
 msgstr ""
 
@@ -219,7 +219,7 @@ msgstr ""
 msgid "Canceled."
 msgstr ""
 
-#: app_actions/file_actions.py:549
+#: app_actions/file_actions.py:555
 msgid "Cannot open clipboard data."
 msgstr ""
 
@@ -235,11 +235,11 @@ msgstr ""
 msgid "Check for app updates"
 msgstr ""
 
-#: ui/prefs/general.py:31
+#: ui/prefs/general.py:35
 msgid "Check for app updates on startup"
 msgstr ""
 
-#: ui/prefs/general.py:195
+#: ui/prefs/general.py:210
 msgid ""
 "Check for app updates on startup. When enabled, the app checks online update "
 "metadata at launch and prompts when a newer version is available."
@@ -257,19 +257,19 @@ msgstr ""
 msgid "Clear Marked Files"
 msgstr ""
 
-#: app_actions/file_actions.py:495
+#: app_actions/file_actions.py:501
 msgid "Clipboard does not contain files or folders."
 msgstr ""
 
-#: app_actions/file_actions.py:549
+#: app_actions/file_actions.py:555
 msgid "Clipboard does not contain openable files or folders."
 msgstr ""
 
-#: app_actions/file_actions.py:495
+#: app_actions/file_actions.py:501
 msgid "Clipboard empty."
 msgstr ""
 
-#: app_actions/file_actions.py:545
+#: app_actions/file_actions.py:551
 #, python-brace-format
 msgid "Clipboard path could not be resolved: {path}"
 msgstr ""
@@ -286,11 +286,11 @@ msgstr ""
 msgid "Close all files"
 msgstr ""
 
-#: app_actions/file_actions.py:460 app_actions/file_actions.py:474
+#: app_actions/file_actions.py:466 app_actions/file_actions.py:480
 msgid "Close failed."
 msgstr ""
 
-#: app_actions/file_actions.py:566 app_actions/marked_file_actions.py:89
+#: app_actions/file_actions.py:572 app_actions/marked_file_actions.py:89
 msgid "Confirm Delete"
 msgstr ""
 
@@ -306,7 +306,7 @@ msgstr ""
 msgid "Control the clicks movement value"
 msgstr ""
 
-#: app_actions/file_actions.py:487 app_actions/file_actions.py:631
+#: app_actions/file_actions.py:493 app_actions/file_actions.py:637
 #: app_actions/marked_file_actions.py:76 app_actions/marked_file_actions.py:266
 #: youtube/results.py:59 youtube/video.py:45
 msgid "Copied."
@@ -316,7 +316,7 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: app_actions/file_actions.py:489 app_actions/file_actions.py:633
+#: app_actions/file_actions.py:495 app_actions/file_actions.py:639
 #: app_actions/marked_file_actions.py:78 youtube/results.py:61
 #: youtube/video.py:47
 msgid "Copy failed."
@@ -346,11 +346,11 @@ msgstr ""
 msgid "Could not check for updates."
 msgstr ""
 
-#: app_actions/file_actions.py:474
+#: app_actions/file_actions.py:480
 msgid "Could not close files."
 msgstr ""
 
-#: app_actions/file_actions.py:460
+#: app_actions/file_actions.py:466
 msgid "Could not close the file."
 msgstr ""
 
@@ -366,7 +366,7 @@ msgstr ""
 msgid "Could not delete marked files."
 msgstr ""
 
-#: app_actions/file_actions.py:574
+#: app_actions/file_actions.py:580
 msgid "Could not delete the file."
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "Could not open file properties: {error}"
 msgstr ""
 
-#: app_actions/file_actions.py:538
+#: app_actions/file_actions.py:544
 msgid "Could not open the file from clipboard."
 msgstr ""
 
@@ -430,7 +430,7 @@ msgstr ""
 msgid "Could not open the folder."
 msgstr ""
 
-#: app_actions/file_actions.py:511
+#: app_actions/file_actions.py:517
 msgid "Could not open the link from clipboard."
 msgstr ""
 
@@ -454,14 +454,14 @@ msgstr ""
 msgid "Could not read video details."
 msgstr ""
 
-#: ui/prefs/general.py:232
+#: ui/prefs/general.py:247
 #, python-brace-format
 msgid ""
 "Could not register file extensions.\n"
 "{error}"
 msgstr ""
 
-#: app_actions/file_actions.py:607
+#: app_actions/file_actions.py:613
 msgid "Could not rename the file."
 msgstr ""
 
@@ -488,7 +488,7 @@ msgstr ""
 msgid "Could not start the updater."
 msgstr ""
 
-#: ui/prefs/general.py:249
+#: ui/prefs/general.py:264
 #, python-brace-format
 msgid ""
 "Could not unregister file extensions.\n"
@@ -504,7 +504,7 @@ msgstr ""
 msgid "Counting files... {count}"
 msgstr ""
 
-#: app_actions/file_actions.py:487
+#: app_actions/file_actions.py:493
 msgid "Current file copied to clipboard."
 msgstr ""
 
@@ -531,7 +531,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: app_actions/file_actions.py:565
+#: app_actions/file_actions.py:571
 #, python-brace-format
 msgid "Delete '{name}'?"
 msgstr ""
@@ -541,11 +541,11 @@ msgstr ""
 msgid "Delete Complete"
 msgstr ""
 
-#: app_actions/file_actions.py:574 app_actions/marked_file_actions.py:157
+#: app_actions/file_actions.py:580 app_actions/marked_file_actions.py:157
 msgid "Delete failed."
 msgstr ""
 
-#: app_actions/file_actions.py:559
+#: app_actions/file_actions.py:565
 msgid "Delete is available only for local files."
 msgstr ""
 
@@ -564,7 +564,7 @@ msgstr ""
 msgid "Deleted {deleted} files. Failed to delete {failed} files."
 msgstr ""
 
-#: app_actions/file_actions.py:580 app_actions/marked_file_actions.py:144
+#: app_actions/file_actions.py:586 app_actions/marked_file_actions.py:144
 msgid "Deleted."
 msgstr ""
 
@@ -715,7 +715,7 @@ msgstr ""
 msgid "Enter link to play."
 msgstr ""
 
-#: app_actions/file_actions.py:597
+#: app_actions/file_actions.py:603
 msgid "Enter new name for the file."
 msgstr ""
 
@@ -723,7 +723,7 @@ msgstr ""
 msgid "Enter search text."
 msgstr ""
 
-#: app_actions/file_actions.py:236 app_actions/file_actions.py:512
+#: app_actions/file_actions.py:236 app_actions/file_actions.py:518
 #: app_actions/help_actions.py:61 update/actions.py:88 update/actions.py:134
 #: update/actions.py:140 youtube/flow.py:48 youtube/flow.py:61
 #: youtube/flow.py:320 youtube/flow.py:605
@@ -766,19 +766,19 @@ msgstr ""
 msgid "File added to marked files."
 msgstr ""
 
-#: app_actions/file_actions.py:466
+#: app_actions/file_actions.py:472
 msgid "File closed."
 msgstr ""
 
-#: app_actions/file_actions.py:580
+#: app_actions/file_actions.py:586
 msgid "File deleted."
 msgstr ""
 
-#: ui/prefs/general.py:225
+#: ui/prefs/general.py:240
 msgid "File extensions registered successfully."
 msgstr ""
 
-#: ui/prefs/general.py:242
+#: ui/prefs/general.py:257
 msgid "File extensions unregistered successfully."
 msgstr ""
 
@@ -786,7 +786,7 @@ msgstr ""
 msgid "File number out of range."
 msgstr ""
 
-#: app_actions/file_actions.py:631
+#: app_actions/file_actions.py:637
 msgid "File path copied to clipboard."
 msgstr ""
 
@@ -806,7 +806,7 @@ msgstr ""
 msgid "File removed from marked files."
 msgstr ""
 
-#: app_actions/file_actions.py:605
+#: app_actions/file_actions.py:611
 msgid "File renamed."
 msgstr ""
 
@@ -826,7 +826,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: ui/prefs/general.py:166
+#: ui/prefs/general.py:174
 msgid ""
 "General settings. Use Tab to move between controls. Press F1 on a specific "
 "control to hear detailed help."
@@ -927,7 +927,7 @@ msgstr ""
 msgid "Invalid number."
 msgstr ""
 
-#: app_actions/file_actions.py:546
+#: app_actions/file_actions.py:552
 msgid "Invalid path in clipboard."
 msgstr ""
 
@@ -1142,11 +1142,11 @@ msgstr ""
 msgid "No YouTube video."
 msgstr ""
 
-#: app_actions/file_actions.py:212 app_actions/file_actions.py:527
+#: app_actions/file_actions.py:212 app_actions/file_actions.py:533
 msgid "No audio files found in that folder."
 msgstr ""
 
-#: app_actions/file_actions.py:212 app_actions/file_actions.py:527
+#: app_actions/file_actions.py:212 app_actions/file_actions.py:533
 msgid "No audio files."
 msgstr ""
 
@@ -1168,9 +1168,9 @@ msgstr ""
 
 #: app_actions/file_actions.py:246 app_actions/file_actions.py:250
 #: app_actions/file_actions.py:261 app_actions/file_actions.py:350
-#: app_actions/file_actions.py:456 app_actions/file_actions.py:471
-#: app_actions/file_actions.py:484 app_actions/file_actions.py:555
-#: app_actions/file_actions.py:586 app_actions/file_actions.py:614
+#: app_actions/file_actions.py:462 app_actions/file_actions.py:477
+#: app_actions/file_actions.py:490 app_actions/file_actions.py:561
+#: app_actions/file_actions.py:592 app_actions/file_actions.py:620
 #: app_actions/marked_file_actions.py:27 app_actions/marked_file_actions.py:37
 #: app_actions/playback_actions.py:41 app_actions/playback_actions.py:64
 #: app_actions/playback_actions.py:86 app_actions/playback_actions.py:253
@@ -1180,9 +1180,9 @@ msgstr ""
 
 #: app_actions/file_actions.py:246 app_actions/file_actions.py:250
 #: app_actions/file_actions.py:261 app_actions/file_actions.py:350
-#: app_actions/file_actions.py:456 app_actions/file_actions.py:471
-#: app_actions/file_actions.py:484 app_actions/file_actions.py:555
-#: app_actions/file_actions.py:586 app_actions/file_actions.py:614
+#: app_actions/file_actions.py:462 app_actions/file_actions.py:477
+#: app_actions/file_actions.py:490 app_actions/file_actions.py:561
+#: app_actions/file_actions.py:592 app_actions/file_actions.py:620
 #: app_actions/marked_file_actions.py:27 app_actions/marked_file_actions.py:37
 #: app_actions/playback_actions.py:41 app_actions/playback_actions.py:64
 #: app_actions/playback_actions.py:86 app_actions/playback_actions.py:253
@@ -1244,8 +1244,8 @@ msgstr ""
 msgid "No videos were found."
 msgstr ""
 
-#: app_actions/file_actions.py:266 app_actions/file_actions.py:560
-#: app_actions/file_actions.py:591
+#: app_actions/file_actions.py:266 app_actions/file_actions.py:566
+#: app_actions/file_actions.py:597
 msgid "Not available for streams."
 msgstr ""
 
@@ -1300,7 +1300,7 @@ msgid "Open YouTube Link..."
 msgstr ""
 
 #: app_actions/file_actions.py:255 app_actions/file_actions.py:281
-#: app_actions/file_actions.py:538 app_actions/help_actions.py:68
+#: app_actions/file_actions.py:544 app_actions/help_actions.py:68
 #: app_actions/help_actions.py:74
 msgid "Open failed."
 msgstr ""
@@ -1313,15 +1313,15 @@ msgstr ""
 msgid "Open in browser\tCtrl+B"
 msgstr ""
 
-#: ui/prefs/general.py:53
+#: ui/prefs/general.py:57
 msgid "Open the file and the main folder files"
 msgstr ""
 
-#: ui/prefs/general.py:52
+#: ui/prefs/general.py:56
 msgid "Open the file only"
 msgstr ""
 
-#: ui/prefs/general.py:54
+#: ui/prefs/general.py:58
 msgid "Open the file with the main and subfolder files"
 msgstr ""
 
@@ -1339,7 +1339,7 @@ msgid ""
 "configuration."
 msgstr ""
 
-#: ui/prefs/general.py:201
+#: ui/prefs/general.py:216
 msgid ""
 "Open with files behavior controls what happens when you open a single file. "
 "Open the file only loads just that file. Open the file and the main folder "
@@ -1534,11 +1534,11 @@ msgstr ""
 msgid "Reading: {name}"
 msgstr ""
 
-#: ui/prefs/general.py:75
+#: ui/prefs/general.py:79
 msgid "Register file extensions"
 msgstr ""
 
-#: ui/prefs/general.py:209
+#: ui/prefs/general.py:224
 msgid ""
 "Register file extensions writes Windows registry entries for supported media "
 "types. This lets files open with this app from Explorer and Open With. On "
@@ -1546,11 +1546,11 @@ msgid ""
 "system Default apps settings."
 msgstr ""
 
-#: ui/prefs/general.py:226
+#: ui/prefs/general.py:241
 msgid "Registration"
 msgstr ""
 
-#: ui/prefs/general.py:233
+#: ui/prefs/general.py:248
 msgid "Registration Error"
 msgstr ""
 
@@ -1567,22 +1567,22 @@ msgstr ""
 msgid "Remember last file position"
 msgstr ""
 
-#: ui/prefs/general.py:172
+#: ui/prefs/general.py:180
 msgid ""
 "Remember last file position. When enabled, the player saves the current file "
 "and playback time on exit, then restores that position next time. When "
 "disabled, the player starts fresh each launch."
 msgstr ""
 
-#: app_actions/file_actions.py:598
+#: app_actions/file_actions.py:604
 msgid "Rename File"
 msgstr ""
 
-#: app_actions/file_actions.py:607
+#: app_actions/file_actions.py:613
 msgid "Rename failed."
 msgstr ""
 
-#: app_actions/file_actions.py:590
+#: app_actions/file_actions.py:596
 msgid "Rename is available only for local files."
 msgstr ""
 
@@ -1590,7 +1590,7 @@ msgstr ""
 msgid "Rename..."
 msgstr ""
 
-#: app_actions/file_actions.py:605
+#: app_actions/file_actions.py:611
 msgid "Renamed."
 msgstr ""
 
@@ -1839,6 +1839,17 @@ msgstr ""
 msgid "Space"
 msgstr ""
 
+#: ui/prefs/general.py:30
+msgid "Speak file name when navigating (Previous/Next)"
+msgstr ""
+
+#: ui/prefs/general.py:188
+msgid ""
+"Speak file name when navigating. When enabled, the player will announce the "
+"name of the new file when you move to the previous or next track. This is "
+"helpful for identifying files without manually requesting file information."
+msgstr ""
+
 #: app_actions/file_actions.py:376
 msgid "Speaker test file not found."
 msgstr ""
@@ -1968,7 +1979,7 @@ msgstr ""
 msgid "Total time: "
 msgstr ""
 
-#: app_actions/file_actions.py:489
+#: app_actions/file_actions.py:495
 msgid "Unable to copy current file to clipboard."
 msgstr ""
 
@@ -1976,7 +1987,7 @@ msgstr ""
 msgid "Unable to copy marked files to clipboard."
 msgstr ""
 
-#: app_actions/file_actions.py:633
+#: app_actions/file_actions.py:639
 msgid "Unable to copy to clipboard."
 msgstr ""
 
@@ -1999,19 +2010,19 @@ msgstr ""
 msgid "Unmarked."
 msgstr ""
 
-#: ui/prefs/general.py:243
+#: ui/prefs/general.py:258
 msgid "Unregister"
 msgstr ""
 
-#: ui/prefs/general.py:250
+#: ui/prefs/general.py:265
 msgid "Unregister Error"
 msgstr ""
 
-#: ui/prefs/general.py:78
+#: ui/prefs/general.py:82
 msgid "Unregister file extensions"
 msgstr ""
 
-#: ui/prefs/general.py:216
+#: ui/prefs/general.py:231
 msgid ""
 "Unregister file extensions removes registry entries created by this app for "
 "media associations. This does not delete your media files. Windows may still "
@@ -2050,11 +2061,11 @@ msgstr ""
 msgid "User Guide"
 msgstr ""
 
-#: ui/prefs/general.py:42
+#: ui/prefs/general.py:46
 msgid "Verbosity"
 msgstr ""
 
-#: ui/prefs/general.py:187
+#: ui/prefs/general.py:202
 msgid ""
 "Verbosity controls speech detail. Beginner gives clearer full messages. "
 "Advanced gives shorter, compact announcements. Possible values: Beginner or "
@@ -2137,7 +2148,7 @@ msgstr ""
 msgid "What happens after a file ends?"
 msgstr ""
 
-#: ui/prefs/general.py:62
+#: ui/prefs/general.py:66
 msgid "What would you like to open with files?"
 msgstr ""
 
