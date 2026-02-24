@@ -52,7 +52,7 @@ A feature-rich, accessible Windows desktop audio and media player built with Pyt
 
 ## Usage
 
-For detailed instructions, please refer to the [Full User Guide](docs/en/userguide.html).
+For detailed instructions, please refer to the [Full User Guide](player/docs/en/userguide.html).
 
 ### Basic Playback
 
