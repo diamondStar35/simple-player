@@ -1,6 +1,6 @@
 import os
 
-def gather_context(root_dir, extensions=('.py',)):
+def gather_context(root_dir, output_file, extensions=('.py',)):
     """Gathers file paths and contents for Gemini context."""
     for root, dirs, files in os.walk(root_dir):
         # Skip common non-source directories
@@ -10,16 +10,19 @@ def gather_context(root_dir, extensions=('.py',)):
         for file in files:
             if file.endswith(extensions):
                 full_path = os.path.abspath(os.path.join(root, file))
-                print(f"{full_path}")
-                print("```" + (file.split('.')[-1] if '.' in file else ""))
+                output_file.write(f"{full_path}\n")
+                output_file.write("```" + (file.split('.')[-1] if '.' in file else "") + "\n")
                 try:
                     with open(full_path, 'r', encoding='utf-8') as f:
-                        print(f.read())
+                        output_file.write(f.read() + "\n")
                 except Exception as e:
-                    print(f"Error reading file: {e}")
-                print("```\n")
+                    output_file.write(f"Error reading file: {e}\n")
+                output_file.write("```\n\n")
 
 if __name__ == "__main__":
     # Run this from your project root
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    gather_context(project_root)
+    output_filename = "context.txt"
+    with open(output_filename, 'w', encoding='utf-8') as f:
+        gather_context(project_root, f)
+    print(f"Context gathered into {output_filename}")

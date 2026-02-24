@@ -70,6 +70,9 @@ class PlayerLoadMixin:
             return False
         return self._load_current()
 
+    def reload_current_file(self):
+        return self._load_current()
+
     def _load_current(self):
         path = self._state.current_path
         if not path:

@@ -1,1123 +1,1036 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Audio Player - User Guide</title>
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            line-height: 1.6;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 5px;
-        }
-        h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        h2 {
-            background-color: #34495e;
-            color: white;
-            padding: 10px 15px;
-            margin-top: 30px;
-            border-radius: 3px;
-        }
-        h3 {
-            color: #2c3e50;
-            border-left: 4px solid #3498db;
-            padding-left: 10px;
-            margin-top: 20px;
-        }
-        .toc {
-            background-color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        .toc ul {
-            list-style-position: inside;
-            padding-left: 0;
-        }
-        .toc a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        .toc a:hover {
-            text-decoration: underline;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background-color: white;
-        }
-        th, td {
-            border: 1px solid #bdc3c7;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #3498db;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #ecf0f1;
-        }
-        .note {
-            background-color: #fffacd;
-            border-left: 4px solid #f39c12;
-            padding: 10px 15px;
-            margin: 15px 0;
-            border-radius: 3px;
-        }
-        .warning {
-            background-color: #ffe4e1;
-            border-left: 4px solid #e74c3c;
-            padding: 10px 15px;
-            margin: 15px 0;
-            border-radius: 3px;
-        }
-        .tip {
-            background-color: #e8f8f5;
-            border-left: 4px solid #27ae60;
-            padding: 10px 15px;
-            margin: 15px 0;
-            border-radius: 3px;
-        }
-        code {
-            background-color: #ecf0f1;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-        }
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #bdc3c7;
-            color: #7f8c8d;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Simple Audio Player</h1>
-        <p>Complete User Guide</p>
-        <p style="font-size: 0.9em; margin: 10px 0 0 0;">Version 1.0.1</p>
-    </header>
-
-    <div class="toc">
-        <h3 style="margin-top: 0;">Table of Contents</h3>
-        <ul>
-            <li><a href="#getting-started">Getting Started</a></li>
-            <li><a href="#installation">Installation & Setup</a></li>
-            <li><a href="#main-interface">Main Interface</a></li>
-            <li><a href="#basic-playback">Basic Playback</a></li>
-            <li><a href="#file-management">File Management</a></li>
-            <li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
-            <li><a href="#youtube-features">YouTube Features</a></li>
-            <li><a href="#audio-settings">Audio Settings</a></li>
-            <li><a href="#advanced-features">Advanced Features</a></li>
-            <li><a href="#accessibility">Accessibility & Screen Readers</a></li>
-            <li><a href="#troubleshooting">Troubleshooting</a></li>
-            <li><a href="#faq">Frequently Asked Questions</a></li>
-        </ul>
-    </div>
-
-    <h2 id="getting-started">Getting Started</h2>
-    <p>Simple Audio Player is a feature-rich audio and media player designed for Windows with full keyboard accessibility and screen reader support. Whether you're a casual listener or need accessibility features, this guide will help you get the most out of the application.</p>
-
-    <h3>What is Simple Audio Player?</h3>
-    <p>Simple Audio Player is a desktop application that allows you to:</p>
-    <ul>
-        <li>Play audio and video files in multiple formats</li>
-        <li>Manage large music libraries and playlists</li>
-        <li>Search and play YouTube videos</li>
-        <li>Process audio with advanced features like silence removal</li>
-        <li>Control playback entirely with keyboard shortcuts</li>
-        <li>Access all features through screen readers</li>
-    </ul>
-
-    <h3>System Requirements</h3>
-    <ul>
-        <li><strong>Operating System:</strong> Windows 7 SP1 or later (Windows 10+ recommended)</li>
-        <li><strong>RAM:</strong> Minimum 256 MB</li>
-        <li><strong>Disk Space:</strong> 200 MB for installation</li>
-        <li><strong>Audio Device:</strong> Working audio output device</li>
-    </ul>
-
-    <h2 id="installation">Installation & Setup</h2>
-
-    <h3>Windows Installer (Recommended)</h3>
-    <ol>
-        <li>Download <code>SimpleAudioPlayerSetup.exe</code> from the project releases page</li>
-        <li>Run the installer executable</li>
-        <li>Follow the installation wizard prompts</li>
-        <li>Choose installation directory (default: <code>%LocalAppData%\Programs\Simple Audio Player</code>)</li>
-        <li>Select whether to create desktop shortcut</li>
-        <li>Click "Install" and wait for completion</li>
-        <li>Launch the application from Start Menu or desktop shortcut</li>
-    </ol>
-
-    <h3>Portable Version</h3>
-    <ol>
-        <li>Download the portable ZIP file</li>
-        <li>Extract to your preferred location</li>
-        <li>Run <code>SimpleAudioPlayer.exe</code> directly</li>
-        <li>No installation or elevated permissions required</li>
-    </ol>
-
-    <div class="tip">
-        <strong>Tip:</strong> Portable version is ideal if you want to use the player from a USB drive or don't have administrator rights on your computer.
-    </div>
-
-    <h3>First-Time Setup</h3>
-    <p>When you run Simple Audio Player for the first time:</p>
-    <ol>
-        <li>Application window appears with main controls</li>
-        <li>If YouTube features are needed, installation prompt may appear</li>
-        <li>Settings dialog allows customization of preferences</li>
-        <li>Your preferences are automatically saved</li>
-    </ol>
-
-    <h2 id="main-interface">Main Interface</h2>
-
-    <h3>Main Window Layout</h3>
-    <p>The main window contains:</p>
-    <ul>
-        <li><strong>Menu Bar:</strong> File, Edit, View, Help menus with dropdown options</li>
-        <li><strong>Control Buttons:</strong> Previous, Rewind, Play/Pause, Forward, Next</li>
-        <li><strong>Status Area:</strong> Displays current file information and playback status</li>
-    </ul>
-
-    <h3>Menu Structure</h3>
-    <table>
-        <tr>
-            <th>Menu</th>
-            <th>Options</th>
-            <th>Purpose</th>
-        </tr>
-        <tr>
-            <td><strong>File</strong></td>
-            <td>Open File, Open Folder, Open YouTube Link, YouTube Search, Close File, Close All, Exit</td>
-            <td>File and application management</td>
-        </tr>
-        <tr>
-            <td><strong>Edit</strong></td>
-            <td>Copy, Paste, Delete, Rename, Mark Files, Batch Operations</td>
-            <td>File and playlist editing</td>
-        </tr>
-        <tr>
-            <td><strong>Playback</strong></td>
-            <td>Play/Pause, Next, Previous, Stop, Shuffle, Repeat</td>
-            <td>Playback control</td>
-        </tr>
-        <tr>
-            <td><strong>Tools</strong></td>
-            <td>Audio Devices, Settings, Preferences, Silence Removal</td>
-            <td>Application settings and tools</td>
-        </tr>
-        <tr>
-            <td><strong>Help</strong></td>
-            <td>User Guide, Changes, About, Contact Support</td>
-            <td>Help and information</td>
-        </tr>
-    </table>
-
-    <h2 id="basic-playback">Basic Playback</h2>
-
-    <h3>Opening and Playing Files</h3>
-    <ol>
-        <li><strong>Using Menu:</strong> Go to <code>File → Open File</code></li>
-        <li><strong>Using Keyboard:</strong> Press <code>Ctrl+O</code></li>
-        <li>Select audio or video file from your computer</li>
-        <li>File loads and automatic playback begins (if autoplay enabled)</li>
-        <li>Current file information displayed in status area</li>
-    </ol>
-
-    <h3>Play and Pause</h3>
-    <ul>
-        <li><strong>Button:</strong> Click "Play/Pause" button</li>
-        <li><strong>Keyboard:</strong> Press <code>Space</code></li>
-        <li>Current playback status announced via text-to-speech</li>
-        <li>Press again to resume from same position</li>
-    </ul>
-
-    <h3>Seeking (Navigation)</h3>
-    <table>
-        <tr>
-            <th>Action</th>
-            <th>Keyboard Shortcut</th>
-            <th>Effect</th>
-        </tr>
-        <tr>
-            <td>Seek Forward (5 sec)</td>
-            <td><code>Right Arrow</code></td>
-            <td>Skip ahead 5 seconds</td>
-        </tr>
-        <tr>
-            <td>Seek Backward (5 sec)</td>
-            <td><code>Left Arrow</code></td>
-            <td>Rewind 5 seconds</td>
-        </tr>
-        <tr>
-            <td>Jump to Start</td>
-            <td><code>Home</code></td>
-            <td>Go to beginning of file</td>
-        </tr>
-        <tr>
-            <td>Jump to End</td>
-            <td><code>End</code></td>
-            <td>Go to end of file</td>
-        </tr>
-        <tr>
-            <td>Custom Seek</td>
-            <td><code>Ctrl+1</code> through <code>Ctrl+0</code></td>
-            <td>Jump by custom interval (configurable)</td>
-        </tr>
-    </table>
-
-    <div class="note">
-        <strong>Note:</strong> Seek intervals can be customized in Settings. Default intervals range from 1 second to 1 hour.
-    </div>
-
-    <h3>Volume Control</h3>
-    <table>
-        <tr>
-            <th>Action</th>
-            <th>Keyboard Shortcut</th>
-            <th>Effect</th>
-        </tr>
-        <tr>
-            <td>Volume Up</td>
-            <td><code>Ctrl+Up</code> or <code>+</code></td>
-            <td>Increase volume by 5 steps</td>
-        </tr>
-        <tr>
-            <td>Volume Down</td>
-            <td><code>Ctrl+Down</code> or <code>-</code></td>
-            <td>Decrease volume by 5 steps</td>
-        </tr>
-        <tr>
-            <td>Maximize Volume</td>
-            <td><code>M</code></td>
-            <td>Set to maximum (1000)</td>
-        </tr>
-        <tr>
-            <td>Mute</td>
-            <td><code>Shift+M</code></td>
-            <td>Set to minimum (0)</td>
-        </tr>
-        <tr>
-            <td>Announce Volume</td>
-            <td><code>V</code></td>
-            <td>Current volume spoken aloud</td>
-        </tr>
-    </table>
-
-    <div class="tip">
-        <strong>Tip:</strong> Volume control has 1000 steps for fine-grained control. Minimum keyboard increment is 5 steps, but can be set to 1 step in settings.
-    </div>
-
-    <h3>Speed Control</h3>
-    <table>
-        <tr>
-            <th>Action</th>
-            <th>Keyboard Shortcut</th>
-            <th>Range</th>
-        </tr>
-        <tr>
-            <td>Increase Speed</td>
-            <td><code>Shift+Up</code></td>
-            <td>0.5x to 6.0x</td>
-        </tr>
-        <tr>
-            <td>Decrease Speed</td>
-            <td><code>Shift+Down</code></td>
-            <td>0.5x to 6.0x</td>
-        </tr>
-        <tr>
-            <td>Reset Speed</td>
-            <td><code>1</code></td>
-            <td>Return to 1.0x (normal)</td>
-        </tr>
-        <tr>
-            <td>Announce Speed</td>
-            <td><code>S</code></td>
-            <td>Current speed spoken aloud</td>
-        </tr>
-    </table>
-
-    <h2 id="file-management">File Management</h2>
-
-    <h3>Opening Folders</h3>
-    <ol>
-        <li>Go to <code>File → Open Folder</code> or press <code>Ctrl+Shift+O</code></li>
-        <li>Select a folder containing audio files</li>
-        <li>Application scans folder recursively for all audio files</li>
-        <li>Progress dialog shows scanning status</li>
-        <li>All found files added to playlist automatically</li>
-    </ol>
-
-    <div class="note">
-        <strong>Note:</strong> Folder scanning looks for all supported audio formats recursively through subfolders. Large folders may take time to scan.
-    </div>
-
-    <h3>Navigating Files</h3>
-    <table>
-        <tr>
-            <th>Action</th>
-            <th>Keyboard Shortcut</th>
-            <th>Menu Option</th>
-        </tr>
-        <tr>
-            <td>Next File</td>
-            <td><code>Ctrl+Right</code> or <code>N</code></td>
-            <td>Playback → Next</td>
-        </tr>
-        <tr>
-            <td>Previous File</td>
-            <td><code>Ctrl+Left</code> or <code>P</code></td>
-            <td>Playback → Previous</td>
-        </tr>
-        <tr>
-            <td>First File</td>
-            <td><code>Ctrl+Home</code></td>
-            <td>Playback → First</td>
-        </tr>
-        <tr>
-            <td>Last File</td>
-            <td><code>Ctrl+End</code></td>
-            <td>Playback → Last</td>
-        </tr>
-        <tr>
-            <td>Go to File</td>
-            <td><code>Ctrl+G</code></td>
-            <td>File → Go to File</td>
-        </tr>
-    </table>
-
-    <h3>File Operations</h3>
-
-    <h4>Rename File</h4>
-    <ol>
-        <li>Load file or select from playlist</li>
-        <li>Press <code>F2</code> or go to <code>Edit → Rename</code></li>
-        <li>Enter new filename in dialog</li>
-        <li>Press Enter to confirm</li>
-    </ol>
-
-    <h4>Delete File</h4>
-    <ol>
-        <li>Select file to delete</li>
-        <li>Press <code>Delete</code> or go to <code>Edit → Delete</code></li>
-        <li>Confirm deletion in dialog</li>
-        <li>File moved to Recycle Bin</li>
-    </ol>
-
-    <h4>Copy File Path</h4>
-    <ol>
-        <li>Load file</li>
-        <li>Press <code>Ctrl+C</code> or go to <code>Edit → Copy</code></li>
-        <li>File path copied to clipboard</li>
-        <li>Can be pasted into any text editor</li>
-    </ol>
-
-    <h4>Paste Files</h4>
-    <ol>
-        <li>Copy audio files in Windows Explorer</li>
-        <li>Press <code>Ctrl+V</code> in Simple Audio Player</li>
-        <li>Files added to current playlist</li>
-    </ol>
-
-    <h3>Marking Files (Batch Operations)</h3>
-    <p>Mark files to perform batch operations on multiple files:</p>
-
-    <h4>Marking Operations</h4>
-    <table>
-        <tr>
-            <th>Action</th>
-            <th>Keyboard Shortcut</th>
-            <th>Effect</th>
-        </tr>
-        <tr>
-            <td>Mark Current File</td>
-            <td><code>M</code></td>
-            <td>Add current file to marked list</td>
-        </tr>
-        <tr>
-            <td>Mark All Files</td>
-            <td><code>Ctrl+A</code></td>
-            <td>Mark all files in playlist</td>
-        </tr>
-        <tr>
-            <td>Clear Marks</td>
-            <td><code>Ctrl+Alt+C</code></td>
-            <td>Remove all marks</td>
-        </tr>
-        <tr>
-            <td>Announce Marked Count</td>
-            <td><code>Ctrl+M</code></td>
-            <td>Speak number of marked files</td>
-        </tr>
-    </table>
-
-    <h4>Batch Operations on Marked Files</h4>
-    <ul>
-        <li><strong>Copy to Folder:</strong> Copy all marked files to selected directory</li>
-        <li><strong>Move to Folder:</strong> Move all marked files to selected directory</li>
-        <li><strong>Copy to Clipboard:</strong> Copy all marked file paths to clipboard</li>
-        <li><strong>Delete Marked:</strong> Delete all marked files</li>
-    </ul>
-
-    <h2 id="keyboard-shortcuts">Complete Keyboard Shortcuts Reference</h2>
-
-    <h3>Playback Control</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>Space</code></td>
-            <td>Play / Pause</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Right</code> or <code>N</code></td>
-            <td>Next Track</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Left</code> or <code>P</code></td>
-            <td>Previous Track</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+.</code> (period)</td>
-            <td>Stop Playback</td>
-        </tr>
-    </table>
-
-    <h3>Seeking</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>Right Arrow</code></td>
-            <td>Seek Forward 5 seconds</td>
-        </tr>
-        <tr>
-            <td><code>Left Arrow</code></td>
-            <td>Seek Backward 5 seconds</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Right Arrow</code> (x2)</td>
-            <td>Seek Forward 2x speed</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Left Arrow</code> (x2)</td>
-            <td>Seek Backward 2x speed</td>
-        </tr>
-        <tr>
-            <td><code>Home</code></td>
-            <td>Jump to Start</td>
-        </tr>
-        <tr>
-            <td><code>End</code></td>
-            <td>Jump to End</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+1</code> through <code>Ctrl+9</code></td>
-            <td>Jump by Seek Step 1-9</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+0</code></td>
-            <td>Jump by Seek Step 10</td>
-        </tr>
-    </table>
-
-    <h3>Volume Control</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Up</code> or <code>+</code></td>
-            <td>Increase Volume</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Down</code> or <code>-</code></td>
-            <td>Decrease Volume</td>
-        </tr>
-        <tr>
-            <td><code>M</code></td>
-            <td>Maximize Volume</td>
-        </tr>
-        <tr>
-            <td><code>Shift+M</code></td>
-            <td>Minimize Volume (Mute)</td>
-        </tr>
-        <tr>
-            <td><code>V</code></td>
-            <td>Announce Volume</td>
-        </tr>
-    </table>
-
-    <h3>Speed Control</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>Shift+Up</code></td>
-            <td>Increase Speed</td>
-        </tr>
-        <tr>
-            <td><code>Shift+Down</code></td>
-            <td>Decrease Speed</td>
-        </tr>
-        <tr>
-            <td><code>1</code></td>
-            <td>Reset Speed to 1.0x</td>
-        </tr>
-        <tr>
-            <td><code>S</code></td>
-            <td>Announce Speed</td>
-        </tr>
-    </table>
-
-    <h3>File Management</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>Ctrl+O</code></td>
-            <td>Open File</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Shift+O</code></td>
-            <td>Open Folder</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+W</code></td>
-            <td>Close Current File</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Shift+W</code></td>
-            <td>Close All Files</td>
-        </tr>
-        <tr>
-            <td><code>F2</code></td>
-            <td>Rename File</td>
-        </tr>
-        <tr>
-            <td><code>Delete</code></td>
-            <td>Delete File</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+C</code></td>
-            <td>Copy File Path</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+V</code></td>
-            <td>Paste Files</td>
-        </tr>
-    </table>
-
-    <h3>Navigation</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Home</code></td>
-            <td>Go to First File</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+End</code></td>
-            <td>Go to Last File</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+G</code></td>
-            <td>Go to Specific File</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+F</code></td>
-            <td>Open Containing Folder</td>
-        </tr>
-    </table>
-
-    <h3>Information</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>T</code></td>
-            <td>Announce Elapsed Time</td>
-        </tr>
-        <tr>
-            <td><code>Shift+T</code></td>
-            <td>Announce Remaining Time</td>
-        </tr>
-        <tr>
-            <td><code>D</code></td>
-            <td>Announce Duration</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+P</code></td>
-            <td>Announce Current Position %</td>
-        </tr>
-        <tr>
-            <td><code>F</code></td>
-            <td>Announce File Information</td>
-        </tr>
-    </table>
-
-    <h3>Marking Files</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>Ctrl+I</code></td>
-            <td>Mark Current File</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Shift+A</code></td>
-            <td>Mark All Files</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Alt+C</code></td>
-            <td>Clear All Marks</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+M</code></td>
-            <td>Announce Marked Count</td>
-        </tr>
-    </table>
-
-    <h3>Utilities</h3>
-    <table>
-        <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Comma</code></td>
-            <td>Open Settings</td>
-        </tr>
-        <tr>
-            <td><code>F1</code></td>
-            <td>Show User Guide</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Alt+A</code></td>
-            <td>Show About Dialog</td>
-        </tr>
-        <tr>
-            <td><code>Ctrl+Alt+T</code></td>
-            <td>Test Speakers</td>
-        </tr>
-    </table>
-
-    <div class="tip">
-        <strong>Tip:</strong> All keyboard shortcuts are customizable. Go to Settings > Keyboard Shortcuts to modify them to your preference.
-    </div>
-
-    <h2 id="youtube-features">YouTube Features</h2>
-
-    <h3>YouTube Search</h3>
-    <ol>
-        <li>Go to <code>File → YouTube Search</code> or press <code>Ctrl+Y</code></li>
-        <li>Enter search query (e.g., "music artist name")</li>
-        <li>Wait for search results to load</li>
-        <li>Select video from results list</li>
-        <li>Video plays immediately</li>
-    </ol>
-
-    <h3>Opening YouTube Links</h3>
-    <ol>
-        <li>Copy YouTube video URL to clipboard</li>
-        <li>Go to <code>File → Open YouTube Link</code> or press <code>Ctrl+Alt+Y</code></li>
-        <li>Paste URL when prompted</li>
-        <li>Video begins playing automatically</li>
-    </ol>
-
-    <div class="note">
-        <strong>Note:</strong> YouTube URLs must start with <code>https://</code> and contain valid video ID. URLs like <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code> are supported.
-    </div>
-
-    <h3>Downloading YouTube Videos</h3>
-    <ol>
-        <li>Search or open YouTube video</li>
-        <li>Go to <code>Edit → Download Video</code></li>
-        <li>Select download options:
-            <ul>
-                <li>Video quality (best available to specific resolution)</li>
-                <li>Format (video file, audio only, etc.)</li>
-            </ul>
-        </li>
-        <li>Choose save location</li>
-        <li>Download progress displayed in dialog</li>
-        <li>Downloaded file playable offline</li>
-    </ol>
-
-    <h3>YouTube Components Installation</h3>
-    <p>YouTube features require additional components (yt-dlp):</p>
-    <ul>
-        <li>Application automatically detects if components are missing</li>
-        <li>Installation prompt appears on first YouTube use</li>
-        <li>Click "Install" to download and set up components</li>
-        <li>Internet connection required for installation</li>
-    </ul>
-
-    <div class="warning">
-        <strong>Warning:</strong> Downloading copyrighted YouTube content may violate terms of service. Only download content you have permission to use.
-    </div>
-
-    <h2 id="audio-settings">Audio Settings</h2>
-
-    <h3>Accessing Settings</h3>
-    <ol>
-        <li>Press <code>Ctrl+Comma</code>, or</li>
-        <li>Go to <code>Tools → Settings</code></li>
-    </ol>
-
-    <h3>General Settings Tab</h3>
-    <ul>
-        <li><strong>Language:</strong> Choose English or Arabic</li>
-        <li><strong>Verbosity:</strong> Beginner or Advanced mode
-            <ul>
-                <li>Beginner: Less detailed announcements</li>
-                <li>Advanced: Detailed status messages</li>
-            </ul>
-        </li>
-        <li><strong>Check for Updates:</strong> Enable/disable automatic update checks</li>
-    </ul>
-
-    <h3>Audio Device Settings</h3>
-    <ol>
-        <li>Go to Settings → Audio Device tab</li>
-        <li>View list of available audio devices</li>
-        <li>Select desired output device</li>
-        <li>Settings saved automatically</li>
-    </ol>
-
-    <h3>Silence Removal Settings</h3>
-    <p>Automatically remove silent sections from audio:</p>
-    <table>
-        <tr>
-            <th>Setting</th>
-            <th>Description</th>
-            <th>Default</th>
-        </tr>
-        <tr>
-            <td>Enable Silence Removal</td>
-            <td>Toggle feature on/off</td>
-            <td>Off</td>
-        </tr>
-        <tr>
-            <td>Minimum Silence Duration</td>
-            <td>Silence shorter than this kept (seconds)</td>
-            <td>0.5</td>
-        </tr>
-        <tr>
-            <td>Silence Threshold</td>
-            <td>Audio level considered silent (dB)</td>
-            <td>-30</td>
-        </tr>
-        <tr>
-            <td>Detection Mode</td>
-            <td>Peak or RMS level detection</td>
-            <td>Peak</td>
-        </tr>
-    </table>
-
-    <h3>Audio Normalization</h3>
-    <ul>
-        <li><strong>Enable Audio Normalization:</strong> Automatically adjusts levels</li>
-        <li><strong>Benefit:</strong> Consistent volume across different audio sources</li>
-        <li><strong>Use Case:</strong> Listening to podcasts or music from various sources</li>
-    </ul>
-
-    <h3>Mono Conversion</h3>
-    <ul>
-        <li><strong>Enable Mono Mode:</strong> Convert stereo to single-channel</li>
-        <li><strong>Benefit:</strong> Compatible with single-channel audio devices</li>
-        <li><strong>Use Case:</strong> Using mono headphone or speaker</li>
-    </ul>
-
-    <h3>Keyboard Shortcuts Customization</h3>
-    <ol>
-        <li>Go to Settings → Keyboard Shortcuts tab</li>
-        <li>View list of all available actions</li>
-        <li>Select action to customize</li>
-        <li>Press new keyboard shortcut</li>
-        <li>Confirm by clicking Save</li>
-    </ol>
-
-    <div class="warning">
-        <strong>Warning:</strong> Some shortcuts (like Alt+F4) are reserved by Windows and cannot be customized.
-    </div>
-
-    <h2 id="advanced-features">Advanced Features</h2>
-
-    <h3>Shuffle and Repeat Modes</h3>
-    <table>
-        <tr>
-            <th>Mode</th>
-            <th>Behavior</th>
-            <th>Keyboard</th>
-        </tr>
-        <tr>
-            <td>Shuffle</td>
-            <td>Play files in random order</td>
-            <td><code>Shift+R</code></td>
-        </tr>
-        <tr>
-            <td>Repeat File</td>
-            <td>Repeat current file continuously</td>
-            <td><code>Ctrl+R</code></td>
-        </tr>
-        <tr>
-            <td>Repeat Playlist</td>
-            <td>Repeat entire playlist when finished</td>
-            <td><code>Shift+Ctrl+R</code></td>
-        </tr>
-    </table>
-
-    <h3>File Selection (Range Selection)</h3>
-    <p>Select ranges of files for batch operations:</p>
-    <table>
-        <tr>
-            <th>Action</th>
-            <th>Keyboard Shortcut</th>
-        </tr>
-        <tr>
-            <td>Start Selection</td>
-            <td><code>Ctrl+Shift+S</code></td>
-        </tr>
-        <tr>
-            <td>End Selection</td>
-            <td><code>Ctrl+Shift+E</code></td>
-        </tr>
-        <tr>
-            <td>Clear Selection</td>
-            <td><code>Ctrl+Shift+C</code></td>
-        </tr>
-    </table>
-
-    <h3>Playback Information</h3>
-    <p>Get detailed playback information:</p>
-    <ul>
-        <li><strong>Elapsed Time:</strong> Press <code>T</code></li>
-        <li><strong>Remaining Time:</strong> Press <code>Shift+T</code></li>
-        <li><strong>Total Duration:</strong> Press <code>D</code></li>
-        <li><strong>Current Position %:</strong> Press <code>Ctrl+P</code></li>
-        <li><strong>File Information:</strong> Press <code>F</code></li>
-    </ul>
-
-    <h3>Playlist Information</h3>
-    <ol>
-        <li>Go to <code>File → Playlist Information</code></li>
-        <li>View:
-            <ul>
-                <li>Total number of files</li>
-                <li>Total playlist duration</li>
-                <li>Currently playing file</li>
-            </ul>
-        </li>
-    </ol>
-
-    <h2 id="accessibility">Accessibility & Screen Readers</h2>
-
-    <h3>Screen Reader Support</h3>
-    <p>Simple Audio Player works with:</p>
-    <ul>
-        <li><strong>JAWS:</strong> Full support for all features</li>
-        <li><strong>NVDA:</strong> Full support for all features</li>
-        <li><strong>Windows Narrator:</strong> Basic support</li>
-    </ul>
-
-    <h3>Text-to-Speech Output</h3>
-    <p>Many actions provide audio feedback:</p>
-    <ul>
-        <li>Play/Pause state changes announced</li>
-        <li>Volume changes spoken when requested</li>
-        <li>File information announced</li>
-        <li>Errors and warnings spoken</li>
-    </ul>
-
-    <h3>Keyboard-Only Operation</h3>
-    <p>Complete application control via keyboard:</p>
-    <ul>
-        <li>No mouse required for any function</li>
-        <li>All menus accessible via Alt key</li>
-        <li>Shortcuts available for all common operations</li>
-    </ul>
-
-    <h3>Beginner vs Advanced Mode</h3>
-    <table>
-        <tr>
-            <th>Mode</th>
-            <th>Feature</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td>Beginner</td>
-            <td>Simple Messages</td>
-            <td>Only essential feedback provided</td>
-        </tr>
-        <tr>
-            <td>Advanced</td>
-            <td>Detailed Messages</td>
-            <td>Comprehensive status and action information</td>
-        </tr>
-    </table>
-
-    <div class="tip">
-        <strong>Tip:</strong> Toggle between modes by pressing <code>V</code> when no file is playing.
-    </div>
-
-    <h2 id="troubleshooting">Troubleshooting</h2>
-
-    <h3>Common Issues</h3>
-
-    <h4>No Sound Output</h4>
-    <p><strong>Symptoms:</strong> Application runs but no audio plays</p>
-    <p><strong>Solutions:</strong></p>
-    <ol>
-        <li>Check Windows audio device is working</li>
-        <li>Verify speakers/headphones are connected</li>
-        <li>Check system volume is not muted</li>
-        <li>Try different audio device in Settings</li>
-        <li>Run "Test Speakers" (Ctrl+Alt+T)</li>
-        <li>Restart application</li>
-    </ol>
-
-    <h4>Screen Reader Not Announcing</h4>
-    <p><strong>Symptoms:</strong> No text-to-speech output from application</p>
-    <p><strong>Solutions:</strong></p>
-    <ol>
-        <li>Verify screen reader (JAWS/NVDA) is running</li>
-        <li>Check system volume is not muted</li>
-        <li>Try "Test Speakers" to verify audio output works</li>
-        <li>Restart screen reader</li>
-        <li>Restart application</li>
-    </ol>
-
-    <h4>YouTube Search Not Working</h4>
-    <p><strong>Symptoms:</strong> YouTube features unavailable or searching fails</p>
-    <p><strong>Solutions:</strong></p>
-    <ol>
-        <li>Check internet connection</li>
-        <li>Install YouTube components if prompted</li>
-        <li>Update yt-dlp: Go to Tools → Update YouTube Components</li>
-        <li>Verify video URL is valid and public</li>
-        <li>Check if video is region-restricted</li>
-    </ol>
-
-    <h4>Application Crashes</h4>
-    <p><strong>Symptoms:</strong> Application unexpectedly closes</p>
-    <p><strong>Solutions:</strong></p>
-    <ol>
-        <li>Disable silence removal in Settings</li>
-        <li>Disable audio normalization</li>
-        <li>Try different audio device</li>
-        <li>Close other applications</li>
-        <li>Reinstall application</li>
-    </ol>
-
-    <h4>File Not Playing</h4>
-    <p><strong>Symptoms:</strong> File selected but won't play</p>
-    <p><strong>Solutions:</strong></p>
-    <ol>
-        <li>Verify file is readable and not corrupted</li>
-        <li>Check file format is supported</li>
-        <li>Try different file to confirm format support</li>
-        <li>Convert file to common format (MP3, WAV)</li>
-    </ol>
-
-    <h2 id="faq">Frequently Asked Questions</h2>
-
-    <h3>General Questions</h3>
-
-    <p><strong>Q: Is Simple Audio Player free?</strong></p>
-    <p>A: Yes, the application is free and open-source.</p>
-
-    <p><strong>Q: Can I use it on Mac or Linux?</strong></p>
-    <p>A: Currently Windows-only. Future cross-platform support is possible.</p>
-
-    <p><strong>Q: Do I need to install anything else?</strong></p>
-    <p>A: YouTube features require yt-dlp components, installed automatically when first used.</p>
-
-    <h3>Playback Questions</h3>
-
-    <p><strong>Q: What audio formats are supported?</strong></p>
-    <p>A: MP3, FLAC, WAV, OGG, OPUS, AAC, AIFF, ALAC, WMA, and more.</p>
-
-    <p><strong>Q: Can I adjust playback speed?</strong></p>
-    <p>A: Yes, speed adjustable from 0.5x to 6.0x normal speed.</p>
-
-    <p><strong>Q: Does it support playlists?</strong></p>
-    <p>A: Yes, create playlists by opening folders or adding individual files.</p>
-
-    <h3>Customization Questions</h3>
-
-    <p><strong>Q: Can I customize keyboard shortcuts?</strong></p>
-    <p>A: Yes, all shortcuts customizable in Settings > Keyboard Shortcuts.</p>
-
-    <p><strong>Q: Can I change the language?</strong></p>
-    <p>A: Yes, English and Arabic supported. Change in Settings > General.</p>
-
-    <p><strong>Q: Where are settings saved?</strong></p>
-    <p>A: In the application directory or %LocalAppData% folder depending on installation type.</p>
-
-    <h3>YouTube Questions</h3>
-
-    <p><strong>Q: Can I download YouTube videos?</strong></p>
-    <p>A: Yes, with restrictions. Only download content you have permission to use.</p>
-
-    <p><strong>Q: What video quality options are available?</strong></p>
-    <p>A: Quality depends on YouTube availability, typically up to 1080p or best available.</p>
-
-    <h3>Accessibility Questions</h3>
-
-    <p><strong>Q: Does it work with my screen reader?</strong></p>
-    <p>A: Yes, JAWS and NVDA fully supported. Windows Narrator has basic support.</p>
-
-    <p><strong>Q: Can I control everything with keyboard?</strong></p>
-    <p>A: Yes, all features accessible via keyboard with no mouse required.</p>
-
-    <footer>
-        <p>Simple Audio Player User Guide | Version 1.0.1</p>
-        <p>For more information, visit <a href="https://github.com/kamalyaser31/simple-player">GitHub Repository</a></p>
-        <p>Last Updated: February 22, 2026</p>
-    </footer>
-</body>
-</html>
+<h1>Simple Audio Player - User Guide</h1>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#installation--setup">Installation &amp; Setup</a></li>
+<li><a href="#main-interface">Main Interface</a></li>
+<li><a href="#basic-playback">Basic Playback</a></li>
+<li><a href="#file-management">File Management</a></li>
+<li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li><a href="#youtube-features">YouTube Features</a></li>
+<li><a href="#audio-settings">Audio Settings</a></li>
+<li><a href="#advanced-features">Advanced Features</a></li>
+<li><a href="#system-integration">System Integration</a></li>
+<li><a href="#accessibility--screen-readers">Accessibility &amp; Screen Readers</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+</ol>
+<hr />
+<h2>Getting Started</h2>
+<p>Simple Audio Player is a feature-rich audio and media player designed for Windows with full keyboard accessibility and screen reader support. Whether you're a casual listener or need accessibility features, this guide will help you get the most out of the application.</p>
+<h3>What is Simple Audio Player?</h3>
+<p>Simple Audio Player allows you to:
+- Play audio and video files in multiple formats
+- Manage large music libraries and playlists
+- Search and play YouTube videos
+- Process audio with advanced features like silence removal
+- Control playback entirely with keyboard shortcuts
+- Access all features through screen readers</p>
+<h3>System Requirements</h3>
+<ul>
+<li><strong>Operating System:</strong> Windows 7 SP1 or later (Windows 10+ recommended)</li>
+<li><strong>RAM:</strong> Minimum 256 MB</li>
+<li><strong>Disk Space:</strong> 200 MB for installation</li>
+<li><strong>Audio Device:</strong> Working audio output device</li>
+</ul>
+<hr />
+<h2>Installation &amp; Setup</h2>
+<h3>Windows Installer (Recommended)</h3>
+<ol>
+<li>Download <code>SimpleAudioPlayerSetup.exe</code> from the project releases page</li>
+<li>Run the installer executable</li>
+<li>Follow the installation wizard prompts</li>
+<li>Choose installation directory (default: <code>%LocalAppData%\Programs\Simple Audio Player</code>)</li>
+<li>Select whether to create desktop shortcut</li>
+<li>Click "Install" and wait for completion</li>
+<li>Launch the application from Start Menu or desktop shortcut</li>
+</ol>
+<h3>Portable Version</h3>
+<ol>
+<li>Download the portable ZIP file</li>
+<li>Extract to your preferred location</li>
+<li>Run <code>SimpleAudioPlayer.exe</code> directly</li>
+<li>No installation or elevated permissions required</li>
+</ol>
+<blockquote>
+<p><strong>Tip:</strong> Portable version is ideal if you want to use the player from a USB drive or don't have administrator rights on your computer.</p>
+</blockquote>
+<h3>First-Time Setup</h3>
+<p>When you run Simple Audio Player for the first time:
+1. Application window appears with main controls
+2. If YouTube features are needed, installation prompt may appear
+3. Settings dialog allows customization of preferences
+4. Your preferences are automatically saved</p>
+<hr />
+<h2>Main Interface</h2>
+<h3>Main Window Layout</h3>
+<p>The main window contains:
+- <strong>Menu Bar:</strong> File, Edit, View, Help menus with dropdown options
+- <strong>Control Buttons:</strong> Previous, Rewind, Play/Pause, Forward, Next
+- <strong>Status Area:</strong> Displays current file information and playback status</p>
+<h3>Menu Structure</h3>
+<table>
+<thead>
+<tr>
+<th>Menu</th>
+<th>Options</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>File</strong></td>
+<td>Open File, Open Folder, Open YouTube Link, YouTube Search, Close File, Close All, Exit</td>
+<td>File and application management</td>
+</tr>
+<tr>
+<td><strong>Edit</strong></td>
+<td>Copy, Paste, Delete, Rename, Mark Files, Batch Operations</td>
+<td>File and playlist editing</td>
+</tr>
+<tr>
+<td><strong>Playback</strong></td>
+<td>Play/Pause, Next, Previous, Stop, Shuffle, Repeat</td>
+<td>Playback control</td>
+</tr>
+<tr>
+<td><strong>Tools</strong></td>
+<td>Audio Devices, Settings, Preferences, Silence Removal</td>
+<td>Application settings and tools</td>
+</tr>
+<tr>
+<td><strong>Help</strong></td>
+<td>User Guide, Changes, About, Contact Support</td>
+<td>Help and information</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Basic Playback</h2>
+<h3>Opening and Playing Files</h3>
+<ol>
+<li><strong>Using Menu:</strong> Go to <code>File → Open File</code></li>
+<li><strong>Using Keyboard:</strong> Press <code>Ctrl+O</code></li>
+<li>Select audio or video file from your computer</li>
+<li>File loads and automatic playback begins (if autoplay enabled)</li>
+<li>Current file information displayed in status area</li>
+</ol>
+<h3>Play and Pause</h3>
+<ul>
+<li><strong>Button:</strong> Click "Play/Pause" button</li>
+<li><strong>Keyboard:</strong> Press <code>Space</code></li>
+<li>Current playback status announced via text-to-speech</li>
+<li>Press again to resume from same position</li>
+</ul>
+<h3>Seeking (Navigation)</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Keyboard Shortcut</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seek Forward (5 sec)</td>
+<td><code>Right Arrow</code></td>
+<td>Skip ahead 5 seconds</td>
+</tr>
+<tr>
+<td>Seek Backward (5 sec)</td>
+<td><code>Left Arrow</code></td>
+<td>Rewind 5 seconds</td>
+</tr>
+<tr>
+<td>Jump to Start</td>
+<td><code>Home</code></td>
+<td>Go to beginning of file</td>
+</tr>
+<tr>
+<td>Jump to End</td>
+<td><code>End</code></td>
+<td>Go to end of file</td>
+</tr>
+<tr>
+<td>Seek Steps</td>
+<td><code>Shift+1</code> through <code>Shift+0</code></td>
+<td>Jump by fixed intervals (1s to 60m)</td>
+</tr>
+<tr>
+<td>Custom Seek Step</td>
+<td><code>Shift+-</code></td>
+<td>Jump by your custom seek interval</td>
+</tr>
+<tr>
+<td>Percent Jumps</td>
+<td><code>Ctrl+1</code> through <code>Ctrl+0</code></td>
+<td>Jump to 10% through 100% of the file</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Tip:</strong> You can also use <code>Ctrl+Shift+1</code> through <code>Ctrl+Shift+0</code> to jump to 5% offsets (e.g., 15%, 25%, etc.).</p>
+<p><strong>Note:</strong> Seek steps (Shift+1-0) are fixed presets. Percent jumps (Ctrl+1-0) allow quick navigation through long files.
+You can also use <code>Ctrl+Shift+1-0</code> to jump to 5% offsets (e.g., 15%, 25%).</p>
+</blockquote>
+<h3>Volume Control</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Keyboard Shortcut</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Volume Up</td>
+<td><code>Up Arrow</code></td>
+<td>Increase volume</td>
+</tr>
+<tr>
+<td>Volume Down</td>
+<td><code>Down Arrow</code></td>
+<td>Decrease volume</td>
+</tr>
+<tr>
+<td>Maximize Volume</td>
+<td><code>Shift+Up Arrow</code></td>
+<td>Set to maximum</td>
+</tr>
+<tr>
+<td>Mute</td>
+<td><code>Shift+Down Arrow</code></td>
+<td>Set to minimum (Mute)</td>
+</tr>
+<tr>
+<td>Announce Volume</td>
+<td><code>V</code></td>
+<td>Current volume spoken aloud</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Tip:</strong> Volume control has 1000 steps for fine-grained control. Minimum keyboard increment is 5 steps, but can be set to 1 step in settings.</p>
+</blockquote>
+<h3>Speed Control</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Keyboard Shortcut</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Increase Speed</td>
+<td><code>Ctrl+Up Arrow</code></td>
+<td>0.5x to 6.0x</td>
+</tr>
+<tr>
+<td>Decrease Speed</td>
+<td><code>Ctrl+Down Arrow</code></td>
+<td>0.5x to 6.0x</td>
+</tr>
+<tr>
+<td>Reset Speed</td>
+<td><code>Alt+Y</code></td>
+<td>Return to 1.0x (normal)</td>
+</tr>
+<tr>
+<td>Announce Speed</td>
+<td><code>S</code></td>
+<td>Current speed spoken aloud</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>File Management</h2>
+<h3>Opening Folders</h3>
+<ol>
+<li>Go to <code>File → Open Folder</code> or press <code>Ctrl+Shift+O</code></li>
+<li>Select a folder containing audio files</li>
+<li>Application scans folder recursively for all audio files</li>
+<li>Progress dialog shows scanning status</li>
+<li>All found files added to playlist automatically</li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> Folder scanning looks for all supported audio formats recursively through subfolders. Large folders may take time to scan.</p>
+</blockquote>
+<h3>Navigating Files</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Keyboard Shortcut</th>
+<th>Menu Option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Next File</td>
+<td><code>Tab</code> or <code>Page Down</code></td>
+<td>Playback → Next</td>
+</tr>
+<tr>
+<td>Previous File</td>
+<td><code>Shift+Tab</code> or <code>Page Up</code></td>
+<td>Playback → Previous</td>
+</tr>
+<tr>
+<td>First File</td>
+<td><code>Ctrl+Home</code></td>
+<td>Playback → First</td>
+</tr>
+<tr>
+<td>Last File</td>
+<td><code>Ctrl+End</code></td>
+<td>Playback → Last</td>
+</tr>
+<tr>
+<td>Go to File</td>
+<td><code>Ctrl+G</code></td>
+<td>File → Go to File</td>
+</tr>
+<tr>
+<td>Open Containing Folder</td>
+<td><code>Ctrl+F</code></td>
+<td>File → Open Containing Folder</td>
+</tr>
+</tbody>
+</table>
+<h3>File Operations</h3>
+<h4>Rename File</h4>
+<ol>
+<li>Load file or select from playlist</li>
+<li>Press <code>Shift+F2</code> or go to <code>Edit → Rename</code></li>
+<li>Enter new filename in dialog</li>
+<li>Press Enter to confirm</li>
+</ol>
+<h4>Delete File</h4>
+<ol>
+<li>Select file to delete</li>
+<li>Press <code>Shift+Delete</code> or go to <code>Edit → Delete</code></li>
+<li>Confirm deletion in dialog</li>
+<li>File moved to Recycle Bin</li>
+</ol>
+<h4>File Properties</h4>
+<ol>
+<li>Load file or select from playlist</li>
+<li>Press <code>Alt+Enter</code> or go to <code>File → File Properties</code></li>
+<li>Standard Windows file properties dialog appears</li>
+</ol>
+<h4>Copy File Path</h4>
+<ol>
+<li>Load file</li>
+<li>Press <code>Ctrl+Shift+C</code> or go to <code>Edit → Copy</code></li>
+<li>File path copied to clipboard</li>
+<li>Can be pasted into any text editor</li>
+</ol>
+<h4>Paste Files</h4>
+<ol>
+<li>Copy audio files in Windows Explorer</li>
+<li>Press <code>Ctrl+V</code> in Simple Audio Player</li>
+<li>Files added to current playlist</li>
+</ol>
+<h3>Marking Files (Batch Operations)</h3>
+<p>Mark files to perform batch operations on multiple files:</p>
+<h4>Marking Operations</h4>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Keyboard Shortcut</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mark Current File</td>
+<td><code>Ctrl+K</code></td>
+<td>Add current file to marked list</td>
+</tr>
+<tr>
+<td>Mark All Files</td>
+<td><code>Ctrl+A</code></td>
+<td>Mark all files in playlist</td>
+</tr>
+<tr>
+<td>Clear Marks</td>
+<td><code>Ctrl+Shift+K</code></td>
+<td>Remove all marks</td>
+</tr>
+<tr>
+<td>Announce Marked Count</td>
+<td><code>K</code></td>
+<td>Speak number of marked files</td>
+</tr>
+</tbody>
+</table>
+<h4>Batch Operations on Marked Files</h4>
+<ul>
+<li><strong>Copy to Folder:</strong> Copy all marked files to selected directory</li>
+<li><strong>Move to Folder:</strong> Move all marked files to selected directory</li>
+<li><strong>Copy to Clipboard:</strong> Copy all marked file paths to clipboard</li>
+<li><strong>Delete Marked:</strong> Delete all marked files</li>
+</ul>
+<hr />
+<h2>Keyboard Shortcuts</h2>
+<h3>Playback Control</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Space</code> or <code>Enter</code></td>
+<td>Play / Pause</td>
+</tr>
+<tr>
+<td><code>Tab</code> or <code>Page Down</code></td>
+<td>Next Track</td>
+</tr>
+<tr>
+<td><code>Shift+Tab</code> or <code>Page Up</code></td>
+<td>Previous Track</td>
+</tr>
+</tbody>
+</table>
+<h3>Seeking</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Right Arrow</code></td>
+<td>Seek Forward 5 seconds</td>
+</tr>
+<tr>
+<td><code>Left Arrow</code></td>
+<td>Seek Backward 5 seconds</td>
+</tr>
+<tr>
+<td><code>Ctrl+Right Arrow</code></td>
+<td>Seek Forward x2</td>
+</tr>
+<tr>
+<td><code>Ctrl+Left Arrow</code></td>
+<td>Seek Backward x2</td>
+</tr>
+<tr>
+<td><code>Shift+Right Arrow</code></td>
+<td>Seek Forward x8</td>
+</tr>
+<tr>
+<td><code>Shift+Left Arrow</code></td>
+<td>Seek Backward x8</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+Right Arrow</code></td>
+<td>Seek Forward x4</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+Left Arrow</code></td>
+<td>Seek Backward x4</td>
+</tr>
+<tr>
+<td><code>Home</code></td>
+<td>Jump to Start</td>
+</tr>
+<tr>
+<td><code>End</code></td>
+<td>Jump to End</td>
+</tr>
+<tr>
+<td><code>Shift+1</code> through <code>Shift+9</code></td>
+<td>Jump by Seek Step 1-9</td>
+</tr>
+<tr>
+<td><code>Shift+0</code></td>
+<td>Jump by Seek Step 10</td>
+</tr>
+</tbody>
+</table>
+<h3>Volume Control</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Up Arrow</code></td>
+<td>Increase Volume</td>
+</tr>
+<tr>
+<td><code>Down Arrow</code></td>
+<td>Decrease Volume</td>
+</tr>
+<tr>
+<td><code>Shift+Up Arrow</code></td>
+<td>Maximize Volume</td>
+</tr>
+<tr>
+<td><code>Shift+Down Arrow</code></td>
+<td>Minimize Volume (Mute)</td>
+</tr>
+<tr>
+<td><code>V</code></td>
+<td>Announce Volume</td>
+</tr>
+</tbody>
+</table>
+<h3>Speed Control</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+Up Arrow</code></td>
+<td>Increase Speed</td>
+</tr>
+<tr>
+<td><code>Ctrl+Down Arrow</code></td>
+<td>Decrease Speed</td>
+</tr>
+<tr>
+<td><code>Alt+Y</code></td>
+<td>Reset Speed to 1.0x</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td>Announce Speed</td>
+</tr>
+</tbody>
+</table>
+<h3>File Management</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+O</code></td>
+<td>Open File</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+O</code></td>
+<td>Open Folder</td>
+</tr>
+<tr>
+<td><code>Ctrl+W</code></td>
+<td>Close Current File</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+W</code></td>
+<td>Close All Files</td>
+</tr>
+<tr>
+<td><code>Ctrl+L</code></td>
+<td>Open Link</td>
+</tr>
+<tr>
+<td><code>F2</code></td>
+<td>Opened Files List</td>
+</tr>
+<tr>
+<td><code>Shift+F2</code></td>
+<td>Rename File</td>
+</tr>
+<tr>
+<td><code>Shift+Delete</code></td>
+<td>Delete File</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+C</code></td>
+<td>Copy File Path</td>
+</tr>
+<tr>
+<td><code>Ctrl+V</code></td>
+<td>Paste Files</td>
+</tr>
+<tr>
+<td><code>Alt+Enter</code></td>
+<td>File Properties</td>
+</tr>
+</tbody>
+</table>
+<h3>Navigation</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+Home</code></td>
+<td>Go to First File</td>
+</tr>
+<tr>
+<td><code>Ctrl+End</code></td>
+<td>Go to Last File</td>
+</tr>
+<tr>
+<td><code>Ctrl+G</code></td>
+<td>Go to Specific File</td>
+</tr>
+<tr>
+<td><code>Ctrl+F</code></td>
+<td>Open Containing Folder</td>
+</tr>
+</tbody>
+</table>
+<h3>Information</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>E</code></td>
+<td>Announce Elapsed Time</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>Announce Remaining Time</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td>Announce Duration</td>
+</tr>
+<tr>
+<td><code>P</code></td>
+<td>Announce Current Position %</td>
+</tr>
+<tr>
+<td><code>F</code></td>
+<td>Announce File Information</td>
+</tr>
+</tbody>
+</table>
+<h3>Marking Files</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+K</code></td>
+<td>Mark Current File</td>
+</tr>
+<tr>
+<td><code>Ctrl+A</code></td>
+<td>Mark All Files</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+K</code></td>
+<td>Clear All Marks</td>
+</tr>
+<tr>
+<td><code>K</code></td>
+<td>Announce Marked Count</td>
+</tr>
+</tbody>
+</table>
+<h3>Utilities</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+P</code></td>
+<td>Open Settings</td>
+</tr>
+<tr>
+<td><code>F1</code></td>
+<td>Show User Guide</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+T</code></td>
+<td>Test Speakers</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+A</code></td>
+<td>Audio Devices (Sound Cards)</td>
+</tr>
+<tr>
+<td><code>Ctrl+M</code></td>
+<td>Toggle Silence Removal</td>
+</tr>
+<tr>
+<td><code>Ctrl+Shift+V</code></td>
+<td>Toggle Verbosity Mode</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Tip:</strong> All keyboard shortcuts are customizable. Go to Settings &gt; Keyboard Shortcuts to modify them to your preference.</p>
+</blockquote>
+<hr />
+<h2>YouTube Features</h2>
+<h3>YouTube Search</h3>
+<ol>
+<li>Go to <code>File → YouTube Search</code> or press <code>Ctrl+Y</code></li>
+<li>Enter search query (e.g., "music artist name")</li>
+<li>Wait for search results to load</li>
+<li>Select video from results list</li>
+<li>Video plays immediately</li>
+</ol>
+<h3>Opening YouTube Links</h3>
+<ol>
+<li>Copy YouTube video URL to clipboard</li>
+<li>Go to <code>File → Open YouTube Link</code> or press <code>Ctrl+Shift+Y</code></li>
+<li>Paste URL when prompted</li>
+<li>Video begins playing automatically</li>
+</ol>
+<h4>Video Actions</h4>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+D</code></td>
+<td>Download Video</td>
+</tr>
+<tr>
+<td><code>Alt+D</code></td>
+<td>Show Video Description</td>
+</tr>
+<tr>
+<td><code>Ctrl+Y</code></td>
+<td>YouTube Search</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> YouTube URLs must start with <code>https://</code> and contain valid video ID. URLs like <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code> are supported.</p>
+</blockquote>
+<h3>Downloading YouTube Videos</h3>
+<ol>
+<li>Search or open YouTube video</li>
+<li>Go to <code>Edit → Download Video</code></li>
+<li>Select download options:</li>
+<li>Video quality (best available to specific resolution)</li>
+<li>Format (video file, audio only, etc.)</li>
+<li>Choose save location</li>
+<li>Download progress displayed in dialog</li>
+<li>Downloaded file playable offline</li>
+</ol>
+<h3>YouTube Components Installation</h3>
+<p>YouTube features require additional components (yt-dlp):
+- Application automatically detects if components are missing
+- Installation prompt appears on first YouTube use
+- Click "Install" to download and set up components
+- Internet connection required for installation</p>
+<p>⚠️ <strong>Warning:</strong> Downloading copyrighted YouTube content may violate terms of service. Only download content you have permission to use.</p>
+<hr />
+<h2>Audio Settings</h2>
+<h3>Accessing Settings</h3>
+<ol>
+<li>Press <code>Ctrl+P</code>, or</li>
+<li>Go to <code>Tools → Settings</code></li>
+</ol>
+<h3>General Settings Tab</h3>
+<ul>
+<li><strong>Language:</strong> Choose English or Arabic</li>
+<li><strong>Verbosity:</strong> Beginner or Advanced mode</li>
+<li>Beginner: Less detailed announcements</li>
+<li>Advanced: Detailed status messages</li>
+<li><strong>Check for Updates:</strong> Enable/disable automatic update checks</li>
+<li><strong>Speak file name when navigating:</strong> Automatically announce the file name when moving to the next or previous track.</li>
+</ul>
+<h3>Audio Device Settings</h3>
+<ol>
+<li>Go to Settings → Audio Device tab</li>
+<li>View list of available audio devices</li>
+<li>Select desired output device</li>
+<li>Settings saved automatically</li>
+</ol>
+<h3>Silence Removal Settings</h3>
+<p>Automatically remove silent sections from audio:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enable Silence Removal</td>
+<td>Toggle feature on/off</td>
+<td>Off</td>
+</tr>
+<tr>
+<td>Minimum Silence Duration</td>
+<td>Silence shorter than this kept (seconds)</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>Silence Threshold</td>
+<td>Audio level considered silent (dB)</td>
+<td>-30</td>
+</tr>
+<tr>
+<td>Detection Mode</td>
+<td>Peak or RMS level detection</td>
+<td>Peak</td>
+</tr>
+</tbody>
+</table>
+<h3>Audio Normalization</h3>
+<ul>
+<li><strong>Enable Audio Normalization:</strong> Automatically adjusts levels</li>
+<li><strong>Benefit:</strong> Consistent volume across different audio sources</li>
+<li><strong>Use Case:</strong> Listening to podcasts or music from various sources</li>
+</ul>
+<h3>Mono Conversion</h3>
+<ul>
+<li><strong>Enable Mono Mode:</strong> Convert stereo to single-channel</li>
+<li><strong>Benefit:</strong> Compatible with single-channel audio devices</li>
+<li><strong>Use Case:</strong> Using mono headphone or speaker</li>
+</ul>
+<h3>Keyboard Shortcuts Customization</h3>
+<ol>
+<li>Go to Settings → Keyboard Shortcuts tab</li>
+<li>View list of all available actions</li>
+<li>Select action to customize</li>
+<li>Press new keyboard shortcut</li>
+<li>Confirm by clicking Save</li>
+</ol>
+<p>⚠️ <strong>Warning:</strong> Some shortcuts (like Alt+F4) are reserved by Windows and cannot be customized.</p>
+<hr />
+<h2>Advanced Features</h2>
+<h3>Shuffle and Repeat Modes</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behavior</th>
+<th>Keyboard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shuffle</td>
+<td>Play files in random order</td>
+<td><code>Ctrl+Z</code></td>
+</tr>
+<tr>
+<td>Repeat File</td>
+<td>Repeat current file continuously</td>
+<td><code>Ctrl+R</code></td>
+</tr>
+</tbody>
+</table>
+<h3>File Selection (Range Selection)</h3>
+<p>Select ranges of files for batch operations:</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Keyboard Shortcut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start Selection</td>
+<td><code>[</code></td>
+</tr>
+<tr>
+<td>End Selection</td>
+<td><code>]</code></td>
+</tr>
+<tr>
+<td>Clear Selection</td>
+<td><code>Backspace</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Playback Information</h3>
+<p>Get detailed playback information:
+- <strong>Elapsed Time:</strong> Press <code>E</code>
+- <strong>Remaining Time:</strong> Press <code>R</code>
+- <strong>Total Duration:</strong> Press <code>T</code>
+- <strong>Current Position %:</strong> Press <code>P</code>
+- <strong>File Information:</strong> Press <code>F</code></p>
+<h3>Playlist Information</h3>
+<ol>
+<li>Go to <code>File → Playlist Information</code></li>
+<li>View:</li>
+<li>Total number of files</li>
+<li>Total playlist duration</li>
+<li>Currently playing file</li>
+</ol>
+<hr />
+<h2>System Integration</h2>
+<h3>Windows Media Session</h3>
+<p>Simple Audio Player integrates with the Windows Media Session, allowing you to control playback from the Windows UI. When you are playing a media file, you can:</p>
+<ul>
+<li>See the current track information in the Windows volume flyout.</li>
+<li>Use the media control keys on your keyboard (Play/Pause, Next, Previous) to control the player even when it is not in focus.</li>
+<li>Control playback from other Windows devices, such as a connected smartphone.</li>
+</ul>
+<h3>File Associations</h3>
+<p>You can set Simple Audio Player as the default application for various audio and video formats. This allows you to open your media files directly in Simple Audio Player by double-clicking them.</p>
+<p>You can also right-click on a media file and select "Play with Simple Audio Player" from the context menu to open it in the player.</p>
+<p>You can manage file associations from the application's settings.</p>
+<hr />
+<h2>Accessibility &amp; Screen Readers</h2>
+<h3>Screen Reader Support</h3>
+<p>Simple Audio Player works with:
+- <strong>JAWS:</strong> Full support for all features
+- <strong>NVDA:</strong> Full support for all features
+- <strong>Windows Narrator:</strong> Basic support</p>
+<h3>Text-to-Speech Output</h3>
+<p>Many actions provide audio feedback:
+- Play/Pause state changes announced
+- Volume changes spoken when requested
+- File information announced
+- Errors and warnings spoken</p>
+<h3>Keyboard-Only Operation</h3>
+<p>Complete application control via keyboard:
+- No mouse required for any function
+- All menus accessible via Alt key
+- Shortcuts available for all common operations</p>
+<h3>Beginner vs Advanced Mode</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beginner</td>
+<td>Simple Messages</td>
+<td>Only essential feedback provided</td>
+</tr>
+<tr>
+<td>Advanced</td>
+<td>Detailed Messages</td>
+<td>Comprehensive status and action information</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Tip:</strong> Toggle between modes by pressing <code>V</code> when no file is playing.
+<strong>Tip:</strong> Toggle verbosity mode anytime by pressing <code>Ctrl+Shift+V</code>.</p>
+</blockquote>
+<hr />
+<h2>Troubleshooting</h2>
+<h3>Common Issues</h3>
+<h4>No Sound Output</h4>
+<p><strong>Symptoms:</strong> Application runs but no audio plays</p>
+<p><strong>Solutions:</strong>
+1. Check Windows audio device is working
+2. Verify speakers/headphones are connected
+3. Check system volume is not muted
+4. Try different audio device in Settings
+5. Run "Test Speakers" (Ctrl+Shift+T)
+6. Restart application</p>
+<h4>Screen Reader Not Announcing</h4>
+<p><strong>Symptoms:</strong> No text-to-speech output from application</p>
+<p><strong>Solutions:</strong>
+1. Verify screen reader (JAWS/NVDA) is running
+2. Check system volume is not muted
+3. Try "Test Speakers" to verify audio output works
+4. Restart screen reader
+5. Restart application</p>
+<h4>YouTube Search Not Working</h4>
+<p><strong>Symptoms:</strong> YouTube features unavailable or searching fails</p>
+<p><strong>Solutions:</strong>
+1. Check internet connection
+2. Install YouTube components if prompted
+3. Update yt-dlp: Go to Tools → Update YouTube Components
+4. Verify video URL is valid and public
+5. Check if video is region-restricted</p>
+<h4>Application Crashes</h4>
+<p><strong>Symptoms:</strong> Application unexpectedly closes</p>
+<p><strong>Solutions:</strong>
+1. Disable silence removal in Settings
+2. Disable audio normalization
+3. Try different audio device
+4. Close other applications
+5. Reinstall application</p>
+<h4>File Not Playing</h4>
+<p><strong>Symptoms:</strong> File selected but won't play</p>
+<p><strong>Solutions:</strong>
+1. Verify file is readable and not corrupted
+2. Check file format is supported
+3. Try different file to confirm format support
+4. Convert file to common format (MP3, WAV)</p>
+<hr />
+<h2>Frequently Asked Questions</h2>
+<h3>General Questions</h3>
+<p><strong>Q: Is Simple Audio Player free?</strong><br />
+A: Yes, the application is free and open-source.</p>
+<p><strong>Q: Can I use it on Mac or Linux?</strong><br />
+A: Currently Windows-only. Future cross-platform support is possible.</p>
+<p><strong>Q: Do I need to install anything else?</strong><br />
+A: YouTube features require yt-dlp components, installed automatically when first used.</p>
+<h3>Playback Questions</h3>
+<p><strong>Q: What audio formats are supported?</strong><br />
+A: MP3, FLAC, WAV, OGG, OPUS, AAC, AIFF, ALAC, WMA, and more.</p>
+<p><strong>Q: Can I adjust playback speed?</strong><br />
+A: Yes, speed adjustable from 0.5x to 6.0x normal speed.</p>
+<p><strong>Q: Does it support playlists?</strong><br />
+A: Yes, create playlists by opening folders or adding individual files.</p>
+<h3>Customization Questions</h3>
+<p><strong>Q: Can I customize keyboard shortcuts?</strong><br />
+A: Yes, all shortcuts customizable in Settings &gt; Keyboard Shortcuts.</p>
+<p><strong>Q: Can I change the language?</strong><br />
+A: Yes, English and Arabic supported. Change in Settings &gt; General.</p>
+<p><strong>Q: Where are settings saved?</strong><br />
+A: In the application directory or %LocalAppData% folder depending on installation type.</p>
+<h3>YouTube Questions</h3>
+<p><strong>Q: Can I download YouTube videos?</strong><br />
+A: Yes, with restrictions. Only download content you have permission to use.</p>
+<p><strong>Q: What video quality options are available?</strong><br />
+A: Quality depends on YouTube availability, typically up to 1080p or best available.</p>
+<h3>Accessibility Questions</h3>
+<p><strong>Q: Does it work with my screen reader?</strong><br />
+A: Yes, JAWS and NVDA fully supported. Windows Narrator has basic support.</p>
+<p><strong>Q: Can I control everything with keyboard?</strong><br />
+A: Yes, all features accessible via keyboard with no mouse required.</p>
+<hr />
+<p><strong>Simple Audio Player User Guide | Version 1.0.1</strong><br />
+<strong>Last Updated: February 22, 2026</strong></p>
+<p>For more information, visit the <a href="https://github.com/kamalyaser31/simple-player">GitHub Repository</a></p>

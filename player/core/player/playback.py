@@ -1,4 +1,7 @@
 class PlayerPlaybackMixin:
+    def stop(self):
+        self._engine.stop()
+
     def toggle_pause(self):
         return self._engine.toggle_pause()
 

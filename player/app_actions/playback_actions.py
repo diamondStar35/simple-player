@@ -40,6 +40,16 @@ def toggle_play_pause(ctx):
     if not ctx.player.current_path:
         ctx.speak(_("No file loaded."), _("No file."))
         return
+
+    # If the player is stopped (no duration), but we have a current file,
+    # then reload and play it from the start.
+    if ctx.player.get_duration() is None:
+        if ctx.player.reload_current_file():
+            ctx.set_playing(True)
+            if not ctx.is_advanced():
+                speech.speak(_("Play"))
+        return
+
     is_playing = ctx.player.toggle_pause()
     ctx.set_playing(is_playing)
     if not ctx.is_advanced():

@@ -11,9 +11,10 @@
 7. [YouTube Features](#youtube-features)
 8. [Audio Settings](#audio-settings)
 9. [Advanced Features](#advanced-features)
-10. [Accessibility & Screen Readers](#accessibility--screen-readers)
-11. [Troubleshooting](#troubleshooting)
-12. [Frequently Asked Questions](#frequently-asked-questions)
+10. [System Integration](#system-integration)
+11. [Accessibility & Screen Readers](#accessibility--screen-readers)
+12. [Troubleshooting](#troubleshooting)
+13. [Frequently Asked Questions](#frequently-asked-questions)
 
 ---
 
@@ -458,10 +459,10 @@ Select ranges of files for batch operations:
 ### Playback Information
 
 Get detailed playback information:
-- **Elapsed Time:** Press `T`
-- **Remaining Time:** Press `Shift+T`
-- **Total Duration:** Press `D`
-- **Current Position %:** Press `Ctrl+P`
+- **Elapsed Time:** Press `E`
+- **Remaining Time:** Press `R`
+- **Total Duration:** Press `T`
+- **Current Position %:** Press `P`
 - **File Information:** Press `F`
 
 ### Playlist Information
@@ -471,6 +472,26 @@ Get detailed playback information:
    - Total number of files
    - Total playlist duration
    - Currently playing file
+
+---
+
+## System Integration
+
+### Windows Media Session
+
+Simple Audio Player integrates with the Windows Media Session, allowing you to control playback from the Windows UI. When you are playing a media file, you can:
+
+- See the current track information in the Windows volume flyout.
+- Use the media control keys on your keyboard (Play/Pause, Next, Previous) to control the player even when it is not in focus.
+- Control playback from other Windows devices, such as a connected smartphone.
+
+### File Associations
+
+You can set Simple Audio Player as the default application for various audio and video formats. This allows you to open your media files directly in Simple Audio Player by double-clicking them.
+
+You can also right-click on a media file and select "Play with Simple Audio Player" from the context menu to open it in the player.
+
+You can manage file associations from the application's settings.
 
 ---
 

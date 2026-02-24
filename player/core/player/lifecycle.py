@@ -20,7 +20,9 @@ class PlayerLifecycleMixin:
             self._load_current()
             return
         if self._end_behavior == "advance":
-            if self._state.next_track(use_shuffle=True):
+            if not self._state.next_track(use_shuffle=True):
+                self.stop()
+            else:
                 self._load_current()
             return
         if self._end_behavior == "loop":
