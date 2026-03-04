@@ -16,7 +16,10 @@ class MainFrame(MainFrameMenuMixin, MainFrameStateMixin, MainFrameEventsMixin, w
         self._menu_action_map = {}
         self._accelerator_bound = False
         self._jump_menu_map = {}
+        self._bookmark_jump_ids = []
         self._seek_step_menu_map = {}
+        self._bookmarks_menu_index = -1
+        self._bookmarks_enabled = False
         self._marked_actions_items = ()
         self._marked_actions_menu_index = -1
         self._has_marked_files = False

@@ -2,6 +2,7 @@ import wx
 from gettext import gettext as _
 
 from actions import (
+    ADD_BOOKMARK,
     CHECK_APP_UPDATES,
     CLOSE_FILE,
     CLOSE_ALL_FILES,
@@ -18,6 +19,7 @@ from actions import (
     OPEN_USER_GUIDE,
     OPEN_YOUTUBE_LINK,
     OPEN_YOUTUBE_SEARCH,
+    MANAGE_BOOKMARKS,
     UPDATE_YT_COMPONENTS,
     VIDEO_DESCRIPTION,
     VIDEO_DOWNLOAD,
@@ -47,6 +49,8 @@ class MainFrameStateMixin:
             CHECK_APP_UPDATES: self._check_updates_item.GetId(),
             UPDATE_YT_COMPONENTS: self._update_yt_item.GetId(),
             OPEN_ABOUT: self._about_item.GetId(),
+            ADD_BOOKMARK: self._bookmark_add_item.GetId(),
+            MANAGE_BOOKMARKS: self._bookmark_manage_item.GetId(),
         }
         table, action_map = build_accelerator_table(
             self._controller.get_shortcut_bindings(),
@@ -112,6 +116,22 @@ class MainFrameStateMixin:
         self._rename_item.Enable(self._local_file_actions_enabled)
         self._delete_item.Enable(self._local_file_actions_enabled)
 
+    def set_bookmarks_enabled(self, enabled):
+        self._bookmarks_enabled = bool(enabled) and self._file_loaded
+        self._bookmark_add_item.Enable(self._bookmarks_enabled)
+        self._bookmark_manage_item.Enable(self._bookmarks_enabled)
+        menu_bar = self.GetMenuBar()
+        if menu_bar is not None:
+            for item_id in self._bookmark_jump_ids:
+                menu_item = menu_bar.FindItemById(item_id)
+                if menu_item:
+                    menu_item.Enable(self._bookmarks_enabled)
+            if self._bookmarks_menu_index >= 0:
+                try:
+                    menu_bar.EnableTop(self._bookmarks_menu_index, self._bookmarks_enabled)
+                except Exception:
+                    pass
+
     def set_file_loaded(self, loaded):
         self._file_loaded = bool(loaded)
         enabled = self._file_loaded
@@ -166,3 +186,4 @@ class MainFrameStateMixin:
             self._local_file_actions_enabled if enabled else False
         )
         self.set_video_options_enabled(self._video_opts_enabled if enabled else False)
+        self.set_bookmarks_enabled(self._bookmarks_enabled if enabled else False)

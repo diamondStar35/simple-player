@@ -2,6 +2,8 @@ import wx
 from gettext import gettext as _
 
 from actions import (
+    ADD_BOOKMARK,
+    BOOKMARK_JUMPS,
     CHECK_APP_UPDATES,
     CLEAR_SELECTION,
     CLEAR_MARKED_FILES,
@@ -18,6 +20,7 @@ from actions import (
     MARKED_MOVE_TO_FOLDER,
     MARK_ALL_FILES,
     MARK_CURRENT_FILE,
+    MANAGE_BOOKMARKS,
     NEXT_TRACK,
     OPEN_CONTAINING_FOLDER,
     OPEN_FILE,
@@ -76,6 +79,7 @@ class MainFrameMenuMixin:
 
         file_menu = self._build_file_menu()
         edit_menu = self._build_edit_menu()
+        bookmarks_menu = self._build_bookmarks_menu()
         marked_menu = self._build_marked_menu()
         player_menu = self._build_player_menu()
         video_menu = self._build_video_menu()
@@ -83,6 +87,8 @@ class MainFrameMenuMixin:
 
         menu_bar.Append(file_menu, _("File"))
         menu_bar.Append(edit_menu, _("Edit"))
+        self._bookmarks_menu_index = menu_bar.GetMenuCount()
+        menu_bar.Append(bookmarks_menu, _("Bookmarks"))
         self._marked_actions_menu_index = menu_bar.GetMenuCount()
         menu_bar.Append(marked_menu, _("Actions for marked files"))
         menu_bar.Append(player_menu, _("Player"))
@@ -207,6 +213,31 @@ class MainFrameMenuMixin:
         self._bind_action_item(self._mark_current_item, MARK_CURRENT_FILE)
         self._bind_action_item(self._mark_all_item, MARK_ALL_FILES)
         self._bind_action_item(self._clear_marked_item, CLEAR_MARKED_FILES)
+        return menu
+
+    def _build_bookmarks_menu(self):
+        menu = wx.Menu()
+        self._bookmark_add_item = menu.Append(
+            wx.ID_ANY,
+            self._menu_label(_("Add a new bookmark"), ADD_BOOKMARK),
+        )
+        self._bookmark_manage_item = menu.Append(
+            wx.ID_ANY,
+            self._menu_label(_("Manage bookmarks"), MANAGE_BOOKMARKS),
+        )
+        jumps = wx.Menu()
+        self._bookmark_jump_ids = []
+        for action_id, slot in sorted(BOOKMARK_JUMPS.items(), key=lambda item: item[1]):
+            item = jumps.Append(
+                wx.ID_ANY,
+                self._menu_label(_("Bookmark {slot}").format(slot=slot), action_id),
+            )
+            self._bookmark_jump_ids.append(item.GetId())
+            self._bind_action_item(item, action_id)
+        menu.AppendSubMenu(jumps, _("Jump to bookmark"))
+
+        self._bind_action_item(self._bookmark_add_item, ADD_BOOKMARK)
+        self._bind_action_item(self._bookmark_manage_item, MANAGE_BOOKMARKS)
         return menu
 
     def _build_marked_menu(self):

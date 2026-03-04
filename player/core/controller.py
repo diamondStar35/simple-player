@@ -3,6 +3,8 @@ import wx
 
 from actions import (
     ACTIONS,
+    ADD_BOOKMARK,
+    BOOKMARK_JUMPS,
     CHECK_APP_UPDATES,
     ANNOUNCE_DURATION,
     ANNOUNCE_ELAPSED,
@@ -36,6 +38,7 @@ from actions import (
     OPEN_CHANGES,
     OPEN_CONTACT,
     OPEN_ABOUT,
+    MANAGE_BOOKMARKS,
     VIDEO_COPY_LINK,
     VIDEO_DESCRIPTION,
     VIDEO_DOWNLOAD,
@@ -88,8 +91,10 @@ from actions import (
     PASTE_FROM_CLIPBOARD,
     GLOBAL_SHORTCUT_ACTIONS,
 )
+from bookmarks.store import MarkStore
 from config.constants import APP_NAME
 from core.action_context import ActionContext
+from app_actions.bookmark_actions import add_mark, jump_mark_slot, manage_marks
 from app_actions.device_actions import open_sound_cards
 from app_actions.file_actions import (
     close_file,
@@ -176,6 +181,7 @@ from youtube.actions import (
     search_yt,
     show_desc,
 )
+from youtube.state import is_yt
 from youtube.startup import install_components_now
 from update.actions import (
     check_app_updates_now,
@@ -189,7 +195,8 @@ class AppController:
     def __init__(self, settings):
         self._settings = settings
         self._player = Player()
-        self._ctx = ActionContext(self._player, self._settings)
+        self._marks = MarkStore(self._settings.config_path)
+        self._ctx = ActionContext(self._player, self._settings, marks=self._marks)
         self._media = WindowsMediaBridge(
             app_id="SimpleAudioPlayer",
             app_name=APP_NAME,
@@ -236,6 +243,8 @@ class AppController:
             OPEN_ABOUT: lambda: show_about(self._ctx),
             CHECK_APP_UPDATES: lambda: check_app_updates_now(self._ctx),
             UPDATE_YT_COMPONENTS: lambda: update_youtube_components_now(self._ctx),
+            ADD_BOOKMARK: lambda: add_mark(self._ctx),
+            MANAGE_BOOKMARKS: lambda: manage_marks(self._ctx),
             OPEN_FOLDER: lambda: open_folder(self._ctx),
             OPEN_CONTAINING_FOLDER: lambda: open_here(self._ctx),
             OPEN_FILE_PROPERTIES: lambda: open_props(self._ctx),
@@ -286,6 +295,10 @@ class AppController:
         for action_id, percent in PERCENT_JUMPS.items():
             self._action_handlers[action_id] = (
                 lambda percent=percent: jump_to_percent(self._ctx, percent)
+            )
+        for action_id, slot in BOOKMARK_JUMPS.items():
+            self._action_handlers[action_id] = (
+                lambda slot=slot: jump_mark_slot(self._ctx, slot)
             )
         self._load_shortcuts_from_settings()
         self._player.set_volume(self._settings.get_volume())
@@ -420,6 +433,8 @@ class AppController:
         frame.set_mark_all_checked(self._player.are_all_files_marked())
         frame.set_marked_actions_enabled(self._player.has_marked_files())
         is_local = os.path.isfile(self._player.current_path or "")
+        can_bookmark = is_local and not is_yt(self._player.current_source)
+        frame.set_bookmarks_enabled(can_bookmark)
         frame.set_file_properties_enabled(is_local)
         frame.set_local_file_actions_enabled(is_local)
         frame.set_video_options_enabled(has_video(self._ctx))

@@ -94,6 +94,8 @@ OPEN_CONTACT = "open_contact"
 OPEN_ABOUT = "open_about"
 CHECK_APP_UPDATES = "check_app_updates"
 UPDATE_YT_COMPONENTS = "update_yt_components"
+ADD_BOOKMARK = "add_bookmark"
+MANAGE_BOOKMARKS = "manage_bookmarks"
 
 
 ACTIONS = {
@@ -206,6 +208,16 @@ ACTIONS = {
         UPDATE_YT_COMPONENTS,
         "Update YouTube Components",
         None,
+    ),
+    ADD_BOOKMARK: Action(
+        ADD_BOOKMARK,
+        "Add Bookmark",
+        Shortcut("m", frozenset({"shift"})),
+    ),
+    MANAGE_BOOKMARKS: Action(
+        MANAGE_BOOKMARKS,
+        "Manage Bookmarks",
+        Shortcut("m", frozenset({"ctrl", "shift"})),
     ),
     OPEN_FOLDER: Action(
         OPEN_FOLDER, "Open Folder", Shortcut("o", frozenset({"ctrl", "shift"}))
@@ -346,6 +358,17 @@ GLOBAL_SHORTCUT_ACTIONS = {
         Shortcut("page_up", frozenset({"win", "alt"})),
     ),
 }
+
+BOOKMARK_JUMPS = {}
+for slot in range(1, 11):
+    key = "0" if slot == 10 else str(slot)
+    action_id = f"bookmark_jump_{slot}"
+    ACTIONS[action_id] = Action(
+        action_id,
+        f"Jump to Bookmark {slot}",
+        Shortcut(key, frozenset({"alt"})),
+    )
+    BOOKMARK_JUMPS[action_id] = slot
 
 PERCENT_JUMPS = {}
 for digit in range(10):
