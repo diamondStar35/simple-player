@@ -21,7 +21,6 @@ from helpers.file_helpers import (
     set_switched,
     show_name,
 )
-from playlist.info import show as show_pl_info
 from ui import dialogs
 from youtube.actions import open_yt_link, sync_sel, try_next
 from youtube.link_validator import parse_link
@@ -362,12 +361,21 @@ def open_list(ctx):
         names,
         current_index=ctx.player.get_current_index(),
     )
-    dlg.info_button.Bind(wx.EVT_BUTTON, lambda _e: show_pl_info(dlg, ctx, files))
+    dlg.info_button.Bind(wx.EVT_BUTTON, lambda _e: _show_playlist_info(dlg, ctx, files))
     if dlg.ShowModal() == wx.ID_OK:
         idx = dlg.get_selection()
         if idx != wx.NOT_FOUND and ctx.player.jump_to_index(idx):
             set_ready(ctx)
     dlg.Destroy()
+
+
+def _show_playlist_info(parent, ctx, files):
+    try:
+        from playlist.info import show as show_pl_info
+    except Exception:
+        ctx.speak(_("Could not load playlist info."), _("Info failed."))
+        return
+    show_pl_info(parent, ctx, files)
 
 
 def spk_test(ctx):

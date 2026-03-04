@@ -34,6 +34,9 @@ class MainFrame(MainFrameMenuMixin, MainFrameStateMixin, MainFrameEventsMixin, w
         self.Bind(wx.EVT_CHAR_HOOK, self._on_char_hook)
         self.set_file_loaded(False)
 
+    def set_controller(self, controller):
+        self._controller = controller
+
     def _build_ui(self):
         self._prev_button = CustomButton(self, -1, _("Previous"))
         self._rewind_button = CustomButton(self, -1, _("Rewind"))
