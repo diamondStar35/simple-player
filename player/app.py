@@ -67,6 +67,8 @@ class SimpleAudioPlayerApp(wx.App):
         self._ipc_handle = APP_GUARD_IPC_HANDLE
         self._ipc_msg = None
         self._pending_open_paths = []
+        self._shell_open_queue = []
+        self._shell_open_timer = None
         self._controller_ready = False
         self.controller = None
         super().__init__(redirect)
@@ -85,11 +87,15 @@ class SimpleAudioPlayerApp(wx.App):
         frame = MainFrame(self.controller, APP_NAME)
         self.SetTopWindow(frame)
         frame.Show()
+        self._shell_open_timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self._on_shell_open_timer, self._shell_open_timer)
         self._register_guard_message_handler()
         wx.CallAfter(self._initialize_controller_and_startup)
         return True
 
     def OnExit(self):
+        if self._shell_open_timer is not None and self._shell_open_timer.IsRunning():
+            self._shell_open_timer.Stop()
         if self._guard is not None and self._ipc_msg is not None:
             try:
                 self._guard.unregister_msg(self._ipc_msg)
@@ -135,7 +141,34 @@ class SimpleAudioPlayerApp(wx.App):
                 frame.Raise()
             except Exception:
                 _log_exc("Could not raise main window.")
-        self._open_paths(paths)
+        self._queue_shell_paths(paths)
+
+    def _queue_shell_paths(self, paths):
+        pending = []
+        for path in paths or []:
+            text = str(path or "").strip()
+            if text:
+                pending.append(text)
+        if not pending:
+            return
+        if not self._controller_ready:
+            self._pending_open_paths.extend(pending)
+            return
+
+        self._shell_open_queue.extend(pending)
+        if self._shell_open_timer is None:
+            self._flush_shell_open_queue()
+            return
+        self._shell_open_timer.Start(120, oneShot=True)
+
+    def _on_shell_open_timer(self, _event):
+        self._flush_shell_open_queue()
+
+    def _flush_shell_open_queue(self):
+        paths = list(self._shell_open_queue)
+        self._shell_open_queue.clear()
+        if paths:
+            self._open_paths(paths)
 
     def _open_paths(self, paths):
         if not self._controller_ready:
@@ -182,10 +215,13 @@ class SimpleAudioPlayerApp(wx.App):
                 return
         pending = list(self._pending_open_paths)
         self._pending_open_paths.clear()
+        startup_paths = []
+        if self._initial_paths:
+            startup_paths.extend(self._initial_paths)
         if pending:
-            self._open_paths(pending)
-        elif self._initial_paths:
-            self._open_paths(self._initial_paths)
+            startup_paths.extend(pending)
+        if startup_paths:
+            self._open_paths(startup_paths)
         else:
             self.controller.restore_last_session()
         speech.speak(_("Welcome to Simple Audio Player"))

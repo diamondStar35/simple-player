@@ -202,6 +202,7 @@ from update.actions import (
 )
 from core.windows_media import WindowsMediaBridge
 from recording import RecEngine
+from positions import PosStore
 
 
 class AppController:
@@ -210,7 +211,13 @@ class AppController:
         self._player = Player()
         self._rec = RecEngine()
         self._marks = MarkStore(self._settings.config_path)
-        self._ctx = ActionContext(self._player, self._settings, marks=self._marks)
+        self._file_pos = PosStore(self._settings.config_path)
+        self._ctx = ActionContext(
+            self._player,
+            self._settings,
+            marks=self._marks,
+            file_pos=self._file_pos,
+        )
         self._media = WindowsMediaBridge(
             app_id="SimpleAudioPlayer",
             app_name=APP_NAME,
@@ -417,6 +424,8 @@ class AppController:
             if self._media_timer is not None and self._media_timer.IsRunning():
                 self._media_timer.Stop()
             self._rec.stop(beep=False)
+            if self._settings.get_save_file_pos() and self._settings.get_save_on_close():
+                self._save_file_position()
             self._settings.set_volume(self._player.get_volume())
             self._settings.set_speed(self._player.get_speed())
             if self._settings.get_remember_position():
@@ -534,4 +543,22 @@ class AppController:
             can_next=can_next,
             can_previous=can_previous,
         )
+
+    def _save_file_position(self):
+        path = str(self._player.current_path or "").strip()
+        if not path or not os.path.isfile(path):
+            return
+        raw = self._player.get_elapsed()
+        if raw is None:
+            return
+        try:
+            pos = float(raw)
+        except (TypeError, ValueError):
+            return
+        if pos < 0:
+            pos = 0.0
+        try:
+            self._file_pos.set(path, pos)
+        except Exception:
+            return
 

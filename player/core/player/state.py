@@ -60,6 +60,9 @@ class PlayerStateMixin:
     def get_current_index(self):
         return self._state.get_current_index()
 
+    def set_pending_start(self, value):
+        self._state.set_pending_start(value)
+
     def jump_to_index(self, index):
         if not self._state.jump_to_index(index):
             return False

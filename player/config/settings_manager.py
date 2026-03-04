@@ -80,6 +80,7 @@ class SettingsManager:
                 "volume_step": str(int(VOLUME_STEP)),
                 "end_behavior": "advance",
                 "wrap_playlist": "false",
+                "save_file_pos": "false",
                 "audio_normalize_enabled": "true",
                 "audio_mono_enabled": "false",
             },
@@ -535,6 +536,17 @@ class SettingsManager:
         if "audio" not in self._config:
             self._config["audio"] = {}
         self._config["audio"]["wrap_playlist"] = "true" if enabled else "false"
+
+    def get_save_file_pos(self):
+        try:
+            return self._config.getboolean("audio", "save_file_pos")
+        except (ValueError, configparser.Error):
+            return False
+
+    def set_save_file_pos(self, enabled):
+        if "audio" not in self._config:
+            self._config["audio"] = {}
+        self._config["audio"]["save_file_pos"] = "true" if enabled else "false"
 
     def get_audio_normalize_enabled(self):
         try:

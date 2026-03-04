@@ -50,6 +50,12 @@ class AudioSettings(wx.ScrolledWindow):
         self._wrap_playlist_checkbox.SetValue(self._settings.get_wrap_playlist())
         self._help_map[self._wrap_playlist_checkbox] = self._help_wrap_playlist
 
+        self._save_file_pos_checkbox = wx.CheckBox(
+            self, label=_("Save current position for each file")
+        )
+        self._save_file_pos_checkbox.SetValue(self._settings.get_save_file_pos())
+        self._help_map[self._save_file_pos_checkbox] = self._help_save_file_pos
+
         self._normalize_checkbox = wx.CheckBox(
             self, label=_("Enable dynamic normalize and limiter")
         )
@@ -72,6 +78,7 @@ class AudioSettings(wx.ScrolledWindow):
         sizer.Add(self._end_label, 0, wx.LEFT | wx.RIGHT | wx.TOP, 8)
         sizer.Add(self._end_choice, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, 8)
         sizer.Add(self._wrap_playlist_checkbox, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
+        sizer.Add(self._save_file_pos_checkbox, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
         sizer.Add(self._normalize_checkbox, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
         sizer.Add(self._mono_checkbox, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
         self.SetSizer(sizer)
@@ -103,6 +110,7 @@ class AudioSettings(wx.ScrolledWindow):
             selection = 0
         self._settings.set_end_behavior(END_BEHAVIOR_VALUES[selection])
         self._settings.set_wrap_playlist(self._wrap_playlist_checkbox.GetValue())
+        self._settings.set_save_file_pos(self._save_file_pos_checkbox.GetValue())
         self._settings.set_audio_normalize_enabled(self._normalize_checkbox.GetValue())
         self._settings.set_audio_mono_enabled(self._mono_checkbox.GetValue())
 
@@ -117,6 +125,7 @@ class AudioSettings(wx.ScrolledWindow):
             index = 0
         self._end_choice.SetSelection(index)
         self._wrap_playlist_checkbox.SetValue(self._settings.get_wrap_playlist())
+        self._save_file_pos_checkbox.SetValue(self._settings.get_save_file_pos())
         self._normalize_checkbox.SetValue(self._settings.get_audio_normalize_enabled())
         self._mono_checkbox.SetValue(self._settings.get_audio_mono_enabled())
 
@@ -162,6 +171,12 @@ class AudioSettings(wx.ScrolledWindow):
             "When enabled and the playlist has more than one file, moving next from the last file goes to the first file, "
             "and moving previous from the first file goes to the last file. "
             "Advance-at-end uses the same wrapping behavior."
+        )
+
+    def _help_save_file_pos(self):
+        return _(
+            "Save current position for each file. "
+            "When enabled, the app stores the current position of files and restores that position when navigating between files."
         )
 
     def _help_volume_step(self):
