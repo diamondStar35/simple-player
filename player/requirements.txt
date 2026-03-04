@@ -5,3 +5,5 @@ accessible_output3
 py-yt-search
 winsdk
 certifi
+pyaudio
+lameenc

@@ -19,6 +19,7 @@ from actions import (
     DELETE_FILE,
     END_SELECTION,
     GO_TO_FILE,
+    GO_TO_TIME,
     GO_FIRST_FILE,
     GO_LAST_FILE,
     MARK_ALL_FILES,
@@ -37,8 +38,14 @@ from actions import (
     OPEN_USER_GUIDE,
     OPEN_CHANGES,
     OPEN_CONTACT,
+    OPEN_CONTACT_EMAIL,
+    OPEN_CONTACT_TELEGRAM,
+    OPEN_CONTACT_WEBSITE,
     OPEN_ABOUT,
     MANAGE_BOOKMARKS,
+    REC_PAUSE,
+    REC_START,
+    REC_STOP,
     VIDEO_COPY_LINK,
     VIDEO_DESCRIPTION,
     VIDEO_DOWNLOAD,
@@ -133,8 +140,12 @@ from app_actions.help_actions import (
     open_guide,
     open_changes,
     open_contact,
+    open_contact_email,
+    open_contact_tg,
+    open_contact_website,
     show_about,
 )
+from app_actions.recording_actions import pause_resume_rec, start_rec, stop_rec
 from core.keyboard_handler import KeyboardHandler
 from app_actions.playback_actions import (
     announce_duration,
@@ -148,6 +159,7 @@ from app_actions.playback_actions import (
     clear_selection,
     end_selection,
     jump_to_percent,
+    go_to_time,
     reset_speed,
     seek_end,
     seek_backward,
@@ -189,12 +201,14 @@ from update.actions import (
     update_youtube_components_now,
 )
 from core.windows_media import WindowsMediaBridge
+from recording import RecEngine
 
 
 class AppController:
     def __init__(self, settings):
         self._settings = settings
         self._player = Player()
+        self._rec = RecEngine()
         self._marks = MarkStore(self._settings.config_path)
         self._ctx = ActionContext(self._player, self._settings, marks=self._marks)
         self._media = WindowsMediaBridge(
@@ -240,11 +254,17 @@ class AppController:
             OPEN_USER_GUIDE: lambda: open_guide(self._ctx),
             OPEN_CHANGES: lambda: open_changes(self._ctx),
             OPEN_CONTACT: lambda: open_contact(self._ctx),
+            OPEN_CONTACT_EMAIL: lambda: open_contact_email(self._ctx),
+            OPEN_CONTACT_TELEGRAM: lambda: open_contact_tg(self._ctx),
+            OPEN_CONTACT_WEBSITE: lambda: open_contact_website(self._ctx),
             OPEN_ABOUT: lambda: show_about(self._ctx),
             CHECK_APP_UPDATES: lambda: check_app_updates_now(self._ctx),
             UPDATE_YT_COMPONENTS: lambda: update_youtube_components_now(self._ctx),
             ADD_BOOKMARK: lambda: add_mark(self._ctx),
             MANAGE_BOOKMARKS: lambda: manage_marks(self._ctx),
+            REC_START: lambda: start_rec(self._ctx, self._rec),
+            REC_PAUSE: lambda: pause_resume_rec(self._ctx, self._rec),
+            REC_STOP: lambda: stop_rec(self._ctx, self._rec),
             OPEN_FOLDER: lambda: open_folder(self._ctx),
             OPEN_CONTAINING_FOLDER: lambda: open_here(self._ctx),
             OPEN_FILE_PROPERTIES: lambda: open_props(self._ctx),
@@ -254,6 +274,7 @@ class AppController:
             TEST_SPEAKERS: lambda: spk_test(self._ctx),
             OPEN_SETTINGS: self.open_settings_dialog,
             GO_TO_FILE: lambda: goto_file(self._ctx),
+            GO_TO_TIME: lambda: go_to_time(self._ctx),
             GO_FIRST_FILE: lambda: first_file(self._ctx),
             GO_LAST_FILE: lambda: last_file(self._ctx),
             NEXT_TRACK: lambda: next_file(self._ctx),
@@ -304,6 +325,7 @@ class AppController:
         self._player.set_volume(self._settings.get_volume())
         self._player.set_speed(self._settings.get_speed())
         self._player.set_end_behavior(self._settings.get_end_behavior())
+        self._player.set_wrap_playlist_enabled(self._settings.get_wrap_playlist())
         device = self._settings.get_audio_device()
         if device:
             self._player.set_audio_device(device)
@@ -351,6 +373,7 @@ class AppController:
             if self._ctx.frame is not None:
                 self._ctx.frame.refresh_shortcuts()
             self._player.set_end_behavior(self._settings.get_end_behavior())
+            self._player.set_wrap_playlist_enabled(self._settings.get_wrap_playlist())
             self._player.set_audio_normalize_enabled(
                 self._settings.get_audio_normalize_enabled()
             )
@@ -393,6 +416,7 @@ class AppController:
                 self._global_keyboard = None
             if self._media_timer is not None and self._media_timer.IsRunning():
                 self._media_timer.Stop()
+            self._rec.stop(beep=False)
             self._settings.set_volume(self._player.get_volume())
             self._settings.set_speed(self._player.get_speed())
             if self._settings.get_remember_position():
@@ -438,6 +462,7 @@ class AppController:
         frame.set_file_properties_enabled(is_local)
         frame.set_local_file_actions_enabled(is_local)
         frame.set_video_options_enabled(has_video(self._ctx))
+        frame.set_recording_state(self._rec.is_running, self._rec.is_paused)
         self._sync_media_state()
 
     def _load_shortcuts_from_settings(self):

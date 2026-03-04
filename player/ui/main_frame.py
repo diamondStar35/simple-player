@@ -29,6 +29,8 @@ class MainFrame(MainFrameMenuMixin, MainFrameStateMixin, MainFrameEventsMixin, w
         self._video_opts_items = ()
         self._video_opts_menu_index = -1
         self._video_opts_enabled = False
+        self._recording_running = False
+        self._recording_paused = False
 
         self._build_menu()
         self._build_ui()
