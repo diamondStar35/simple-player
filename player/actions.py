@@ -399,6 +399,21 @@ GLOBAL_SHORTCUT_ACTIONS = {
         "Previous Track",
         Shortcut("page_up", frozenset({"win", "alt"})),
     ),
+    REC_START: Action(
+        REC_START,
+        "Start Recording",
+        Shortcut("f9", frozenset({"win", "alt"})),
+    ),
+    REC_PAUSE: Action(
+        REC_PAUSE,
+        "Pause/Resume Recording",
+        Shortcut("f7", frozenset({"win", "alt"})),
+    ),
+    REC_STOP: Action(
+        REC_STOP,
+        "Stop Recording",
+        Shortcut("f8", frozenset({"win", "alt"})),
+    ),
 }
 
 BOOKMARK_JUMPS = {}
