@@ -24,6 +24,7 @@ from actions import (
     OPEN_YOUTUBE_LINK,
     OPEN_YOUTUBE_SEARCH,
     MANAGE_BOOKMARKS,
+    OPEN_REC_FOLDER,
     REC_PAUSE,
     REC_START,
     REC_STOP,
@@ -65,6 +66,7 @@ class MainFrameStateMixin:
             REC_START: self._rec_start_item.GetId(),
             REC_PAUSE: self._rec_pause_item.GetId(),
             REC_STOP: self._rec_stop_item.GetId(),
+            OPEN_REC_FOLDER: self._open_rec_folder_item.GetId(),
         }
         table, action_map = build_accelerator_table(
             self._controller.get_shortcut_bindings(),

@@ -43,6 +43,7 @@ from actions import (
     OPEN_CONTACT_WEBSITE,
     OPEN_ABOUT,
     MANAGE_BOOKMARKS,
+    OPEN_REC_FOLDER,
     REC_PAUSE,
     REC_START,
     REC_STOP,
@@ -145,7 +146,12 @@ from app_actions.help_actions import (
     open_contact_website,
     show_about,
 )
-from app_actions.recording_actions import pause_resume_rec, start_rec, stop_rec
+from app_actions.recording_actions import (
+    open_rec_folder,
+    pause_resume_rec,
+    start_rec,
+    stop_rec,
+)
 from core.keyboard_handler import KeyboardHandler
 from app_actions.playback_actions import (
     announce_duration,
@@ -272,6 +278,7 @@ class AppController:
             REC_START: lambda: start_rec(self._ctx, self._rec),
             REC_PAUSE: lambda: pause_resume_rec(self._ctx, self._rec),
             REC_STOP: lambda: stop_rec(self._ctx, self._rec),
+            OPEN_REC_FOLDER: lambda: open_rec_folder(self._ctx),
             OPEN_FOLDER: lambda: open_folder(self._ctx),
             OPEN_CONTAINING_FOLDER: lambda: open_here(self._ctx),
             OPEN_FILE_PROPERTIES: lambda: open_props(self._ctx),

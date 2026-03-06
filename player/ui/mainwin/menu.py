@@ -37,6 +37,7 @@ from actions import (
     PLAY_PAUSE,
     PREVIOUS_TRACK,
     REC_PAUSE,
+    OPEN_REC_FOLDER,
     REC_START,
     REC_STOP,
     RENAME_FILE,
@@ -531,9 +532,15 @@ class MainFrameMenuMixin:
             wx.ID_ANY,
             self._menu_label(_("Stop"), REC_STOP),
         )
+        menu.AppendSeparator()
+        self._open_rec_folder_item = menu.Append(
+            wx.ID_ANY,
+            self._menu_label(_("Open recordings folder"), OPEN_REC_FOLDER),
+        )
         self._bind_action_item(self._rec_start_item, REC_START)
         self._bind_action_item(self._rec_pause_item, REC_PAUSE)
         self._bind_action_item(self._rec_stop_item, REC_STOP)
+        self._bind_action_item(self._open_rec_folder_item, OPEN_REC_FOLDER)
         return menu
 
     def _bind_action_item(self, item, action_id):

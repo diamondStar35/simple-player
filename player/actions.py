@@ -103,6 +103,7 @@ MANAGE_BOOKMARKS = "manage_bookmarks"
 REC_START = "recording_start"
 REC_PAUSE = "recording_pause_resume"
 REC_STOP = "recording_stop"
+OPEN_REC_FOLDER = "open_recordings_folder"
 
 
 ACTIONS = {
@@ -255,6 +256,11 @@ ACTIONS = {
         REC_STOP,
         "Stop Recording",
         Shortcut("f8"),
+    ),
+    OPEN_REC_FOLDER: Action(
+        OPEN_REC_FOLDER,
+        "Open Recordings Folder",
+        None,
     ),
     OPEN_FOLDER: Action(
         OPEN_FOLDER, "Open Folder", Shortcut("o", frozenset({"ctrl", "shift"}))
