@@ -39,6 +39,7 @@ OPEN_FILE = "open_file"
 OPEN_LINK = "open_link"
 OPEN_YOUTUBE_LINK = "open_youtube_link"
 OPEN_YOUTUBE_SEARCH = "open_youtube_search"
+OPEN_FAVORITES = "open_favorites"
 OPEN_FOLDER = "open_folder"
 OPEN_CONTAINING_FOLDER = "open_containing_folder"
 OPEN_FILE_LIST = "open_file_list"
@@ -171,6 +172,11 @@ ACTIONS = {
         OPEN_YOUTUBE_SEARCH,
         "Search YouTube",
         Shortcut("y", frozenset({"ctrl"})),
+    ),
+    OPEN_FAVORITES: Action(
+        OPEN_FAVORITES,
+        "Favorite Videos",
+        Shortcut("f", frozenset({"ctrl", "shift"})),
     ),
     VIDEO_DOWNLOAD: Action(
         VIDEO_DOWNLOAD,
